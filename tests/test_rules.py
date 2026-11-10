@@ -91,7 +91,8 @@ def test_invented_and_uncited_evidence_is_rejected():
     bad = Findings(linked_change_ids=["ct-999"], claims=[Claim(text="x", evidence_ids=["met-999"])])
     errors = validate_findings(bad, tb.pool)
     assert any("ct-999" in e for e in errors) and any("met-999" in e for e in errors)
-    assert validate_findings(Findings(), tb.pool) == ["claims: at least one cited claim is required"]
+    assert validate_findings(Findings(), tb.pool)[0].startswith("claims: cite at least one fact")
+    assert validate_findings(Findings(gaps=["No change event found."]), tb.pool) == [], "gaps-only answers are allowed"
 
 
 def test_writeup_numbers_ids_and_verdict_are_checked():

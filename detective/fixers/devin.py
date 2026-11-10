@@ -28,11 +28,21 @@ def devin_status(devin_bin: str) -> dict:
 class DevinFixer(CodeFixer):
     name = "devin"
 
+    def cli(self) -> str:
+        """The CLI from Settings → Integrations when connected, else the DEVIN_BIN setting."""
+        from detective.integrations import devin_connection
+        conn = devin_connection(self.settings)
+        return conn["path"] if conn else self.settings.devin_bin
+
     def apply(self, work: Path, brief: FixBrief, brief_path: Path) -> tuple[str, str]:
         s = self.settings
-        if not Path(s.devin_bin).exists():
-            raise FixError(f"Devin CLI not found at {s.devin_bin}")
-        cmd = [s.devin_bin, "-p", "--prompt-file", str(brief_path), "--permission-mode", "accept-edits",
+        cli = self.cli()
+        if not Path(cli).exists():
+            raise FixError(f"Devin CLI not found at {cli}")
+        if not devin_status(cli)["logged_in"]:
+            raise FixError("Devin is no longer signed in on this machine. Run `devin auth login`, then connect again "
+                           "in Settings → Integrations.")
+        cmd = [cli, "-p", "--prompt-file", str(brief_path), "--permission-mode", "accept-edits",
                "--respect-workspace-trust", "false"]
         if s.devin_model:
             cmd += ["--model", s.devin_model]

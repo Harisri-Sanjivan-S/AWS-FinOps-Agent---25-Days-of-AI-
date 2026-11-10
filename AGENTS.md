@@ -64,6 +64,11 @@ Python 3.12 via uv, Strands Agents, Amazon Bedrock (Claude Haiku; Sonnet for esc
   run in the target folder before any push (never plan/apply); a failure blocks the push. After the PR opens, CI is
   polled (up to `FINOPS_CI_WAIT_S`, default 150 s) and stored on the case; `pipeline.refresh_ci` updates it. Tests set
   `FINOPS_TF_VALIDATE=0` and use fake terraform/CI stand-ins.
+- Integrations (`detective/integrations.py`, Settings → Integrations, FinOps only): "Connect to Devin CLI" finds the
+  CLI (PATH, `DEVIN_BIN`, Devin Desktop path), reads `devin auth status`, and saves metadata only to
+  `runs/integrations.json` (no tokens). Inbox offers Devin only when connected; the default writer stays Template.
+  The app must run under the OS user that ran `devin auth login` (the agent sandbox shell cannot see it).
+  GitHub and AWS integrations are shown as planned.
 - `app/` Streamlit app; `evals/` runner + baseline; `demo_repo/acme-platform/` source of the public demo repo
   `Harisri-Sanjivan-S/acme-platform` (created 2026-11-10; CI green on the test PR #1, which was closed).
 

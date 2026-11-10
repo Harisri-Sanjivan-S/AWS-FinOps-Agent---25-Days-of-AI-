@@ -10,7 +10,8 @@ from detective.config import ROOT
 from detective.pipeline import investigate_all
 
 APP = ROOT / "app"
-HIDDEN_WORDS = ["planted", "offline", "replay", "anomaly detection", "shaped like", "mirror", "dry run"]
+HIDDEN_WORDS = ["planted", "offline", "replay", "anomaly detection", "shaped like", "mirror", "dry run",
+                "noise ignored", "explained by the next morning", "bedrock spend"]
 
 
 def run(name: str, **state) -> AppTest:
@@ -24,15 +25,19 @@ def no_errors(at: AppTest) -> None:
     assert not at.exception, [e.message for e in at.exception]
 
 
-def visible_text(at: AppTest) -> str:
+def text(at: AppTest) -> str:
     parts = [m.value for m in at.markdown] + [c.value for c in at.caption] + [t.value for t in at.title]
-    parts += [i.value for i in at.info] + [w.value for w in at.warning] + [m.label for m in at.metric]
-    return " ".join(str(p) for p in parts).lower()
+    parts += [i.value for i in at.info] + [w.value for w in at.warning] + [s.value for s in at.success]
+    return " ".join(str(p) for p in parts)
+
+
+def buttons(at: AppTest) -> list[str]:
+    return [b.label for b in at.button]
 
 
 @pytest.fixture
 def week():
-    """Two demo days with cases for Ravi on both (10 Nov and 13 Nov), plus the Orders-team NAT case on 10 Nov."""
+    """Two demo days with cases for Ravi on both (10 and 13 Nov), plus the Orders-team NAT case on 10 Nov."""
     for day in ("nov10", "nov13"):
         investigate_all(day, "offline")
 
@@ -40,8 +45,9 @@ def week():
 def test_router_shows_pages_by_role(week):
     finops = run("Home.py", actor="finops-team")
     no_errors(finops)
-    assert finops.title[0].value == "Cost spike investigation console"
+    assert finops.title[0].value == "Console"
     assert finops.sidebar.selectbox[0].label == "Acting as"
+    assert not [w for w in HIDDEN_WORDS if w in text(finops).lower()]
     owner = run("Home.py", actor="ravi.m")
     no_errors(owner)
     assert owner.title[0].value == "Inbox", "owners land on their inbox; console is not in their navigation"
@@ -61,32 +67,32 @@ def test_refresh_keeps_actor_and_day_from_the_url(week):
     assert bad.session_state["actor"] == "finops-team", "unknown actors in the URL are ignored"
 
 
-def test_console_has_no_internal_labels():
+def test_console_is_clean_and_breadcrumbed():
     at = run("views/console.py")
     no_errors(at)
-    assert at.selectbox[0].options[0].startswith("Sat 07 Nov") and len(at.selectbox[0].options) == 8
-    assert at.metric[1].value == "$4,496.44" and "Passed" in at.metric[3].value
-    assert at.button[0].label == "Investigate" and not at.button[0].disabled
-    text = visible_text(at)
-    assert not [w for w in HIDDEN_WORDS if w in text], text
+    page = text(at)
+    assert "Console</b>" not in page and "Tue 10 Nov" in page, "breadcrumb shows the selected day"
+    assert "Spend **\\$4,496.44** · expected \\$3,256.44" in page and "3 cost drivers" in page
+    assert "Investigate" in buttons(at) and "Estimated cost" in page
+    assert not [w for w in HIDDEN_WORDS if w in page.lower()], page
+    assert not at.metric, "no big number tiles"
 
 
-def test_console_uses_bedrock_and_needs_cost_approval(monkeypatch):
+def test_console_bedrock_asks_for_cost_approval_before_running(monkeypatch):
     monkeypatch.setenv("FINOPS_UI_MODE", "bedrock")
     config.get_settings.cache_clear()
     at = run("views/console.py")
     no_errors(at)
-    assert any("Amazon Bedrock" in w.value for w in at.warning)
-    assert at.button[0].disabled, "no Bedrock spend until the approval box is ticked"
+    at = next(b for b in at.button if b.label == "Investigate").click().run()
+    no_errors(at)
+    assert "pending_run" not in at.session_state, "nothing runs until the cost is approved in the confirmation"
 
 
-def test_quiet_day_explains_why_nothing_runs(monkeypatch):
-    monkeypatch.setenv("FINOPS_UI_MODE", "bedrock")
-    config.get_settings.cache_clear()
+def test_quiet_day_explains_why_nothing_runs():
     at = run("views/console.py", scenario="nov07")
     no_errors(at)
-    assert any("Below the alert threshold" in s.value for s in at.success)
-    assert not at.warning and not at.button, "no cost warning and no Investigate button on a quiet day"
+    assert "Below the alert threshold. Nothing to investigate." in text(at)
+    assert "Investigate" not in buttons(at)
 
 
 def test_owner_cannot_open_finops_pages():
@@ -106,14 +112,15 @@ def test_live_investigation_then_replay_follows_the_selected_day():
     no_errors(replay)
     assert len(replay.status) == 3
     other = run("views/investigation.py", scenario="nov08")
-    assert any("not been investigated yet" in i.value for i in other.info)
+    assert "not been investigated yet" in text(other)
 
 
 def test_case_page_lists_own_cases_across_days(week):
     at = run("views/case.py", actor="ravi.m")
     no_errors(at)
     assert [o.split(" · ")[0] for o in at.selectbox[0].options] == ["N10-01", "N13-01"]
-    assert any(m.label == "Already spent (code)" and m.value == "$888.33" for m in at.metric)
+    page = text(at)
+    assert "$888.33" in page and "Likely waste" in page and "Cases" in page
     finops = run("views/case.py", actor="finops-team")
     assert len(finops.selectbox[0].options) == 4
 
@@ -121,31 +128,32 @@ def test_case_page_lists_own_cases_across_days(week):
 def test_inbox_owner_sees_every_day_and_approves(week):
     at = run("views/inbox.py", actor="ravi.m")
     no_errors(at)
-    assert len(at.expander) == 2 and [h.value.split(" · ")[0] for h in at.subheader] == ["Tue 10 Nov", "Fri 13 Nov"]
-    approve_btn = next(b for b in at.button if b.label == "Approve stop")
-    at = approve_btn.click().run()
+    assert [o.split(" · ")[0] for o in at.selectbox[0].options] == ["N10-01", "N13-01"]
+    at = next(b for b in at.button if b.label == "Approve stop").click().run()
     no_errors(at)
-    nd = next(b for b in at.button if b.label == "Next day: check the bill")
-    at = nd.click().run()
+    at = run("views/inbox.py", actor="ravi.m", inbox_filter="All", inbox_case="N10-01")
+    at = next(b for b in at.button if b.label == "Next day: check the bill").click().run()
     no_errors(at)
     assert any("Saving confirmed" in s.value for s in at.success)
     orders = run("views/inbox.py", actor="orders-team")
-    assert len(orders.expander) == 1 and "N10-03" in orders.expander[0].label
+    assert [o.split(" · ")[0] for o in orders.selectbox[0].options] == ["N10-03"]
 
 
 def test_inbox_finops_sees_all_but_cannot_approve_others(week):
-    at = run("views/inbox.py", actor="finops-team")
+    at = run("views/inbox.py", actor="finops-team", inbox_filter="All")
     no_errors(at)
-    assert len(at.expander) == 4
-    assert not [b for b in at.button if b.label in ("Approve stop", "Approve fix and open PR")]
-    assert any(t.label == "Re-route" for t in at.tabs)
-    assert any("no alert was sent" in m.value for m in at.markdown)
+    assert len(at.selectbox[0].options) == 4
+    assert not {"Approve stop", "Approve fix and open PR"} & set(buttons(at))
+    assert any(t.label == "Re-route" for t in at.tabs), "FinOps may re-route any case"
+    quiet = run("views/inbox.py", actor="finops-team", inbox_filter="All", inbox_case="N10-02")
+    assert "no alert was sent" in text(quiet)
     other = run("views/inbox.py", actor="priya.s")
     no_errors(other)
-    assert any("Nothing for you" in s.value for s in other.success)
+    assert "Nothing for you" in text(other)
 
 
-def test_results_page():
-    at = run("views/results.py")
-    no_errors(at)
-    assert not [w for w in HIDDEN_WORDS if w in visible_text(at)]
+def test_settings_page():
+    for tab in ("Results", "Models", "Access", "Cost", "Reset"):
+        at = run("views/results.py", settings_tab=tab)
+        no_errors(at)
+        assert not [w for w in HIDDEN_WORDS if w in text(at).lower()]

@@ -7,146 +7,104 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import ui  # noqa: I001 - sets sys.path for the detective package
 
+import json
+
 import streamlit as st
 
 from checks import check_badges
-from detective.pipeline import refresh_ci
-from detective.sources import FixtureSource
-from evals.score import proof, score_case, summarise
 from detective.config import ROOT
-import json
+from detective.pipeline import refresh_ci
+from evals.score import proof, score_case, summarise
 
 ui.require_page("performance")
-st.title("AI performance & proof")
-
 stores = ui.demo_stores()
 history = ui.history_stores()
+tab = st.segmented_control("Section", ["Overview", "Investigations", "Proof", "Audit"], default="Overview",
+                           key="perf_tab", label_visibility="collapsed") or "Overview"
+ui.header("AI performance", "AI performance", tab)
 if not stores:
-    st.info("No Amazon Bedrock runs of the demo week yet. FinOps can run a day from the console, or the whole week with "
-            "`uv run python scripts/run_week.py --confirm`.")
+    st.markdown("No investigations of the demo week yet.")
     st.stop()
 
 rows = [score_case(c) for s in stores for c in s.cases()]
 summary = summarise(rows)
 evidence = proof(stores, history)
-days = sorted({s.meta()["scenario_id"] for s in stores})
-st.caption(f"Latest run of {len(days)} day(s): {', '.join(ui.scenario_label(d).split(' · ')[0] for d in days)} · "
-           f"{summary.get('investigations', 0)} investigations by Claude on Amazon Bedrock")
 
-tab_perf, tab_proof = st.tabs(["AI performance", "Proof of changes"])
 
-with tab_perf:
-    if not rows:
-        st.success("No cost drivers needed investigating on these days.")
+def comparison() -> tuple[dict, dict] | None:
+    d = ROOT / "evals" / "results"
+    ev, bl = sorted(d.glob("*-bedrock-haiku.json"), reverse=True), sorted(d.glob("*-baseline.json"), reverse=True)
+    if not (ev and bl):
+        return None
+    return json.loads(ev[0].read_text()), json.loads(bl[0].read_text())
+
+
+if tab == "Overview":
+    if summary:
+        ui.kv([("Verdict accuracy", f"{summary['verdict_accuracy_pct']}%"),
+               ("Routed to the right owner", f"{summary['routing_accuracy_pct']}%"),
+               ("Claims with valid evidence", f"{summary['citations_valid_pct']}%"),
+               ("Right first time", f"{summary['first_pass_valid_pct']}%"),
+               ("Guardrail tests passed", f"{summary['guardrail_passed']} of {summary['guardrail_tests']}"),
+               ("Average time per investigation", f"{summary['avg_seconds']:.0f} s"),
+               ("Average cost per investigation", f"${summary['avg_cost_usd']:.3f}"),
+               ("Saving confirmed on the next bill", f"{ui.money(evidence['proven_per_day'])} / day"),
+               ("Actions taken before approval", str(evidence["actions_without_approval"]))])
+    comp = comparison()
+    if comp:
+        ev, bl = comp[0]["summary"]["metrics"], comp[1]["summary"]["metrics"]
+        st.subheader("Agent with rules vs plain AI")
+        agent, plain = float(ev["Verdict accuracy"].rstrip("%")), float(bl["Verdict accuracy"].rstrip("%"))
+        st.bar_chart({"Verdict accuracy (%)": [agent, plain]}, horizontal=True, height=140,
+                     x_label="", y_label="")
+        ui.muted(f"Agent with rules {agent:.0f}% · plain AI {plain:.0f}%. Same model and the same seven test scenarios; "
+                 "plain AI receives all data in one prompt, without tools or rules.")
+
+elif tab == "Investigations":
+    st.dataframe([{"Day": ui.day_short(r["scenario"]), "Case": r["case"], "Driver": r["driver"], "Expected": r["expected"],
+                   "Verdict": r["verdict"], "Correct": r["correct"], "Tool calls": r["tool_calls"],
+                   "Seconds": round(r["seconds"]), "Cost USD": round(r["cost_usd"], 3)} for r in rows],
+                 hide_index=True, width="stretch")
+
+elif tab == "Proof":
+    ui.kv([("Unplanned spend found", f"{ui.money(evidence['found_per_day'])} / day"),
+           ("Avoidable with a fix", f"{ui.money(evidence['avoidable_per_day'])} / day"),
+           ("Saving confirmed on the next bill", f"{ui.money(evidence['proven_per_day'])} / day"),
+           ("Waiting on pull-request merge", f"{ui.money(evidence['pending_pr_per_day'])} / day")])
+    st.subheader("Savings")
+    if evidence["savings"]:
+        st.dataframe([{"Case": s_["case"], "Day": ui.day_short(s_["day"]), "Approved by": ui.actor_name(s_["approved_by"]),
+                       "Before (USD/day)": s_["before_usd"], "After (USD/day)": s_["after_usd"],
+                       "Confirmed": {True: "Yes", False: "No"}.get(s_["confirmed"], "Pending")}
+                      for s_ in evidence["savings"]], hide_index=True, width="stretch")
     else:
-        c = st.columns(4)
-        c[0].metric("Verdict accuracy", f"{summary['verdict_accuracy_pct']}%", help="Verdict matches the planted truth")
-        c[1].metric("Routed to the right owner", f"{summary['routing_accuracy_pct']}%")
-        c[2].metric("Claims with valid evidence", f"{summary['citations_valid_pct']}%",
-                    help="Every accepted claim cites an ID a tool actually returned; code rejects the rest")
-        c[3].metric("Right first time", f"{summary['first_pass_valid_pct']}%",
-                    help="Findings accepted on the first attempt (no retry)")
-        c = st.columns(4)
-        c[0].metric("Avg time per driver", f"{summary['avg_seconds']:.0f} s")
-        c[1].metric("Avg cost per driver", f"${summary['avg_cost_usd']:.3f}", f"total ${summary['total_cost_usd']:.2f}",
-                    delta_color="off")
-        c[2].metric("Tool calls per driver", f"{summary['avg_tool_calls']}", f"max {summary['max_tool_calls']}", delta_color="off")
-        c[3].metric("Escalated to Sonnet", f"{summary['escalation_pct']}%")
-        if summary["guardrail_tests"]:
-            st.markdown(f"**Guardrails:** {summary['guardrail_passed']} of {summary['guardrail_tests']} passed "
-                        "(unrelated change ignored, prompt injection in a ticket resisted). "
-                        f"Actions taken before approval: **{evidence['actions_without_approval']}**.")
-
-        st.subheader("Agent + rules vs plain AI")
-        results_dir = ROOT / "evals" / "results"
-        evals_ = sorted(results_dir.glob("*-bedrock-haiku.json"), reverse=True)
-        base_ = sorted(results_dir.glob("*-baseline.json"), reverse=True)
-        if evals_ and base_:
-            ev, bl = json.loads(evals_[0].read_text())["summary"]["metrics"], json.loads(base_[0].read_text())
-            blm = bl["summary"]["metrics"]
-            comp = {"Verdict accuracy (%)": [float(ev["Verdict accuracy"].rstrip("%")), float(blm["Verdict accuracy"].rstrip("%"))],
-                    "Valid citations (%)": [float(ev["Valid citations"].rstrip("%")), float(blm["Valid citations"].rstrip("%"))]}
-            cols = st.columns(2)
-            for col, (label, (agent, plain)) in zip(cols, comp.items()):
-                col.metric(label, f"{agent:.0f}% vs {plain:.0f}%", f"{agent - plain:+.0f} points", delta_color="normal")
-            st.bar_chart({"Agent + rules": [v[0] for v in comp.values()], "Plain AI": [v[1] for v in comp.values()]},
-                         height=220, stack=False)
-            st.caption(f"Same model ({bl['model'].split('.')[-1][:24]}) on the same 7 test scenarios. Plain AI gets all "
-                       "the data in one prompt, with no tools and no rules. Agent: "
-                       f"{ev['Cost per investigation']} per investigation; plain AI: {blm['Cost per driver']} per driver.")
-        else:
-            st.caption("Run the eval suite and the plain-AI baseline to fill this comparison.")
-
-        st.subheader("By day")
-        per_day = {}
-        for r in rows:
-            d = per_day.setdefault(r["scenario"], {"Day": ui.scenario_label(r["scenario"]), "Drivers": 0, "Correct": 0,
-                                                   "Seconds": 0.0, "Cost USD": 0.0, "Tool calls": 0})
-            d["Drivers"] += 1
-            d["Correct"] += int(r["correct"])
-            d["Seconds"] = round(d["Seconds"] + r["seconds"], 1)
-            d["Cost USD"] = round(d["Cost USD"] + r["cost_usd"], 4)
-            d["Tool calls"] += r["tool_calls"]
-        st.dataframe(list(per_day.values()), hide_index=True, use_container_width=True)
-        left, right = st.columns(2)
-        left.caption("Seconds per day")
-        left.bar_chart({"seconds": [d["Seconds"] for d in per_day.values()]}, height=200)
-        right.caption("Bedrock cost per day (USD)")
-        right.bar_chart({"USD": [d["Cost USD"] for d in per_day.values()]}, height=200)
-
-        st.subheader("Every investigation")
-        st.dataframe([{k: r[k] for k in ("case", "driver", "expected", "verdict", "correct", "citations_valid",
-                                         "investigator_attempts", "tool_calls", "seconds", "cost_usd", "models")}
-                      for r in rows], hide_index=True, use_container_width=True)
-
-with tab_proof:
-    c = st.columns(4)
-    c[0].metric("Unplanned spend found", f"{ui.money(evidence['found_per_day'])}/day")
-    c[1].metric("Avoidable with a fix", f"{ui.money(evidence['avoidable_per_day'])}/day")
-    c[2].metric("Saving proven on the next bill", f"{ui.money(evidence['proven_per_day'])}/day",
-                f"≈ {ui.money(evidence['proven_per_day'] * 365)}/year run-rate", delta_color="off")
-    c[3].metric("Waiting on PR merge", f"{ui.money(evidence['pending_pr_per_day'])}/day")
-
-    st.subheader("Savings proven by the bill")
-    if not evidence["savings"]:
-        st.caption("No approved stops yet.")
-    for s_ in evidence["savings"]:
-        with st.container(border=True):
-            ok = s_["confirmed"]
-            st.markdown(f"**{s_['case']}** · {s_['driver']} · approved by **{ui.actor_name(s_['approved_by'])}** "
-                        f"at {s_['approved_at'][:16].replace('T', ' ')} UTC · action `{s_['action']}`")
-            if s_["after_usd"] is not None:
-                st.bar_chart({"USD/day": [s_["before_usd"], s_["after_usd"]]}, x_label="spike day → next day",
-                             height=160)
-            (st.success if ok else st.warning)(s_["note"])
-            ui.citations(FixtureSource(s_["day"]), s_["evidence"][:6])
-
-    st.subheader("Code changes (pull requests)")
+        st.markdown("No approved stops yet.")
+    st.subheader("Pull requests")
     if not evidence["pull_requests"]:
-        st.caption("No code fixes approved yet.")
+        st.markdown("No code fixes approved yet.")
     for p in evidence["pull_requests"]:
-        with st.container(border=True):
-            st.markdown(f"**{p['case']}** · approved by **{ui.actor_name(p['approved_by'])}** · written by {p['executor']} · "
-                        f"{p['status']} · expected {ui.money(p['avoidable_usd'])}/day after merge and apply")
-            st.markdown(check_badges(p["tf_checks"], p["ci"]), unsafe_allow_html=True)
-            st.caption("Checked before a human sees it: terraform fmt and validate ran locally before the push "
-                       "(never plan or apply), then CI ran them again on the pull request.")
-            if p["url"]:
-                st.link_button("Open pull request", p["url"], icon=":material/open_in_new:")
-                store = next(s for s in history if any(c.case_id == p["case"] for c in s.cases()))
-                if p["url"].startswith("https://github.com/") and st.button("Check CI", key=f"ci-{p['case']}-{p['branch']}"):
-                    try:
-                        refresh_ci(store, store.load_case(p["case"]))
-                        st.rerun()
-                    except Exception as exc:  # noqa: BLE001 - show any gh error to the user
-                        st.error(str(exc))
-            if p["error"]:
-                st.error(p["error"])
-            if p["diff"]:
+        st.markdown(f"{p['case']} · approved by {ui.actor_name(p['approved_by'])} · written by {p['executor']} · {p['status']}")
+        st.markdown(check_badges(p["tf_checks"], p["ci"]), unsafe_allow_html=True)
+        c1, c2, _ = st.columns([1, 1, 2])
+        if p["url"]:
+            c1.link_button("Open pull request", p["url"])
+            store = next(s for s in history if any(c.case_id == p["case"] for c in s.cases()))
+            if p["url"].startswith("https://github.com/") and c2.button("Check CI", key=f"ci-{p['case']}-{p['branch']}"):
+                try:
+                    refresh_ci(store, store.load_case(p["case"]))
+                    st.rerun()
+                except Exception as exc:  # noqa: BLE001 - show any gh error to the user
+                    st.error(str(exc))
+        if p["diff"]:
+            with st.expander("View diff"):
                 st.code(p["diff"], language="diff")
+        if p["error"]:
+            st.markdown(f"Error: {p['error']}")
 
-    st.subheader("Human decisions (audit trail)")
+else:
     if evidence["decisions"]:
-        st.dataframe(evidence["decisions"], hide_index=True, use_container_width=True)
+        st.dataframe([{"Time": d["at"][:16].replace("T", " "), "Case": d["case"], "Decision": d["decision"],
+                       "By": ui.actor_name(d["by"]), "Reason": d["reason"]} for d in evidence["decisions"]],
+                     hide_index=True, width="stretch")
     else:
-        st.caption("No owner decisions yet.")
+        st.markdown("No owner decisions yet.")

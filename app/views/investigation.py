@@ -1,4 +1,4 @@
-"""Live investigation: one panel per driver with the agent's tool calls as they happen."""
+"""Investigation: one row per driver with its status and result; the tool-call trace is one click away."""
 
 import sys
 from pathlib import Path
@@ -9,73 +9,68 @@ import ui  # noqa: I001 - sets sys.path for the detective package
 
 import streamlit as st
 
+from detective.models import VERDICT_LABELS, Case, ToolCall
 from detective.pipeline import investigate_driver, make_agents, start_run
-from detective.models import Case, ToolCall
 
 ui.require_page("investigation")
-st.title("Investigation")
 
 
-def render_call(call: ToolCall) -> str:
-    args = ", ".join(f"{k}={v if not isinstance(v, list) or len(v) < 4 else f'[{len(v)} ids]'}"
-                     for k, v in call.inputs.items() if v is not None)
-    ids = ", ".join(call.evidence_ids[:5]) + (f" +{len(call.evidence_ids) - 5}" if len(call.evidence_ids) > 5 else "")
-    mark = ":green[OK]" if call.ok else ":red[error]"
-    return f"`{call.seq:>2}` **{call.name}**({args}) → {mark} {ids or '—'}  \n<small>{call.summary}</small>"
+def call_row(call: ToolCall) -> dict:
+    ids = ", ".join(call.evidence_ids[:4]) + (f" +{len(call.evidence_ids) - 4}" if len(call.evidence_ids) > 4 else "")
+    return {"#": call.seq, "Tool": call.name, "Result": call.summary if call.ok else f"Error: {call.error}",
+            "Evidence": ids or "—"}
 
 
-def case_footer(case: Case) -> None:
-    if case.report:
-        r = case.report
-        st.markdown(f"{ui.badge(r.verdict)} &nbsp; confidence **{r.confidence} of 4** · "
-                    f"{ui.STATUS_LABELS[case.status]} · route: **{case.assigned_to or 'nobody (quiet)'}**",
-                    unsafe_allow_html=True)
-    else:
-        st.error("Needs human review: " + "; ".join(case.validation_errors[:3]))
+def trace(case: Case) -> None:
+    if case.tool_calls:
+        st.dataframe([call_row(c) for c in case.tool_calls], hide_index=True, width="stretch")
     u = case.usage
-    st.caption(f"{len(case.tool_calls)} tool calls · {', '.join(ui.model_label(m) for m in u.models)} · "
-               f"{u.input_tokens:,} in / {u.output_tokens:,} out tokens · ${u.cost_usd:.4f} · {u.seconds:.1f} s")
+    ui.muted(f"{len(case.tool_calls)} tool calls · {', '.join(ui.model_label(m) for m in u.models)} · "
+             f"{u.input_tokens + u.output_tokens:,} tokens · ${u.cost_usd:.3f} · {u.seconds:.0f} s")
+    if not case.report:
+        st.markdown("Needs review: " + "; ".join(case.validation_errors[:2]))
+
+
+def label(case: Case) -> str:
+    r = case.report
+    result = VERDICT_LABELS[r.verdict] if r else "Needs review"
+    return f"{case.case_id} · {case.driver.title} · {ui.money(case.driver.daily_increase)}/day · {result}"
 
 
 pending = st.session_state.pop("pending_run", None)
 if pending:
-    store, source, det = start_run(pending["scenario"], pending["mode"])
     st.session_state["scenario"] = pending["scenario"]
-    st.caption(f"{ui.scenario_label(pending['scenario'])} · run {store.run_id}")
+    ui.header("Investigation", "Investigation", ui.day_short(pending["scenario"]))
+    store, source, det = start_run(pending["scenario"], pending["mode"])
     agents = make_agents(pending["mode"])
     for i, driver in enumerate(det.drivers, 1):
-        status = st.status(f"{driver.title} · {ui.money(driver.daily_increase)}/day", expanded=True)
-        trace = status.container()
+        status = st.status(f"{driver.title} · investigating", expanded=False)
 
-        def on_event(kind, payload, status=status, trace=trace, driver=driver):
-            if kind == "tool":
-                trace.markdown(render_call(payload[1]), unsafe_allow_html=True)
-            elif kind == "step":
-                status.update(label=f"{driver.title} · {ui.money(driver.daily_increase)}/day · {payload[1]}")
+        def on_event(kind, payload, status=status, driver=driver):
+            if kind == "step":
+                status.update(label=f"{driver.title} · {payload[1].lower()}")
 
         case = investigate_driver(store, source, driver, i, agents, on_event)
+        status.update(label=label(case), state="complete" if case.report else "error")
         with status:
-            case_footer(case)
-        status.update(state="complete" if case.report else "error", expanded=False)
-    st.success("Investigation finished. Open the case reports or the owner inbox.")
-    c1, c2 = st.columns(2)
-    if c1.button("Case reports", icon=":material/description:"):
+            trace(case)
+    st.success("Investigation finished.")
+    c1, c2, _ = st.columns([1, 1, 3])
+    if c1.button("Open cases"):
         st.switch_page("views/case.py")
-    if c2.button("Inbox", icon=":material/inbox:"):
+    if c2.button("Open inbox"):
         st.switch_page("views/inbox.py")
 else:
-    scenario = st.selectbox("Day", ui.scenario_names(), format_func=ui.scenario_label, key="scenario")
+    scenario = st.selectbox("Day", ui.scenario_names(), format_func=ui.scenario_label, key="scenario",
+                            label_visibility="collapsed")
+    ui.header("Investigation", "Investigation", ui.day_short(scenario))
     store = ui.day_store(scenario)
     if not store:
-        st.info("This day has not been investigated yet. Start it from the console.")
+        st.markdown("This day has not been investigated yet. Start it from the console.")
         st.stop()
     if not store.cases():
-        st.success("Below the alert threshold: nothing was investigated on this day.")
+        st.markdown("Below the alert threshold. Nothing was investigated on this day.")
         st.stop()
-    st.caption(f"Latest investigation of this day · run {store.run_id}")
     for case in store.cases():
-        with st.status(f"{case.case_id} · {case.driver.title} · {ui.money(case.driver.daily_increase)}/day",
-                       state="complete" if case.report else "error", expanded=False):
-            for call in case.tool_calls:
-                st.markdown(render_call(call), unsafe_allow_html=True)
-            case_footer(case)
+        with st.status(label(case), state="complete" if case.report else "error", expanded=False):
+            trace(case)

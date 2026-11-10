@@ -1,4 +1,4 @@
-"""Console (FinOps): the spike, code's measurement, the ranked drivers, and the Investigate button."""
+"""Console (FinOps): pick a day, see code's measurement and the ranked drivers, start an investigation."""
 
 import sys
 from pathlib import Path
@@ -16,52 +16,58 @@ from detective.sources import FixtureSource
 
 ui.require_page("console")
 s = get_settings()
+names = ui.scenario_names()
 
-st.title("Cost spike investigation console")
-scenario = st.selectbox("Scenario", ui.scenario_names(), format_func=ui.scenario_label, key="scenario")
+picked = st.segmented_control("Day", names, format_func=ui.day_short, default=st.session_state["scenario"],
+                              key="day_strip", label_visibility="collapsed")
+if picked and picked != st.session_state["scenario"]:
+    st.session_state["scenario"] = picked
+scenario = st.session_state["scenario"]
+ui.header("Console", "Console", ui.day_short(scenario))
+
 source = FixtureSource(scenario)
 det = detect(source)
+ui.muted(f"{source.scenario.get('title', '')}")
+st.markdown(ui.md(f"Spend **{ui.money(det.spike_total)}** · expected {ui.money(det.baseline_mean)} · "
+                  f"{det.increase_pct:+.0f}% · {len(det.drivers)} cost driver{'s' if len(det.drivers) != 1 else ''}"))
 
-c1, c2, c3, c4 = st.columns(4)
-c1.metric("Spike day", det.spike_date)
-c2.metric("Actual spend", ui.money(det.spike_total), f"+{ui.money(det.increase)} (+{det.increase_pct:.0f}%)", delta_color="inverse")
-c3.metric("Expected (last 4 same weekdays)", ui.money(det.baseline_mean), f"σ {ui.money(det.baseline_sd)}", delta_color="off")
-c4.metric("Materiality gate", "Passed" if det.material else "Not material", "> $100/day and > 20%", delta_color="off")
+days = {**det.baseline_days, det.spike_date: det.spike_total}
+st.line_chart({"Daily spend (USD)": list(days.values())}, height=170, x_label="", y_label="")
 
-left, right = st.columns([2, 3])
-with left:
-    st.subheader("Daily bill")
-    days = {**det.baseline_days, det.spike_date: det.spike_total}
-    st.bar_chart({"USD": list(days.values())}, x_label="", y_label="USD/day", height=260)
-    st.caption(" · ".join(f"{d[5:]}: {ui.money(v)}" for d, v in days.items()))
-with right:
-    st.subheader("Code splits the increase into drivers")
-    st.caption(f"{len(det.drivers)} drivers explain {det.explained_pct:.0f}% of the increase. No AI is used for this step.")
-    rows = [{"#": i, "Driver": d.title, "USD/day": d.daily_increase, "Share": f"{d.share_pct:.0f}%", "Cause": d.cause,
-             "Resources": len(d.resource_ids)} for i, d in enumerate(det.drivers, 1)]
-    st.dataframe(rows, hide_index=True, use_container_width=True)
-    noise = sum(n.daily_increase for n in det.noise if n.daily_increase > 0)
-    st.markdown(f"<span style='color:#9e9e9e'>Noise ignored: {ui.money(noise)}/day across {len(det.noise)} small changes.</span>",
-                unsafe_allow_html=True)
-
-st.divider()
-mode = ui.run_mode()
 if not det.material:
-    st.success(f"Below the alert threshold (+{ui.money(det.increase)}/day, +{det.increase_pct:.1f}%; the gate is "
-               "> $100/day and > 20%). Nothing to investigate today, so no AI is called and nobody is paged.")
+    st.markdown("Below the alert threshold. Nothing to investigate.")
     st.stop()
 
-approved = True
-if mode == "bedrock":
-    est = estimate_usd(s.model_fast, len(det.drivers))
-    st.warning(f"This run calls Amazon Bedrock ({s.model_fast}). Estimated cost about ${est:.2f} "
-               f"(cap ${s.cost_cap_usd:.0f}; spend so far is shown in the sidebar).")
-    approved = st.checkbox(f"I approve spending about ${est:.2f} on this investigation")
-existing = ui.day_store(scenario)
-if existing:
-    st.caption(f"This day was last investigated in run {existing.run_id}. Investigating again creates a new run; "
-               "earlier approvals stay on the proof page.")
+st.subheader("Cost drivers")
+st.dataframe([{"Driver": d.title, "Resources": len(d.resource_ids), "USD / day": round(d.daily_increase, 2),
+               "Share": f"{d.share_pct:.0f}%"} for d in det.drivers], hide_index=True, width="stretch")
 
-if st.button("Investigate", type="primary", disabled=not approved, icon=":material/search:"):
-    st.session_state["pending_run"] = {"scenario": scenario, "mode": mode}
+
+def start() -> None:
+    st.session_state["pending_run"] = {"scenario": scenario, "mode": ui.run_mode()}
     st.switch_page("views/investigation.py")
+
+
+est = estimate_usd(s.model_fast, len(det.drivers))
+
+
+@st.dialog("Start investigation")
+def confirm() -> None:
+    st.markdown(f"Claude on Amazon Bedrock will investigate {len(det.drivers)} cost driver(s) for "
+                f"{ui.day_short(scenario)}.")
+    ui.kv([("Estimated cost", f"${est:.2f}"), ("Model", ui.model_label(s.model_fast)),
+           ("Spending guard", f"${s.cost_cap_usd:.0f}")])
+    ok = st.checkbox(f"I approve spending about ${est:.2f}")
+    if st.button("Start", type="primary", disabled=not ok):
+        start()
+
+
+left, right = st.columns([1, 3], vertical_alignment="center")
+clicked = left.button("Investigate", type="primary", icon=":material/search:")
+with right:
+    ui.muted(f"Estimated cost ${est:.2f}")
+if clicked:
+    if ui.run_mode() == "bedrock":
+        confirm()
+    else:
+        start()

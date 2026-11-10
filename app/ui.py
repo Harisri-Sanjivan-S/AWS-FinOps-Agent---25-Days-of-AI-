@@ -1,9 +1,11 @@
-"""Shared Streamlit helpers: actor switcher, role-based navigation, badges, citation popovers, message card."""
+"""Shared Streamlit helpers: layout and style, actor switcher, role-based navigation, breadcrumbs, status dots,
+evidence links. Design: calm, uniform, one accent colour; detail is one click away, never on the surface."""
 
 from __future__ import annotations
 
 import json
 import sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -16,23 +18,47 @@ from detective import rbac
 from detective.cases import RunStore
 from detective.config import get_settings
 from detective.fixturegen import scenario_paths
-from detective.ledger import Ledger
 from detective.models import VERDICT_LABELS, Case
 from detective.sources import FixtureSource
 from evals.score import all_runs, latest_runs
 
-VERDICT_COLORS = {"likely_waste": "#c62828", "unbudgeted": "#ef6c00", "oversized": "#f9a825", "expected": "#2e7d32",
-                  "unexplained": "#6d4c41"}
-STATUS_LABELS = {"quiet": "Quiet (no alert)", "awaiting_owner": "Awaiting owner", "planned": "Planned (exception)",
-                 "rejected": "Rejected", "fix_in_progress": "Fix in review", "fixed": "Fixed", "needs_review": "Needs human review"}
+ACCENT = "#1F3A5F"
+MUTED = "#6B7280"
+VERDICT_COLORS = {"likely_waste": "#B4413C", "unbudgeted": "#B7791F", "oversized": "#A08A2A", "expected": "#3C7A57",
+                  "unexplained": "#6B7280"}
+STATUS_LABELS = {"quiet": "No alert", "awaiting_owner": "Awaiting decision", "planned": "Planned",
+                 "rejected": "Rejected", "fix_in_progress": "Fix in review", "fixed": "Fixed", "needs_review": "Needs review"}
 PAGES = {
     "console": ("views/console.py", "Console", ":material/query_stats:"),
     "investigation": ("views/investigation.py", "Investigation", ":material/manage_search:"),
-    "case": ("views/case.py", "Case report", ":material/description:"),
+    "case": ("views/case.py", "Cases", ":material/description:"),
     "inbox": ("views/inbox.py", "Inbox", ":material/inbox:"),
-    "performance": ("views/performance.py", "AI performance & proof", ":material/monitoring:"),
-    "results": ("views/results.py", "Results and settings", ":material/tune:"),
+    "performance": ("views/performance.py", "AI performance", ":material/monitoring:"),
+    "results": ("views/results.py", "Settings", ":material/tune:"),
 }
+
+CSS = f"""
+<style>
+  .block-container {{max-width: 1080px; padding-top: 2.2rem; padding-bottom: 3rem;}}
+  footer, [data-testid="stDecoration"], [data-testid="stStatusWidget"] {{visibility: hidden; height: 0;}}
+  h1 {{font-size: 1.55rem !important; font-weight: 600 !important; margin-bottom: .2rem !important;}}
+  h2 {{font-size: 1.15rem !important; font-weight: 600 !important;}}
+  h3 {{font-size: 1.0rem !important; font-weight: 600 !important; color: {ACCENT};}}
+  [data-testid="stMetricValue"] {{font-size: 1.1rem !important;}}
+  .crumbs {{color: {MUTED}; font-size: .82rem; letter-spacing: .01em; margin-bottom: .15rem;}}
+  .crumbs b {{color: {ACCENT}; font-weight: 600;}}
+  .muted {{color: {MUTED}; font-size: .88rem;}}
+  .dot {{display:inline-block; width:.55rem; height:.55rem; border-radius:50%; margin-right:.4rem; vertical-align: .05rem;}}
+  .kv {{width:100%; border-collapse: collapse; font-size:.92rem;}}
+  .kv td {{padding:.32rem 0; border-bottom:1px solid #EEF1F4; vertical-align: top;}}
+  .kv td:first-child {{color:{MUTED}; width: 38%;}}
+  [data-testid="stSidebar"] {{border-right: 1px solid #EEF1F4;}}
+</style>
+"""
+
+
+def style() -> None:
+    st.markdown(CSS, unsafe_allow_html=True)
 
 
 def defaults() -> None:
@@ -58,6 +84,7 @@ def actor() -> rbac.Actor:
 
 def require_page(name: str) -> rbac.Actor:
     """Guard inside each view, so a page can never render for an actor whose role does not include it."""
+    style()
     a = actor()
     if name not in a.pages:
         st.error(f"{a.name} ({a.role}) does not have access to this page.")
@@ -65,16 +92,32 @@ def require_page(name: str) -> rbac.Actor:
     return a
 
 
+def header(title: str, *crumbs: str) -> None:
+    """Breadcrumb trail, then a plain page title."""
+    trail = " › ".join([*crumbs[:-1], f"<b>{crumbs[-1]}</b>"]) if crumbs else ""
+    if trail:
+        st.markdown(f"<div class='crumbs'>{trail}</div>", unsafe_allow_html=True)
+    st.title(title)
+
+
+# --- demo days and runs -------------------------------------------------------------------------------------
+
 def scenario_names() -> list[str]:
     """The demo week (7-14 Nov 2026). Test-only scenarios are not shown in the app."""
     return [p.stem for p in scenario_paths() if json.loads(p.read_text()).get("week")]
 
 
+def _scenario(name: str) -> dict:
+    return json.loads((ROOT / "scenarios" / f"{name}.json").read_text())
+
+
+def day_short(name: str) -> str:
+    return f"{date.fromisoformat(_scenario(name)['spike_date']):%a %d %b}"
+
+
 def scenario_label(name: str) -> str:
-    from datetime import date
-    sc = json.loads((ROOT / "scenarios" / f"{name}.json").read_text())
-    day = date.fromisoformat(sc["spike_date"])
-    return f"{day:%a %d %b} · {sc.get('title', name)}"
+    sc = _scenario(name)
+    return f"{day_short(name)} · {sc.get('title', name)}"
 
 
 def demo_stores() -> list[RunStore]:
@@ -100,6 +143,8 @@ def _open_count(actor_id: str) -> int:
     return sum(1 for s in demo_stores() for c in s.cases() if c.assigned_to == actor_id and c.status == "awaiting_owner")
 
 
+# --- sidebar and navigation ---------------------------------------------------------------------------------
+
 def _actor_changed() -> None:
     st.session_state["actor_changed"] = True
 
@@ -107,15 +152,17 @@ def _actor_changed() -> None:
 def actor_switcher() -> rbac.Actor:
     """Top of the sidebar: who is using the app. Each actor gets only the pages and cases their role allows."""
     defaults()
+    style()
     with st.sidebar:
-        st.markdown("### Agentic FinOps on AWS")
+        st.markdown(f"<div style='font-weight:600;color:{ACCENT};font-size:1rem;margin-bottom:.6rem'>"
+                    "Agentic FinOps</div>", unsafe_allow_html=True)
 
         def label(a: str) -> str:
             x, n = rbac.ACTORS[a], _open_count(a)
-            return f"{x.name} · {x.role}" + (f" ({n})" if n else "")
+            return f"{x.name}" + (f"  ({n})" if n else "")
 
-        st.selectbox("Acting as", list(rbac.ACTORS), format_func=label, key="actor", on_change=_actor_changed,
-                     help="Role-based access: each actor sees only their pages, their cases and their actions.")
+        st.selectbox("Acting as", list(rbac.ACTORS), format_func=label, key="actor", on_change=_actor_changed)
+        st.markdown(f"<div class='muted' style='margin-top:-.4rem'>{actor().role}</div>", unsafe_allow_html=True)
     return actor()
 
 
@@ -130,21 +177,31 @@ def navigation() -> None:
     st.query_params["actor"] = a.actor_id
     st.query_params["day"] = st.session_state["scenario"]
     with st.sidebar:
+        st.divider()
         for page in pages:
             st.page_link(page, query_params={"actor": a.actor_id, "day": st.session_state["scenario"]})
-        st.divider()
-        if a.can_investigate:
-            status = Ledger().status()
-            color = {"ok": "green", "warning": "orange", "blocked": "red"}[status["level"]]
-            st.markdown(f"**Bedrock spend:** :{color}[${status['total_usd']:.4f}] of ${status['cap_usd']:.0f} cap")
-        st.caption("Every cost spike explained by the next morning, with proof.")
     nav.run()
 
 
-def badge(verdict: str, big: bool = False) -> str:
-    size = "1.05rem" if big else "0.8rem"
-    return (f"<span style='background:{VERDICT_COLORS[verdict]};color:white;padding:2px 10px;border-radius:12px;"
-            f"font-size:{size};font-weight:600'>{VERDICT_LABELS[verdict]}</span>")
+# --- small presentation helpers -----------------------------------------------------------------------------
+
+def dot(verdict: str) -> str:
+    """Quiet status: a small coloured dot and the label."""
+    return f"<span class='dot' style='background:{VERDICT_COLORS[verdict]}'></span>{VERDICT_LABELS[verdict]}"
+
+
+def badge(verdict: str, big: bool = False) -> str:  # kept for compatibility; renders as a quiet dot
+    return dot(verdict)
+
+
+def kv(rows: list[tuple[str, str]]) -> None:
+    """A clean key-value list."""
+    body = "".join(f"<tr><td>{k}</td><td>{v}</td></tr>" for k, v in rows)
+    st.markdown(f"<table class='kv'>{body}</table>", unsafe_allow_html=True)
+
+
+def muted(text: str) -> None:
+    st.markdown(f"<div class='muted'>{text}</div>", unsafe_allow_html=True)
 
 
 def money(x: float) -> str:
@@ -156,38 +213,73 @@ def model_label(model_id: str) -> str:
 
 
 def actor_name(actor_id: str | None) -> str:
-    return rbac.ACTORS[actor_id].name if actor_id in rbac.ACTORS else (actor_id or "nobody (quiet)")
+    return rbac.ACTORS[actor_id].name if actor_id in rbac.ACTORS else (actor_id or "—")
 
 
-def evidence_popover(source: FixtureSource, eid: str) -> None:
-    with st.popover(eid):
-        record = source.record(eid)
-        if record is None:
-            st.write("Not found")
-        else:
-            shown = {k: v for k, v in record.items() if k not in ("CloudTrailEvent", "timestamps", "values")}
-            if "values" in record:
-                shown["values (first 6)"] = record["values"][:6]
-            st.json(shown, expanded=True)
+def md(text: str) -> str:
+    """Escape '$' so amounts are not rendered as maths by Markdown."""
+    return text.replace("$", "\\$")
 
 
-def citations(source: FixtureSource, ids: list[str], limit: int = 6) -> None:
-    cols = st.columns(min(len(ids), limit) or 1)
-    for i, eid in enumerate(ids[:limit]):
-        with cols[i]:
-            evidence_popover(source, eid)
-    if len(ids) > limit:
-        st.caption(f"+{len(ids) - limit} more: {', '.join(ids[limit:])}")
+def _when(ts: str) -> str:
+    return ts[:16].replace("T", " ") + " UTC" if ts else ""
 
 
-def message_card(case: Case) -> None:
+def describe(eid: str, r: dict) -> tuple[str, str]:
+    """(source, plain-English detail) for one evidence record."""
+    if "line_item_unblended_cost" in r:
+        hours = r["line_item_usage_amount"]
+        unit = r["pricing_unit"]
+        return ("Bill", (f"{r['line_item_resource_id']} · {hours:g} {unit} × ${r['line_item_unblended_rate']:.3f} = "
+                        f"${r['line_item_unblended_cost']:,.2f} on {r['line_item_usage_start_date'][:10]}"))
+    if "EventName" in r:
+        return ("CloudTrail", (f"{r['EventName']} by {r['Username']} · {_when(r['EventTime'])} · "
+                              f"{len(r['Resources'])} resource(s)"))
+    if eid.startswith("tag-"):
+        tags = ", ".join(f"{k}={v}" for k, v in r["tags"].items()) or "no tags"
+        return ("Tags", f"{r['resource_id']} · {tags}")
+    if eid.startswith("met-"):
+        vals = r["values"]
+        res = next(iter(r["dimensions"].values()))
+        if r["unit"] == "Bytes":
+            return ("CloudWatch", f"{r['metric_name']} on {res} · peak {max(vals) / 1e9:,.0f} GB/h")
+        return ("CloudWatch", f"{r['metric_name']} on {res} · average {sum(vals) / len(vals):.1f}%, peak {max(vals):.1f}%")
+    if "key" in r and "status" in r:
+        return ("Ticket", f"{r['key']} · {r['status']} · {r['summary']}")
+    if "BudgetName" in r:
+        return ("Budget", (f"{r['BudgetName']} · ${r['CalculatedSpend']['ActualSpend']['Amount']:,.2f} of "
+                          f"${r['BudgetLimit']['Amount']:,.2f}"))
+    if eid.startswith("dep-"):
+        return ("Deployment", f"{r['service']} {r['version']} · {r['team']} · {r['note']}")
+    if eid.startswith("net-"):
+        top = max(r["destinations"], key=lambda d: d["share_pct"])
+        return ("Flow logs", f"{top['share_pct']:.0f}% of NAT traffic to {top['destination']}")
+    if eid.startswith("exc-"):
+        return ("Exception", f"{r['reason']} · expires {r['expires']}")
+    if "Impact" in r:
+        return ("Anomaly", f"Actual ${r['Impact']['TotalActualSpend']:,.2f} vs expected ${r['Impact']['TotalExpectedSpend']:,.2f}")
+    return ("Record", eid)
+
+
+def citations(source: FixtureSource, ids: list[str], limit: int = 0) -> None:
+    """One small 'Evidence' link under a sentence; it opens a readable list of the cited records."""
+    ids = list(dict.fromkeys(ids))
+    if not ids:
+        return
+    with st.popover(f"Evidence ({len(ids)})"):
+        rows = []
+        for eid in ids:
+            rec = source.record(eid)
+            kind, detail = describe(eid, rec) if rec else ("Not found", "")
+            rows.append({"Source": kind, "Detail": detail, "ID": eid})
+        st.dataframe(rows, hide_index=True, width="stretch")
+
+
+def case_status_line(case: Case) -> str:
     r = case.report
-    with st.container(border=True):
-        st.markdown("<div style='font-size:0.8rem;color:#616161'>Notification · #finops-alerts</div>", unsafe_allow_html=True)
-        st.markdown(f"**Agentic FinOps** &nbsp; {badge(r.verdict)} &nbsp; **{case.case_id}** · {case.driver.title}",
-                    unsafe_allow_html=True)
-        owner = rbac.ACTORS[case.assigned_to].name if case.assigned_to in rbac.ACTORS else case.assigned_to
-        lines = [f"@{owner}: {money(case.driver.daily_increase)}/day since {r.cost_start[:16].replace('T', ' ')} UTC.",
-                 f"Confidence {r.confidence} of 4" + (" · please confirm" if r.needs_confirmation else "") + ".",
-                 f"Already spent {money(r.already_spent)} · avoidable {money(r.avoidable_per_day)}/day."]
-        st.markdown("  \n".join(lines))
+    if not r:
+        return "Needs review"
+    parts = [dot(r.verdict), f"confidence {r.confidence} of 4", STATUS_LABELS[case.status].lower()]
+    if case.assigned_to:
+        parts.insert(2, f"owner {actor_name(case.assigned_to)}")
+    return " · ".join(parts)

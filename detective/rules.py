@@ -253,8 +253,9 @@ def validate_findings(findings: Findings, pool: dict) -> list[str]:
         for eid in ids:
             if eid not in pool:
                 errors.append(f"{name}: '{eid}' was not returned by any tool in this run")
-    if not findings.claims:
-        errors.append("claims: at least one cited claim is required")
+    if not findings.claims and not findings.gaps:
+        # Evidence or silence: an answer with no claims is fine when it says what could not be found.
+        errors.append("claims: cite at least one fact (e.g. the bill lines or utilization), or list the gaps you found")
     for i, claim in enumerate(findings.claims, 1):
         bad = [e for e in claim.evidence_ids if e not in pool]
         if bad:

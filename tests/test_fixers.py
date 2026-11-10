@@ -111,7 +111,8 @@ def test_verify_changes_rules():
 
 def fake_devin(tmp_path: Path, script: str) -> str:
     path = tmp_path / "devin"
-    path.write_text("#!/bin/bash\n" + script)
+    login = 'if [ "$1" = "auth" ]; then echo "Logged in (via Devin)."; echo "  Name: tester"; exit 0; fi\n'
+    path.write_text("#!/bin/bash\n" + login + script)
     path.chmod(path.stat().st_mode | stat.S_IEXEC)
     return str(path)
 

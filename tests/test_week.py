@@ -42,6 +42,10 @@ def test_reinvestigating_a_day_keeps_earlier_proof():
     assert [s["case"] for s in evidence["savings"]] == ["N08-01"] and evidence["found_per_day"] == 700
 
 
+def page_file() -> str:
+    return str(ROOT / "app" / "views" / "performance.py")
+
+
 def test_performance_page_access_and_render():
     run_week.main(["--days", "nov10", "nov13", "--owner-actions"], mode="offline")
     page = str(ROOT / "app" / "views" / "performance.py")
@@ -50,8 +54,14 @@ def test_performance_page_access_and_render():
         at.session_state["actor"] = actor
         at.run()
         assert not at.exception, [e.message for e in at.exception]
-        assert any(m.label == "Verdict accuracy" and m.value == "100%" for m in at.metric)
-        assert any(m.label == "Saving proven on the next bill" and m.value == "$1,640.00/day" for m in at.metric)
+        md = " ".join(m.value for m in at.markdown)
+        assert "<td>Verdict accuracy</td><td>100%</td>" in md
+        assert "<td>Saving confirmed on the next bill</td><td>$1,640.00 / day</td>" in md
+        for tab in ("Investigations", "Proof", "Audit"):
+            other = AppTest.from_file(page_file(), default_timeout=60)
+            other.session_state["actor"], other.session_state["perf_tab"] = actor, tab
+            other.run()
+            assert not other.exception, (tab, [e.message for e in other.exception])
     at = AppTest.from_file(page, default_timeout=60)
     at.session_state["actor"] = "ravi.m"
     at.run()
