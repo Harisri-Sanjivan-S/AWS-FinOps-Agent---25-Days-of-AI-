@@ -11,15 +11,26 @@ import json
 
 import streamlit as st
 
+from detective import rbac
 from detective.config import ROOT, get_settings
 from detective.fixers.devin import devin_status
 from detective.ledger import Ledger
 
-ui.page("Results")
+ui.require_page("results")
 s = get_settings()
 st.title("Results and settings")
 
-st.subheader("Measured results")
+st.subheader("Investigator")
+st.markdown(f"All investigations run on **Amazon Bedrock**: `{s.model_fast}`, escalating to `{s.model_strong}` "
+            "only when code rejects an answer.")
+
+st.subheader("Actors and access")
+st.dataframe([{"Actor": a.name, "Role": a.role, "Pages": ", ".join(ui.PAGES[p][1] for p in a.pages),
+               "Sees": "all cases" if a.sees_all_cases else "own cases",
+               "Can act on": "own cases; re-route any" if a.can_reroute_any else "own cases"}
+              for a in rbac.ACTORS.values()], hide_index=True, use_container_width=True)
+
+st.subheader("Measured results (eval suite)")
 results = sorted((ROOT / "evals" / "results").glob("*.json"), reverse=True)
 if not results:
     st.info("No measured results yet. Run `uv run python -m evals.run --mode bedrock --runs 3 --confirm` "
@@ -45,12 +56,10 @@ with c1:
     st.markdown(f"**Fast model:** `{s.model_fast}`  \n**Escalation model:** `{s.model_strong}`")
     st.markdown(f"**Agent limits:** {s.tool_call_cap} tool calls, {s.turns} turns, {s.total_tokens:,} tokens, "
                 f"{s.lookback_hours} h look-back, temperature 0")
-    st.markdown("**Data:** planted, shaped like AWS. Mirrors CUR 2.0, CloudTrail, CloudWatch, Budgets, Cost Anomaly Detection.")
 with c2:
     d = devin_status(s.devin_bin)
     st.markdown(f"**Code-fix agent:** default `{s.fixer}` · Devin CLI: {d['detail']}")
-    st.caption("Connect to Devin = CLI login on this machine (`devin auth login`). Production path: Devin API with a "
-               "service-user key stored in AWS Secrets Manager.")
+    st.caption("Connect to Devin = CLI login on this machine (`devin auth login`).")
     st.markdown(f"**Demo repo:** [{s.demo_repo}](https://github.com/{s.demo_repo})")
 
 st.subheader("Bedrock cost ledger")

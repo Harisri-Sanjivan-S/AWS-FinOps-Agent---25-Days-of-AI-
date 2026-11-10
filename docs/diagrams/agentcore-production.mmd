@@ -1,0 +1,77 @@
+flowchart TB
+    subgraph TRIG["1. Trigger"]
+        direction LR
+        CAD["AWS Cost Anomaly Detection<br/>spike alert"]
+        SCH["EventBridge Scheduler<br/>daily sweep, expiry re-checks"]
+        SNS["Amazon SNS"]
+        LAM["AWS Lambda<br/>start investigation"]
+        CAD --> SNS --> LAM
+        SCH --> LAM
+    end
+
+    subgraph AC["Amazon Bedrock AgentCore"]
+        direction TB
+        RT["2. Runtime<br/>isolated session per investigation<br/>Strands agent + rules in code"]
+        ID["3. Identity<br/>scoped, short-lived credentials<br/>read-only data · PR-only GitHub"]
+        MEM["Memory<br/>past cases, owner preferences,<br/>recurring exceptions"]
+        GW["4. Gateway<br/>tools as MCP"]
+        POL["5. Policy (Cedar)<br/>checks every tool call<br/>never act without approval"]
+        OBS["8. Observability + Evaluations<br/>traces, dashboards, live scoring"]
+        RT <--> MEM
+        RT --> ID
+        RT -->|tool call| POL -->|allowed| GW
+        RT -.-> OBS
+    end
+
+    BR["Amazon Bedrock<br/>Claude Haiku · Sonnet escalation"]
+
+    subgraph EV["Evidence (read-only)"]
+        direction LR
+        CUR["CUR 2.0 in S3<br/>via Athena"]
+        CT["CloudTrail"]
+        CW["CloudWatch +<br/>Compute Optimizer"]
+        BUD["Tags + Budgets"]
+        FL["VPC Flow Logs"]
+        TIX["Jira / ServiceNow<br/>CI/CD records"]
+    end
+
+    subgraph DEC["6. Decide and notify"]
+        direction LR
+        DDB["DynamoDB<br/>case, verdict, audit trail"]
+        CHAT["Slack / Teams<br/>owner message"]
+        OWN["Resource owner<br/>Planned · Not mine · Reject · Approve"]
+        DDB --> CHAT --> OWN
+    end
+
+    subgraph ACT["7. Act (after approval only)"]
+        direction LR
+        SF["Step Functions<br/>approval + timers"]
+        STOP["Lambda<br/>reversible stop / resize"]
+        PR["GitHub pull request<br/>CI checks, human merges"]
+        SF --> STOP
+    end
+
+    NEXT["9. Next day's bill<br/>EventBridge re-check:<br/>saving confirmed or not"]
+
+    LAM --> RT
+    RT <-->|reasoning| BR
+    GW --> CUR & CT & CW & BUD & FL & TIX
+    RT --> DDB
+    OWN -->|approve stop| SF
+    OWN -->|approve code fix| GW
+    GW -->|open PR| PR
+    STOP --> NEXT
+    PR --> NEXT
+    NEXT --> DDB
+
+    classDef aws fill:#FFF3E0,stroke:#E65100,color:#4E2600
+    classDef ac fill:#F3E5F5,stroke:#6A1B9A,color:#3B0A57
+    classDef human fill:#E8F5E9,stroke:#2E7D32,color:#123D17
+    classDef ext fill:#ECEFF1,stroke:#455A64,color:#1C2A31
+    classDef code fill:#E3F2FD,stroke:#1565C0,color:#0D2B52
+
+    class CAD,SCH,SNS,LAM,BR,CUR,CT,CW,BUD,FL,DDB,SF,STOP aws
+    class RT,ID,MEM,GW,POL,OBS ac
+    class OWN human
+    class TIX,CHAT,PR ext
+    class NEXT code

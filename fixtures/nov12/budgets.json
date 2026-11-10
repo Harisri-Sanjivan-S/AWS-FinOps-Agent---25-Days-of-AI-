@@ -1,0 +1,77 @@
+[
+  {
+    "evidence_id": "bud-001",
+    "BudgetName": "checkout-loadtest-2026-10",
+    "BudgetType": "COST",
+    "TimeUnit": "MONTHLY",
+    "CostFilters": {
+      "TagKeyValue": [
+        "user:project$checkout-loadtest"
+      ]
+    },
+    "BudgetLimit": {
+      "Amount": 1200.0,
+      "Unit": "USD"
+    },
+    "CalculatedSpend": {
+      "ActualSpend": {
+        "Amount": 422.5,
+        "Unit": "USD"
+      },
+      "ForecastedSpend": {
+        "Amount": 942.5,
+        "Unit": "USD"
+      }
+    }
+  },
+  {
+    "evidence_id": "bud-002",
+    "BudgetName": "shared-network-2026-10",
+    "BudgetType": "COST",
+    "TimeUnit": "MONTHLY",
+    "CostFilters": {
+      "TagKeyValue": [
+        "user:project$shared-network"
+      ]
+    },
+    "BudgetLimit": {
+      "Amount": 4000.0,
+      "Unit": "USD"
+    },
+    "CalculatedSpend": {
+      "ActualSpend": {
+        "Amount": 1912.3,
+        "Unit": "USD"
+      },
+      "ForecastedSpend": {
+        "Amount": 3150.0,
+        "Unit": "USD"
+      }
+    }
+  },
+  {
+    "evidence_id": "bud-003",
+    "BudgetName": "orders-2026-10",
+    "BudgetType": "COST",
+    "TimeUnit": "MONTHLY",
+    "CostFilters": {
+      "TagKeyValue": [
+        "user:project$orders"
+      ]
+    },
+    "BudgetLimit": {
+      "Amount": 22000.0,
+      "Unit": "USD"
+    },
+    "CalculatedSpend": {
+      "ActualSpend": {
+        "Amount": 9842.1,
+        "Unit": "USD"
+      },
+      "ForecastedSpend": {
+        "Amount": 15400.0,
+        "Unit": "USD"
+      }
+    }
+  }
+]

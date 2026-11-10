@@ -1,0 +1,15 @@
+[
+  {
+    "evidence_id": "CHG-1042",
+    "key": "CHG-1042",
+    "type": "Change",
+    "status": "Approved",
+    "summary": "Checkout load test ahead of Black Friday",
+    "description": "Run 4 c6i.16xlarge load generators against checkout from Monday 2026-11-09 to Thursday 2026-11-12. Expected cost about $260/day.",
+    "reporter": "priya.s",
+    "approver": "maria.l",
+    "start_date": "2026-11-09",
+    "end_date": "2026-11-12",
+    "estimated_daily_cost": 260.0
+  }
+]

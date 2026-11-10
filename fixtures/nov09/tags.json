@@ -1,0 +1,357 @@
+[
+  {
+    "evidence_id": "tag-001",
+    "resource_id": "i-0c1",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-002",
+    "resource_id": "i-0c2",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-003",
+    "resource_id": "i-0c3",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-004",
+    "resource_id": "i-0c4",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-005",
+    "resource_id": "i-0c5",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-006",
+    "resource_id": "i-0c6",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-007",
+    "resource_id": "i-0c7",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-008",
+    "resource_id": "i-0c8",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-009",
+    "resource_id": "i-0c9",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-010",
+    "resource_id": "i-0c10",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-011",
+    "resource_id": "i-0c11",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-012",
+    "resource_id": "i-0c12",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-013",
+    "resource_id": "i-0c13",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-014",
+    "resource_id": "i-0c14",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-015",
+    "resource_id": "i-0c15",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-016",
+    "resource_id": "i-0c16",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-017",
+    "resource_id": "i-0c17",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-018",
+    "resource_id": "i-0c18",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-019",
+    "resource_id": "i-0c19",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-020",
+    "resource_id": "i-0c20",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-021",
+    "resource_id": "i-0c21",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-022",
+    "resource_id": "i-0c22",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-023",
+    "resource_id": "i-0c23",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-024",
+    "resource_id": "i-0c24",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-025",
+    "resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+    "tags": {
+      "owner": "orders-team",
+      "project": "orders"
+    }
+  },
+  {
+    "evidence_id": "tag-026",
+    "resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-1",
+    "tags": {
+      "owner": "data-team",
+      "project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "tag-027",
+    "resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-2",
+    "tags": {
+      "owner": "data-team",
+      "project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "tag-028",
+    "resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-3",
+    "tags": {
+      "owner": "data-team",
+      "project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "tag-029",
+    "resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-4",
+    "tags": {
+      "owner": "data-team",
+      "project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "tag-030",
+    "resource_id": "nat-0c1",
+    "tags": {
+      "owner": "platform-team",
+      "project": "shared-network",
+      "shared": "true"
+    }
+  },
+  {
+    "evidence_id": "tag-031",
+    "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+    "tags": {
+      "owner": "platform-team",
+      "project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "tag-032",
+    "resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+    "tags": {
+      "owner": "orders-team",
+      "project": "orders"
+    }
+  },
+  {
+    "evidence_id": "tag-033",
+    "resource_id": "winter-shop-assets",
+    "tags": {
+      "owner": "web-team",
+      "project": "storefront"
+    }
+  },
+  {
+    "evidence_id": "tag-034",
+    "resource_id": "i-0e1",
+    "tags": {
+      "owner": "priya.s",
+      "team": "payments",
+      "project": "checkout-loadtest",
+      "change-id": "CHG-1107",
+      "expires": "2026-11-13"
+    }
+  },
+  {
+    "evidence_id": "tag-035",
+    "resource_id": "i-0e2",
+    "tags": {
+      "owner": "priya.s",
+      "team": "payments",
+      "project": "checkout-loadtest",
+      "change-id": "CHG-1107",
+      "expires": "2026-11-13"
+    }
+  },
+  {
+    "evidence_id": "tag-036",
+    "resource_id": "i-0e3",
+    "tags": {
+      "owner": "priya.s",
+      "team": "payments",
+      "project": "checkout-loadtest",
+      "change-id": "CHG-1107",
+      "expires": "2026-11-13"
+    }
+  },
+  {
+    "evidence_id": "tag-037",
+    "resource_id": "i-0e4",
+    "tags": {
+      "owner": "priya.s",
+      "team": "payments",
+      "project": "checkout-loadtest",
+      "change-id": "CHG-1107",
+      "expires": "2026-11-13"
+    }
+  },
+  {
+    "evidence_id": "tag-038",
+    "resource_id": "i-0e5",
+    "tags": {
+      "owner": "priya.s",
+      "team": "payments",
+      "project": "checkout-loadtest",
+      "change-id": "CHG-1107",
+      "expires": "2026-11-13"
+    }
+  },
+  {
+    "evidence_id": "tag-039",
+    "resource_id": "i-0e6",
+    "tags": {
+      "owner": "priya.s",
+      "team": "payments",
+      "project": "checkout-loadtest",
+      "change-id": "CHG-1107",
+      "expires": "2026-11-13"
+    }
+  },
+  {
+    "evidence_id": "tag-040",
+    "resource_id": "winter-access-logs",
+    "tags": {
+      "owner": "security-team",
+      "project": "audit"
+    }
+  },
+  {
+    "evidence_id": "tag-041",
+    "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+    "tags": {
+      "owner": "search-team",
+      "project": "search"
+    }
+  },
+  {
+    "evidence_id": "tag-042",
+    "resource_id": "snap-0e1",
+    "tags": {
+      "owner": "data-team",
+      "project": "analytics"
+    }
+  }
+]

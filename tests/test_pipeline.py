@@ -93,6 +93,26 @@ def test_planned_records_exception_with_expiry():
     assert recorded[0]["resource_ids"] == gpus.driver.resource_ids and recorded[0]["expires"] == "2026-10-25"
 
 
+def test_rbac_only_the_owner_decides():
+    from detective import rbac
+    store, _, cases = tuesday()
+    gpus, nat = cases[820.0], cases[130.0]
+    for intruder in ("orders-team", "finops-team", "priya.s"):
+        with pytest.raises(ActionError, match="may not 'approve'"):
+            approve(store, gpus, reviewer=intruder)
+    with pytest.raises(ActionError, match="may not 'reject'"):
+        reject(store, nat, reviewer="ravi.m", reason="not my problem")
+    with pytest.raises(ActionError):
+        approve(store, gpus, reviewer="mallory")
+    nat = reassign(store, nat, reviewer="finops-team", new_owner="platform-team")  # FinOps may re-route any case
+    assert nat.assigned_to == "platform-team"
+    with pytest.raises(ActionError, match="known owner"):
+        reassign(store, nat, reviewer="platform-team", new_owner="someone-else")
+    assert [c.case_id for c in rbac.visible_cases("ravi.m", store.cases())] == ["TUE-01"]
+    assert len(rbac.visible_cases("finops-team", store.cases())) == 3
+    assert rbac.visible_cases("priya.s", store.cases()) == []
+
+
 class FlakyInvestigator:
     """Returns invented evidence the first `bad` times, then delegates to the scripted playbook."""
 
@@ -122,6 +142,32 @@ def test_retry_then_escalate_then_succeed():
     case = investigate_driver(store, source, det.drivers[0], 1, agents)
     assert case.status == "awaiting_owner" and case.usage.models == ["fast", "strong", "scripted"]
     assert [a.detail["attempt"] for a in case.audit if a.event == "findings returned"] == [1, 2, 3]
+
+
+class OutOfBudgetOnce:
+    """First attempt hits a token limit (billed, no output); the retry succeeds."""
+
+    def __init__(self):
+        self.model_id, self.calls = "fast", 0
+
+    def investigate(self, driver, toolbox, feedback=None):
+        from detective.agent import AgentIncomplete
+        self.calls += 1
+        if self.calls == 1:
+            toolbox.get_tags(driver.resource_ids)
+            raise AgentIncomplete("no findings (limit_total_tokens).", AgentRun(None, "fast", "t", 60_000, 900))
+        assert feedback and "fewer tools" in feedback[0]
+        run = ScriptedInvestigator().investigate(driver, toolbox, feedback)
+        return AgentRun(run.output, "fast", "t", 5_000, 500)
+
+
+def test_token_limit_is_retried_and_its_usage_kept():
+    store, source, det = start_run("injection")
+    inv = OutOfBudgetOnce()
+    case = investigate_driver(store, source, det.drivers[0], 1, Agents([inv, inv], [TemplateWriter()], "offline"))
+    assert case.status == "awaiting_owner" and inv.calls == 2
+    assert case.usage.input_tokens == 65_000 and case.tool_calls[0].name == "get_tags"
+    assert [a.event for a in case.audit][1] == "no findings returned"
 
 
 def test_all_attempts_invalid_needs_human_review():

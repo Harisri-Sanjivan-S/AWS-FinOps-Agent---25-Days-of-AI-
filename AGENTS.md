@@ -48,7 +48,19 @@ Python 3.12 via uv, Strands Agents, Amazon Bedrock (Claude Haiku; Sonnet for esc
   writer, offline ScriptedInvestigator/TemplateWriter), `rules.py` (checks, verdict, routing, money, validators),
   `pipeline.py` (orchestration, retry/escalation, owner actions), `actions.py` (stop, exception, next-day),
   `fixers/` (brief, base flow with file checks, template, Devin CLI), `ledger.py` (cost guard), `cases.py` (run store).
-- `app/` Streamlit pages; `evals/` runner + baseline; `demo_repo/acme-platform/` source of the public demo repo
+- `detective/rbac.py`: actors and roles (FinOps team sees everything and may re-route; owners see and act on their own
+  cases only), enforced in `pipeline.py` actions and in the UI.
+- `app/Home.py` is the router: "Acting as" switcher at the top of the sidebar, then `st.navigation` (hidden) with only
+  the actor's pages; page bodies live in `app/views/`. The UI must not show data-source labels ("planted", "shaped like
+  AWS", "Cost Anomaly Detection" badges, "offline replay"); the no-AI mode is called "Dry run" and lives in Settings.
+- Demo week 7-14 Nov 2026: `detective/weekgen.py` writes `scenarios/nov07.json`..`nov14.json` from the Tuesday base
+  (regenerate: `uv run python -m detective.weekgen && uv run python -m detective.fixturegen`). The app's scenario picker
+  shows only these days; the 4 older scenarios are for tests/evals. Run the week on Bedrock with
+  `uv run python scripts/run_week.py --confirm [--owner-actions] [--open-prs]` (prints the estimate first; needs approval).
+- The app always uses Bedrock (dry run is test-only via session `mode="offline"`). "AI performance & proof" page
+  (`app/views/performance.py`, FinOps + Platform team) scores the latest Bedrock run per day with `evals/score.py`
+  (the only non-test code that reads answer keys) and shows proof: next-day bills, PR diffs, decisions.
+- `app/` Streamlit app; `evals/` runner + baseline; `demo_repo/acme-platform/` source of the public demo repo
   `Harisri-Sanjivan-S/acme-platform` (created 2026-11-10; CI green on the test PR #1, which was closed).
 
 ## Git

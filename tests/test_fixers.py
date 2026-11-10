@@ -71,6 +71,7 @@ def test_template_fix_opens_pr_with_only_the_target_file(nat_case, remote):
     [action] = case.actions
     assert action.kind == "pull_request" and action.url.endswith("/pull/1") and case.status == "fix_in_progress"
     assert branch_files(remote, "finops/tue-03-s3-gateway-endpoint") == ["services/orders-service/infra/s3_gateway_endpoint.tf"]
+    assert '+resource "aws_vpc_endpoint" "s3"' in action.detail["diff"], "the diff is kept as proof of the change"
     repo, branch, title, body = pr.calls[0]
     assert repo == get_settings().demo_repo and branch.startswith("finops/") and "[TUE-03]" in title
     assert "Evidence:" in body and "ct-006" in body and "A human must review and merge" in body

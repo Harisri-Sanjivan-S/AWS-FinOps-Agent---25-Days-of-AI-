@@ -34,6 +34,7 @@ class FixResult(BaseModel):
     target_folder: str = ""
     pr_url: str | None = None
     changed_files: list[str] = Field(default_factory=list)
+    diff: str = ""
     summary: str = ""
     error: str | None = None
     brief_path: str = ""
@@ -139,6 +140,7 @@ class CodeFixer:
 
             on_event("fix", (case.case_id, "Checks passed; committing and pushing the branch"))
             run(["git", "add", "--", *result.changed_files], cwd=work)
+            result.diff = run(["git", "diff", "--cached", "--no-color"], cwd=work)[:12_000]
             run(["git", "-c", f"user.name={BOT_NAME}", "-c", f"user.email={BOT_EMAIL}", "commit", "-m",
                  brief.pr_title], cwd=work)
             run(["git", "push", "origin", brief.branch], cwd=work, timeout=180)

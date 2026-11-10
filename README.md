@@ -19,6 +19,11 @@ Code measures, AI investigates, humans judge:
 
 All AWS data is planted, shaped like the real services. The only AWS service used is Bedrock. No resources are created.
 
+**Production path:** the same agent on Amazon Bedrock AgentCore (Runtime, Gateway, Identity, Policy, Memory,
+Observability, Evaluations). See [docs/agentcore-production.md](docs/agentcore-production.md).
+
+![AgentCore production workflow](docs/diagrams/agentcore-production.png)
+
 ## Run it
 
 ```bash
@@ -27,12 +32,34 @@ cp .env.example .env                      # non-secret settings; AWS keys stay i
 uv run streamlit run app/Home.py          # console, investigation, case, inbox, results
 ```
 
-- In the sidebar, pick a scenario and an investigator:
-  - **Offline replay:** a scripted playbook, no AI, $0.
-  - **Amazon Bedrock:** the real agent. It shows a cost estimate and asks for approval first.
-- Demo flow: Console → **Investigate** → Case report → Inbox.
-  - As `ravi.m`: approve the stop, then run **Next day**.
-  - As `orders-team`: **Approve fix and open PR**.
+- **Acting as** (top of the sidebar) switches between actors. Each actor's role decides what they can see and do.
+  The rules live in `detective/rbac.py` and are enforced in the pipeline as well as the UI.
+
+  | Actor | Pages | Cases | Can act on |
+  |---|---|---|---|
+  | FinOps team | Console, Investigation, Case report, Inbox, Results and settings | all | own cases; re-route any case |
+  | Ravi M., Priya S., Orders team, Platform team | Inbox, Case report | own | own cases only |
+- Every investigation runs on **Amazon Bedrock (Claude)**. The console shows a cost estimate and asks for approval first.
+  The scripted dry run is used only by the automated tests.
+- **Demo week, 7–14 Nov 2026:** one cost story per day, picked on the console. Run the whole week at once with
+  `uv run python scripts/run_week.py --confirm --owner-actions`, which prints the estimate first.
+
+  | Day | Story | Verdict |
+  |---|---|---|
+  | Sat 7 | Noise only | Below the gate, no alert |
+  | Sun 8 | Forgotten GPU notebooks (Anika) | Likely waste → stop → saving proven |
+  | Mon 9 | Approved but idle rehearsal hosts (Priya) | Oversized → ask the owner |
+  | Tue 10 | Forgotten GPUs + approved load test + NAT after deploy | Likely waste / Expected / Unbudgeted |
+  | Wed 11 | Approved load test + NAT charge continues | Expected / Unbudgeted |
+  | Thu 12 | Instances with no change event or tags | Unexplained → FinOps |
+  | Fri 13 | GPUs with a prompt-injection ticket | Likely waste (injection ignored) |
+  | Sat 14 | GPUs relaunched after the stop | Likely waste → saving **not** confirmed |
+- **AI performance & proof** (FinOps team, Platform team):
+  - accuracy, routing, valid citations, right-first-time, time, cost and tool calls per day;
+  - proof of changes: next-day bill before/after, PR links with diffs, the decision audit trail.
+- Demo flow, as FinOps: Console → **Investigate** → Case report. Then switch actor:
+  - As Ravi M.: Inbox → **Approve stop**, then **Next day**.
+  - As Orders team: Inbox → **Approve fix and open PR**.
 
 ## Commands
 

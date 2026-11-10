@@ -1,0 +1,2832 @@
+[
+  {
+    "evidence_id": "bill-20261017-001",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-002",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-003",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-004",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-005",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c5",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-006",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c6",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-007",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c7",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-008",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c8",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-009",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c9",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-010",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c10",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-011",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c11",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-012",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c12",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-013",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c13",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-014",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c14",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-015",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c15",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-016",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c16",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-017",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c17",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-018",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c18",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-019",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c19",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-020",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c20",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-021",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c21",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-022",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c22",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-023",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c23",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-024",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c24",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-025",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonRDS",
+    "line_item_usage_type": "USE1-Multi-AZUsage:db.r6g.8xlarge",
+    "line_item_resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.68,
+    "line_item_unblended_cost": 184.32,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-026",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-027",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-028",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-029",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-030",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Hours",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 1.08,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-031",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Bytes",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 2000.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 90.0,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-032",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonCloudWatch",
+    "line_item_usage_type": "USE1-DataProcessing-Bytes",
+    "line_item_resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+    "line_item_usage_amount": 281.74,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.5,
+    "line_item_unblended_cost": 140.87,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-033",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonDynamoDB",
+    "line_item_usage_type": "USE1-WriteRequestUnits",
+    "line_item_resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+    "line_item_usage_amount": 254032000.0,
+    "pricing_unit": "WriteRequestUnits",
+    "line_item_unblended_rate": 1.25e-06,
+    "line_item_unblended_cost": 317.54,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261017-034",
+    "line_item_usage_start_date": "2026-10-17T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-18T00:00:00Z",
+    "line_item_product_code": "AmazonS3",
+    "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
+    "line_item_resource_id": "winter-shop-assets",
+    "line_item_usage_amount": 19359.130435,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.023,
+    "line_item_unblended_cost": 445.26,
+    "resource_tags": {
+      "user_owner": "web-team",
+      "user_project": "storefront"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-001",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-002",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-003",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-004",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-005",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c5",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-006",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c6",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-007",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c7",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-008",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c8",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-009",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c9",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-010",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c10",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-011",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c11",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-012",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c12",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-013",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c13",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-014",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c14",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-015",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c15",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-016",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c16",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-017",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c17",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-018",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c18",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-019",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c19",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-020",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c20",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-021",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c21",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-022",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c22",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-023",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c23",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-024",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c24",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-025",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonRDS",
+    "line_item_usage_type": "USE1-Multi-AZUsage:db.r6g.8xlarge",
+    "line_item_resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.68,
+    "line_item_unblended_cost": 184.32,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-026",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-027",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-028",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-029",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-030",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Hours",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 1.08,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-031",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Bytes",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 2000.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 90.0,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-032",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonCloudWatch",
+    "line_item_usage_type": "USE1-DataProcessing-Bytes",
+    "line_item_resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+    "line_item_usage_amount": 269.96,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.5,
+    "line_item_unblended_cost": 134.98,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-033",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonDynamoDB",
+    "line_item_usage_type": "USE1-WriteRequestUnits",
+    "line_item_resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+    "line_item_usage_amount": 246976000.0,
+    "pricing_unit": "WriteRequestUnits",
+    "line_item_unblended_rate": 1.25e-06,
+    "line_item_unblended_cost": 308.72,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261024-034",
+    "line_item_usage_start_date": "2026-10-24T00:00:00Z",
+    "line_item_usage_end_date": "2026-10-25T00:00:00Z",
+    "line_item_product_code": "AmazonS3",
+    "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
+    "line_item_resource_id": "winter-shop-assets",
+    "line_item_usage_amount": 18797.826087,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.023,
+    "line_item_unblended_cost": 432.35,
+    "resource_tags": {
+      "user_owner": "web-team",
+      "user_project": "storefront"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-001",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-002",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-003",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-004",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-005",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c5",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-006",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c6",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-007",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c7",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-008",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c8",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-009",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c9",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-010",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c10",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-011",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c11",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-012",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c12",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-013",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c13",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-014",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c14",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-015",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c15",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-016",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c16",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-017",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c17",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-018",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c18",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-019",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c19",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-020",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c20",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-021",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c21",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-022",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c22",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-023",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c23",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-024",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c24",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-025",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonRDS",
+    "line_item_usage_type": "USE1-Multi-AZUsage:db.r6g.8xlarge",
+    "line_item_resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.68,
+    "line_item_unblended_cost": 184.32,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-026",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-027",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-028",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-029",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-030",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Hours",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 1.08,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-031",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Bytes",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 2000.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 90.0,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-032",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonCloudWatch",
+    "line_item_usage_type": "USE1-DataProcessing-Bytes",
+    "line_item_resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+    "line_item_usage_amount": 258.76,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.5,
+    "line_item_unblended_cost": 129.38,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-033",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonDynamoDB",
+    "line_item_usage_type": "USE1-WriteRequestUnits",
+    "line_item_resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+    "line_item_usage_amount": 245440000.0,
+    "pricing_unit": "WriteRequestUnits",
+    "line_item_unblended_rate": 1.25e-06,
+    "line_item_unblended_cost": 306.8,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261031-034",
+    "line_item_usage_start_date": "2026-10-31T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-01T00:00:00Z",
+    "line_item_product_code": "AmazonS3",
+    "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
+    "line_item_resource_id": "winter-shop-assets",
+    "line_item_usage_amount": 18236.086957,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.023,
+    "line_item_unblended_cost": 419.43,
+    "resource_tags": {
+      "user_owner": "web-team",
+      "user_project": "storefront"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-001",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-002",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-003",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-004",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-005",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c5",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-006",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c6",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-007",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c7",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-008",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c8",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-009",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c9",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-010",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c10",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-011",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c11",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-012",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c12",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-013",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c13",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-014",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c14",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-015",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c15",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-016",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c16",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-017",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c17",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-018",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c18",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-019",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c19",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-020",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c20",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-021",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c21",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-022",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c22",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-023",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c23",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-024",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c24",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-025",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonRDS",
+    "line_item_usage_type": "USE1-Multi-AZUsage:db.r6g.8xlarge",
+    "line_item_resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.68,
+    "line_item_unblended_cost": 184.32,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-026",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-027",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-028",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-029",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-030",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Hours",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 1.08,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-031",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Bytes",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 2000.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 90.0,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-032",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonCloudWatch",
+    "line_item_usage_type": "USE1-DataProcessing-Bytes",
+    "line_item_resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+    "line_item_usage_amount": 282.1,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.5,
+    "line_item_unblended_cost": 141.05,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-033",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonDynamoDB",
+    "line_item_usage_type": "USE1-WriteRequestUnits",
+    "line_item_resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+    "line_item_usage_amount": 252616000.0,
+    "pricing_unit": "WriteRequestUnits",
+    "line_item_unblended_rate": 1.25e-06,
+    "line_item_unblended_cost": 315.77,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261107-034",
+    "line_item_usage_start_date": "2026-11-07T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-08T00:00:00Z",
+    "line_item_product_code": "AmazonS3",
+    "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
+    "line_item_resource_id": "winter-shop-assets",
+    "line_item_usage_amount": 19054.347826,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.023,
+    "line_item_unblended_cost": 438.25,
+    "resource_tags": {
+      "user_owner": "web-team",
+      "user_project": "storefront"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-001",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-002",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-003",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-004",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-005",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c5",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-006",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c6",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-007",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c7",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-008",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c8",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-009",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c9",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-010",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c10",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-011",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c11",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-012",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c12",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-013",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c13",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-014",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c14",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-015",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c15",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-016",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c16",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-017",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c17",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-018",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c18",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-019",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c19",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-020",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c20",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-021",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c21",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-022",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c22",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-023",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c23",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-024",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:m6i.16xlarge",
+    "line_item_resource_id": "i-0c24",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.072,
+    "line_item_unblended_cost": 73.73,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-025",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonRDS",
+    "line_item_usage_type": "USE1-Multi-AZUsage:db.r6g.8xlarge",
+    "line_item_resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.68,
+    "line_item_unblended_cost": 184.32,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-026",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-027",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-028",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-029",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonRedshift",
+    "line_item_usage_type": "USE1-Node:ra3.4xlarge",
+    "line_item_resource_id": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 3.26,
+    "line_item_unblended_cost": 78.24,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-030",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Hours",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 1.08,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-031",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-NatGateway-Bytes",
+    "line_item_resource_id": "nat-0c1",
+    "line_item_usage_amount": 2000.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.045,
+    "line_item_unblended_cost": 90.0,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "shared-network",
+      "user_shared": "true"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-032",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonCloudWatch",
+    "line_item_usage_type": "USE1-DataProcessing-Bytes",
+    "line_item_resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+    "line_item_usage_amount": 280.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.5,
+    "line_item_unblended_cost": 140.0,
+    "resource_tags": {
+      "user_owner": "platform-team",
+      "user_project": "eks-prod"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-033",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonDynamoDB",
+    "line_item_usage_type": "USE1-WriteRequestUnits",
+    "line_item_resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+    "line_item_usage_amount": 248000000.0,
+    "pricing_unit": "WriteRequestUnits",
+    "line_item_unblended_rate": 1.25e-06,
+    "line_item_unblended_cost": 310.0,
+    "resource_tags": {
+      "user_owner": "orders-team",
+      "user_project": "orders"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-034",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonS3",
+    "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
+    "line_item_resource_id": "winter-shop-assets",
+    "line_item_usage_amount": 18808.695652,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.023,
+    "line_item_unblended_cost": 432.6,
+    "resource_tags": {
+      "user_owner": "web-team",
+      "user_project": "storefront"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-035",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:g5.12xlarge",
+    "line_item_resource_id": "i-0g1",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.2916667,
+    "line_item_unblended_cost": 175.0,
+    "resource_tags": {}
+  },
+  {
+    "evidence_id": "bill-20261114-036",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:g5.12xlarge",
+    "line_item_resource_id": "i-0g2",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.2916667,
+    "line_item_unblended_cost": 175.0,
+    "resource_tags": {}
+  },
+  {
+    "evidence_id": "bill-20261114-037",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:g5.12xlarge",
+    "line_item_resource_id": "i-0g3",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.2916667,
+    "line_item_unblended_cost": 175.0,
+    "resource_tags": {}
+  },
+  {
+    "evidence_id": "bill-20261114-038",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-BoxUsage:g5.12xlarge",
+    "line_item_resource_id": "i-0g4",
+    "line_item_usage_amount": 24,
+    "pricing_unit": "Hrs",
+    "line_item_unblended_rate": 7.2916667,
+    "line_item_unblended_cost": 175.0,
+    "resource_tags": {}
+  },
+  {
+    "evidence_id": "bill-20261114-039",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonS3",
+    "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
+    "line_item_resource_id": "winter-access-logs",
+    "line_item_usage_amount": 521.73913,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.023,
+    "line_item_unblended_cost": 12.0,
+    "resource_tags": {
+      "user_owner": "security-team",
+      "user_project": "audit"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-040",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonCloudWatch",
+    "line_item_usage_type": "USE1-DataProcessing-Bytes",
+    "line_item_resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+    "line_item_usage_amount": 20.0,
+    "pricing_unit": "GB",
+    "line_item_unblended_rate": 0.5,
+    "line_item_unblended_cost": 10.0,
+    "resource_tags": {
+      "user_owner": "search-team",
+      "user_project": "search"
+    }
+  },
+  {
+    "evidence_id": "bill-20261114-041",
+    "line_item_usage_start_date": "2026-11-14T00:00:00Z",
+    "line_item_usage_end_date": "2026-11-15T00:00:00Z",
+    "line_item_product_code": "AmazonEC2",
+    "line_item_usage_type": "USE1-EBS:SnapshotUsage",
+    "line_item_resource_id": "snap-0e1",
+    "line_item_usage_amount": 160.0,
+    "pricing_unit": "GB-Mo",
+    "line_item_unblended_rate": 0.05,
+    "line_item_unblended_cost": 8.0,
+    "resource_tags": {
+      "user_owner": "data-team",
+      "user_project": "analytics"
+    }
+  }
+]

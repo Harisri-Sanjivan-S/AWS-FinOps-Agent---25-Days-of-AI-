@@ -84,7 +84,8 @@ class Findings(BaseModel):
 
     linked_change_ids: list[str] = Field(default_factory=list, description=(
         "CloudTrail evidence IDs (ct-...) of the change(s) that most plausibly caused this cost, most likely first. "
-        "Empty if no plausible change was found."))
+        "Include non-exact leads, such as a deployment shortly before the cost stepped up on a shared resource. "
+        "Empty only if no plausible change was found."))
     ignored_change_ids: list[str] = Field(default_factory=list, description="Change events you looked at and judged unrelated.")
     intent_evidence_ids: list[str] = Field(default_factory=list, description=(
         "Ticket, budget or exception evidence IDs that relate to whether this spend was planned (supporting or not)."))

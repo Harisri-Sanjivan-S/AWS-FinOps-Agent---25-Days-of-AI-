@@ -1,7 +1,7 @@
 """Code's decisions reproduce the answer key from the evidence the tools returned (answer key is read only here)."""
 
 import pytest
-from conftest import SCENARIOS, answer_key
+from conftest import SCENARIOS, WEEK, answer_key
 
 from detective.agent import ScriptedInvestigator, TemplateWriter
 from detective.detect import detect
@@ -21,7 +21,7 @@ def investigate(scenario: str):
     return out
 
 
-@pytest.mark.parametrize("scenario", SCENARIOS)
+@pytest.mark.parametrize("scenario", SCENARIOS + WEEK)
 def test_decisions_match_answer_key(scenario):
     key = {tuple(sorted(d["resource_ids"])): d for d in answer_key(scenario)["drivers"]}
     for driver, findings, tb, report in investigate(scenario):

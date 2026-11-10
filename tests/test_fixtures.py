@@ -77,7 +77,7 @@ def test_every_scenario_has_unique_ids_and_valid_answer_key(name):
     records += [line for v in nxt["variants"].values() for line in v]
     ids = [r["evidence_id"] for r in records]
     assert len(ids) == len(set(ids))
-    assert key["materiality_passed"] is True
+    assert key["materiality_passed"] is (name != "nov07"), "only the quiet day stays below the gate"
     for d in key["drivers"]:
         for kind, refs in d["evidence"].items():
             assert set(refs) <= set(ids), (name, d["scene_id"], kind)

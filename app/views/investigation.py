@@ -12,7 +12,7 @@ import streamlit as st
 from detective.pipeline import investigate_driver, make_agents, start_run
 from detective.models import Case, ToolCall
 
-ui.page("Investigation")
+ui.require_page("investigation")
 st.title("Investigation")
 
 
@@ -33,15 +33,15 @@ def case_footer(case: Case) -> None:
     else:
         st.error("Needs human review: " + "; ".join(case.validation_errors[:3]))
     u = case.usage
-    st.caption(f"{len(case.tool_calls)} tool calls · {', '.join(u.models)} · {u.input_tokens:,} in / {u.output_tokens:,} out tokens"
-               f" · ${u.cost_usd:.4f} · {u.seconds:.1f} s")
+    st.caption(f"{len(case.tool_calls)} tool calls · {', '.join(ui.model_label(m) for m in u.models)} · "
+               f"{u.input_tokens:,} in / {u.output_tokens:,} out tokens · ${u.cost_usd:.4f} · {u.seconds:.1f} s")
 
 
 pending = st.session_state.pop("pending_run", None)
 if pending:
     store, source, det = start_run(pending["scenario"], pending["mode"])
     st.session_state["run_dir"] = str(store.dir)
-    st.caption(f"Run {store.run_id} · {ui.MODES[pending['mode']]}")
+    st.caption(f"Run {store.run_id}")
     agents = make_agents(pending["mode"])
     for i, driver in enumerate(det.drivers, 1):
         status = st.status(f"{driver.title} · {ui.money(driver.daily_increase)}/day", expanded=True)
@@ -60,17 +60,15 @@ if pending:
     st.success("Investigation finished. Open the case reports or the owner inbox.")
     c1, c2 = st.columns(2)
     if c1.button("Case reports", icon=":material/description:"):
-        st.switch_page("pages/2_Case.py")
-    if c2.button("Owner inbox", icon=":material/inbox:"):
-        st.switch_page("pages/3_Inbox.py")
+        st.switch_page("views/case.py")
+    if c2.button("Inbox", icon=":material/inbox:"):
+        st.switch_page("views/inbox.py")
 else:
     store = ui.current_store()
     if not store:
         st.info("No run yet. Start one from the console.")
-        st.page_link("Home.py", label="Go to the console", icon=":material/arrow_back:")
         st.stop()
-    meta = store.meta()
-    st.caption(f"Replay of run {store.run_id} · {ui.MODES.get(meta['mode'], meta['mode'])} (no new model calls)")
+    st.caption(f"Run {store.run_id}")
     for case in store.cases():
         with st.status(f"{case.case_id} · {case.driver.title} · {ui.money(case.driver.daily_increase)}/day",
                        state="complete" if case.report else "error", expanded=False):

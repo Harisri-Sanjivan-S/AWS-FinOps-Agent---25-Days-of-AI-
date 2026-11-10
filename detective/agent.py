@@ -38,6 +38,14 @@ class AgentRun:
     notes: list[str] = field(default_factory=list)
 
 
+class AgentIncomplete(RuntimeError):
+    """The model stopped (e.g. a token or turn limit) without structured output. Carries the usage, which was billed."""
+
+    def __init__(self, message: str, run: AgentRun):
+        super().__init__(message)
+        self.run = run
+
+
 class Investigator(Protocol):
     model_id: str
 
@@ -264,10 +272,11 @@ class BedrockInvestigator:
                        limits={"turns": self.settings.turns, "total_tokens": self.settings.total_tokens})
         tin, tout = _usage(result)
         self.ledger.record(self.model_id, tin, tout, purpose=f"investigate {driver.driver_id}")
-        findings = result.structured_output
-        if findings is None:
-            raise RuntimeError(f"Investigator returned no structured findings (stop reason: {result.stop_reason})")
-        return AgentRun(findings, self.model_id, version, tin, tout, time.perf_counter() - started, str(result.stop_reason))
+        run = AgentRun(result.structured_output, self.model_id, version, tin, tout, time.perf_counter() - started,
+                       str(result.stop_reason))
+        if run.output is None:
+            raise AgentIncomplete(f"Investigator returned no structured findings (stop reason: {result.stop_reason}).", run)
+        return run
 
 
 class BedrockWriter:
@@ -289,10 +298,11 @@ class BedrockWriter:
         result = agent(prompt, structured_output_model=Explanation, limits={"turns": 3, "total_tokens": 20_000})
         tin, tout = _usage(result)
         self.ledger.record(self.model_id, tin, tout, purpose=f"write {driver.driver_id}")
-        if result.structured_output is None:
-            raise RuntimeError(f"Writer returned no structured explanation (stop reason: {result.stop_reason})")
-        return AgentRun(result.structured_output, self.model_id, version, tin, tout, time.perf_counter() - started,
-                        str(result.stop_reason))
+        run = AgentRun(result.structured_output, self.model_id, version, tin, tout, time.perf_counter() - started,
+                       str(result.stop_reason))
+        if run.output is None:
+            raise AgentIncomplete(f"Writer returned no structured explanation (stop reason: {result.stop_reason}).", run)
+        return run
 
 
 # --- Offline doubles (no AI) ---------------------------------------------------------------------------

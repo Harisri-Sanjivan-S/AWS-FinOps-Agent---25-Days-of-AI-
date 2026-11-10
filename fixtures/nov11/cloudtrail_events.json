@@ -1,0 +1,269 @@
+[
+  {
+    "evidence_id": "ct-001",
+    "EventId": "45adb4fa-9cd0-4998-ae1d-f7b11df4848d",
+    "EventName": "RunInstances",
+    "EventTime": "2026-11-10T09:00:00Z",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "priya.s",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b1"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b2"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b3"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b4"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b5"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b6"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b7"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0b8"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/loadtest-runner/priya.s"
+      },
+      "eventTime": "2026-11-10T09:00:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "RunInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "198.51.100.7",
+      "userAgent": "aws-cli/2.17.0",
+      "requestParameters": {
+        "instanceType": "c6i.8xlarge",
+        "minCount": 8,
+        "maxCount": 8,
+        "tagSpecificationSet": {
+          "items": [
+            {
+              "resourceType": "instance",
+              "tags": [
+                {
+                  "key": "owner",
+                  "value": "priya.s"
+                },
+                {
+                  "key": "team",
+                  "value": "payments"
+                },
+                {
+                  "key": "project",
+                  "value": "checkout-loadtest"
+                },
+                {
+                  "key": "change-id",
+                  "value": "CHG-1109"
+                },
+                {
+                  "key": "expires",
+                  "value": "2026-11-13"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "readOnly": false,
+      "eventID": "45adb4fa-9cd0-4998-ae1d-f7b11df4848d",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-002",
+    "EventId": "0d41335f-14b7-44a5-bbd3-bc8132fdafb8",
+    "EventName": "PutBucketLogging",
+    "EventTime": "2026-11-10T14:10:00Z",
+    "EventSource": "s3.amazonaws.com",
+    "Username": "sam.k",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::S3::Bucket",
+        "ResourceName": "winter-access-logs"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::111122223333:user/sam.k",
+        "userName": "sam.k"
+      },
+      "eventTime": "2026-11-10T14:10:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutBucketLogging",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "198.51.100.21",
+      "userAgent": "aws-cli/2.17.0",
+      "requestParameters": {},
+      "readOnly": false,
+      "eventID": "0d41335f-14b7-44a5-bbd3-bc8132fdafb8",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-003",
+    "EventId": "de96427f-a2b6-4867-ade3-30f7788007d8",
+    "EventName": "CreateLogGroup",
+    "EventTime": "2026-11-10T16:40:00Z",
+    "EventSource": "logs.amazonaws.com",
+    "Username": "search-ci",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::Logs::LogGroup",
+        "ResourceName": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/search-deployer/search-ci"
+      },
+      "eventTime": "2026-11-10T16:40:00Z",
+      "eventSource": "logs.amazonaws.com",
+      "eventName": "CreateLogGroup",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "192.0.2.55",
+      "userAgent": "aws-sdk-go-v2/1.30.0",
+      "requestParameters": {},
+      "readOnly": false,
+      "eventID": "de96427f-a2b6-4867-ade3-30f7788007d8",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-006",
+    "EventId": "e6575c25-6ccd-49c8-9cda-b1f6fa41baab",
+    "EventName": "CreateSecurityGroup",
+    "EventTime": "2026-11-10T22:05:00Z",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "ops-bot",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::SecurityGroup",
+        "ResourceName": "sg-0f1"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/ops-automation/ops-bot"
+      },
+      "eventTime": "2026-11-10T22:05:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "CreateSecurityGroup",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "192.0.2.77",
+      "userAgent": "aws-sdk-go-v2/1.30.0",
+      "requestParameters": {
+        "groupName": "batch-workers-sg",
+        "vpcId": "vpc-0a1"
+      },
+      "readOnly": false,
+      "eventID": "e6575c25-6ccd-49c8-9cda-b1f6fa41baab",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-004",
+    "EventId": "1c2e2d0b-d5f8-412a-9649-04af50c4a6db",
+    "EventName": "CreateSnapshot",
+    "EventTime": "2026-11-11T03:00:00Z",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "backup",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::Snapshot",
+        "ResourceName": "snap-0e1"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/AWSBackupDefaultServiceRole/backup"
+      },
+      "eventTime": "2026-11-11T03:00:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "CreateSnapshot",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "backup.amazonaws.com",
+      "userAgent": "backup.amazonaws.com",
+      "requestParameters": {},
+      "readOnly": false,
+      "eventID": "1c2e2d0b-d5f8-412a-9649-04af50c4a6db",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-005",
+    "EventId": "a2426b19-135b-480e-b213-31838e28cdf9",
+    "EventName": "UpdateService",
+    "EventTime": "2026-11-11T09:52:00Z",
+    "EventSource": "ecs.amazonaws.com",
+    "Username": "orders-service-ci",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::ECS::Service",
+        "ResourceName": "arn:aws:ecs:us-east-1:111122223333:service/prod/orders-service"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/github-actions-deploy/orders-service-ci"
+      },
+      "eventTime": "2026-11-11T09:52:00Z",
+      "eventSource": "ecs.amazonaws.com",
+      "eventName": "UpdateService",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "192.0.2.40",
+      "userAgent": "aws-sdk-js/3.600.0",
+      "requestParameters": {
+        "cluster": "prod",
+        "service": "orders-service",
+        "taskDefinition": "orders-service:214"
+      },
+      "readOnly": false,
+      "eventID": "a2426b19-135b-480e-b213-31838e28cdf9",
+      "recipientAccountId": "111122223333"
+    }
+  }
+]

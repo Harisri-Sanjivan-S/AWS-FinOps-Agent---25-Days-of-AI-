@@ -38,14 +38,14 @@ class Settings:
     model_strong: str = "global.anthropic.claude-sonnet-4-6"
     model_opus: str = ""
     max_tokens: int = 2000
-    turns: int = 12
-    total_tokens: int = 60_000
+    turns: int = 16
+    total_tokens: int = 120_000
     tool_call_cap: int = 10
     lookback_hours: int = 48
     cost_cap_usd: float = 25.0
     cost_warn_usd: tuple[float, ...] = (10.0, 20.0)
     investigation_cap_usd: float = 0.50
-    investigation_cap_tokens: int = 150_000
+    investigation_cap_tokens: int = 300_000
     cost_override: bool = False
     demo_repo: str = "Harisri-Sanjivan-S/acme-platform"
     devin_bin: str = "/Applications/Devin.app/Contents/Resources/app/extensions/windsurf/devin/bin/devin"

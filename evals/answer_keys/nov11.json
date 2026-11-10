@@ -1,0 +1,159 @@
+{
+  "scenario_id": "nov11",
+  "case_prefix": "N11",
+  "description": "Demo week, Wed 11 Nov 2026: Search load test + NAT charge continues (PR not merged yet).",
+  "distractor_change_events": [
+    "ct-006"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-11",
+  "baseline_mean": 3235.43,
+  "baseline_sd": 18.6,
+  "spike_total": 3995.43,
+  "increase": 760.0,
+  "increase_pct": 23.49,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "load_test",
+      "title": "Approved search load test",
+      "resource_ids": [
+        "i-0b1",
+        "i-0b2",
+        "i-0b3",
+        "i-0b4",
+        "i-0b5",
+        "i-0b6",
+        "i-0b7",
+        "i-0b8"
+      ],
+      "daily_increase": 520.0,
+      "start_time": "2026-11-10T09:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261111-035",
+          "bill-20261111-036",
+          "bill-20261111-037",
+          "bill-20261111-038",
+          "bill-20261111-039",
+          "bill-20261111-040",
+          "bill-20261111-041",
+          "bill-20261111-042"
+        ],
+        "change_events": [
+          "ct-001"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039",
+          "tag-040",
+          "tag-041"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008"
+        ],
+        "tickets": [
+          "CHG-1109"
+        ],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": true,
+        "used": true,
+        "needs_confirmation": false,
+        "action": "none",
+        "proposed_fix": null,
+        "saving_confirmed": null,
+        "verdict": "expected",
+        "notify": null
+      },
+      "saving_per_day": 0.0
+    },
+    {
+      "scene_id": "nat_after_deploy",
+      "title": "Network charge after a deploy",
+      "resource_ids": [
+        "nat-0c1"
+      ],
+      "daily_increase": 210.0,
+      "start_time": "2026-11-11T10:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261111-031"
+        ],
+        "change_events": [
+          "ct-005"
+        ],
+        "tags": [
+          "tag-030",
+          "tag-045"
+        ],
+        "metrics": [
+          "met-009"
+        ],
+        "tickets": [],
+        "deployments": [
+          "dep-001"
+        ],
+        "traffic": [
+          "net-001"
+        ]
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": false,
+          "owner": false
+        },
+        "confidence": 2,
+        "planned": false,
+        "used": true,
+        "verdict": "unbudgeted",
+        "needs_confirmation": true,
+        "action": "ask_owner",
+        "proposed_fix": "s3_gateway_endpoint",
+        "notify": "orders-team",
+        "saving_confirmed": null
+      },
+      "saving_per_day": 0.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

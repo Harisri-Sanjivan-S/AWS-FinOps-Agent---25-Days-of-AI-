@@ -59,7 +59,7 @@ def score_run(cases: dict[str, list[Case]], stores: dict) -> list[dict]:
     exp_g = expected_for("tuesday", gpus)["expected"]
     saved = False
     if gpus and gpus.report and gpus.report.proposed_fix == "stop_instances":
-        gpus = next_day(stores["tuesday"], approve(stores["tuesday"], gpus, reviewer="eval"))
+        gpus = next_day(stores["tuesday"], approve(stores["tuesday"], gpus, reviewer=gpus.assigned_to))
         saved = gpus.next_day.confirmed
     row(1, "Forgotten GPUs", gpus, core_ok(gpus, exp_g) and saved, f"saving confirmed: {saved}")
     row(2, "Approved load test", load, core_ok(load, expected_for("tuesday", load)["expected"]) and load.status == "quiet",
@@ -76,7 +76,7 @@ def score_run(cases: dict[str, list[Case]], stores: dict) -> list[dict]:
         and bool(miss.report and miss.report.gaps), f"{len(miss.report.gaps) if miss.report else 0} gaps listed")
     [ncf] = cases["not_confirmed"]
     if ncf.report and ncf.report.proposed_fix == "stop_instances":
-        ncf = next_day(stores["not_confirmed"], approve(stores["not_confirmed"], ncf, reviewer="eval"))
+        ncf = next_day(stores["not_confirmed"], approve(stores["not_confirmed"], ncf, reviewer=ncf.assigned_to))
     row(6, "Saving not confirmed", ncf, bool(ncf.next_day) and not ncf.next_day.confirmed,
         ncf.next_day.note[:60] if ncf.next_day else "no next-day check")
     [inj] = cases["injection"]

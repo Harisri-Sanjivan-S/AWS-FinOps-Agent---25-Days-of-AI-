@@ -1,0 +1,96 @@
+{
+  "scenario_id": "nov14",
+  "case_prefix": "N14",
+  "description": "Demo week, Sat 14 Nov 2026: GPUs stopped but relaunched by a script (Anika).",
+  "distractor_change_events": [
+    "ct-005"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-14",
+  "baseline_mean": 3240.48,
+  "baseline_sd": 21.38,
+  "spike_total": 3970.48,
+  "increase": 730.0,
+  "increase_pct": 22.53,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "relaunched_gpus",
+      "title": "Relaunched GPU notebooks",
+      "resource_ids": [
+        "i-0g1",
+        "i-0g2",
+        "i-0g3",
+        "i-0g4"
+      ],
+      "daily_increase": 700.0,
+      "start_time": "2026-11-13T18:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261114-035",
+          "bill-20261114-036",
+          "bill-20261114-037",
+          "bill-20261114-038"
+        ],
+        "change_events": [
+          "ct-003"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": false,
+        "verdict": "likely_waste",
+        "notify": "anika.r"
+      },
+      "saving_per_day": 700.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

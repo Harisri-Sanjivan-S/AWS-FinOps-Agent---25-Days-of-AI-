@@ -7,8 +7,9 @@ import time
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from detective import actions
+from detective import actions, rbac
 from detective.agent import (
+    AgentIncomplete,
     AgentRun,
     BedrockInvestigator,
     BedrockWriter,
@@ -88,7 +89,15 @@ def investigate_driver(store: RunStore, source: FixtureSource, driver: Driver, i
         feedback, findings = None, None
         for attempt, investigator in enumerate(agents.investigators, 1):
             toolbox.cap = len(toolbox.calls) + settings.tool_call_cap
-            run = investigator.investigate(driver, toolbox, feedback)
+            try:
+                run = investigator.investigate(driver, toolbox, feedback)
+            except AgentIncomplete as exc:
+                _record_usage(case, exc.run, ledger)
+                case.log(exc.run.model, "no findings returned", attempt=attempt, reason=str(exc))
+                feedback = [(f"{exc} The evidence you already gathered is still valid: call fewer tools (at most 4 more) "
+                             "and return your structured findings.")]
+                case.validation_errors = [str(exc)]
+                continue
             _record_usage(case, run, ledger)
             case.prompt_versions["investigator"] = run.prompt_version
             on_event("step", (case.case_id, "Verifying"))
@@ -113,7 +122,13 @@ def investigate_driver(store: RunStore, source: FixtureSource, driver: Driver, i
         on_event("step", (case.case_id, "Writing"))
         feedback = None
         for attempt, writer in enumerate(agents.writers, 1):
-            run = writer.write(driver, report, toolbox.pool, feedback)
+            try:
+                run = writer.write(driver, report, toolbox.pool, feedback)
+            except AgentIncomplete as exc:
+                _record_usage(case, exc.run, ledger)
+                case.log(exc.run.model, "no explanation returned", attempt=attempt, reason=str(exc))
+                feedback = [str(exc)]
+                continue
             _record_usage(case, run, ledger)
             case.prompt_versions["writer"] = run.prompt_version
             errors = validate_explanation(run.output, driver, report, toolbox.pool)
@@ -135,6 +150,7 @@ def investigate_driver(store: RunStore, source: FixtureSource, driver: Driver, i
     except Exception as exc:  # noqa: BLE001 - any failure becomes a case that needs human review
         case.validation_errors = [f"{type(exc).__name__}: {exc}"]
         case.log("code", "investigation failed", error=str(exc))
+    case.tool_calls = toolbox.calls
     return _finish(store, case, started, on_event)
 
 
@@ -163,13 +179,18 @@ class ActionError(ValueError):
     pass
 
 
-def _require(case: Case, *statuses: str) -> None:
+def _require(case: Case, *statuses: str, actor: str | None = None, action: str | None = None) -> None:
     if case.status not in statuses:
         raise ActionError(f"{case.case_id} is '{case.status}'; this action needs {' or '.join(statuses)}.")
+    if action:
+        try:
+            rbac.authorize(actor, case, action)
+        except rbac.PermissionDenied as exc:
+            raise ActionError(str(exc)) from exc
 
 
 def mark_planned(store: RunStore, case: Case, reviewer: str, reason: str, expiry: str) -> Case:
-    _require(case, "awaiting_owner")
+    _require(case, "awaiting_owner", actor=reviewer, action="planned")
     record = actions.record_exception(source_for(store, case.scenario_id), case, reviewer, reason, expiry)
     case.decisions.append(Decision(action="planned", reviewer=reviewer, reason=reason, expiry=expiry))
     case.actions.append(record)
@@ -180,9 +201,9 @@ def mark_planned(store: RunStore, case: Case, reviewer: str, reason: str, expiry
 
 
 def reassign(store: RunStore, case: Case, reviewer: str, new_owner: str, reason: str = "") -> Case:
-    _require(case, "awaiting_owner")
-    if not new_owner or new_owner == case.assigned_to:
-        raise ActionError("Pick a different owner.")
+    _require(case, "awaiting_owner", actor=reviewer, action="not_mine")
+    if not new_owner or new_owner == case.assigned_to or new_owner not in rbac.ACTORS:
+        raise ActionError("Pick a different, known owner.")
     case.decisions.append(Decision(action="not_mine", reviewer=reviewer, new_owner=new_owner, reason=reason or None))
     case.actions.append(actions.ActionRecord(kind="reassign", action_id=actions._id("re", case.case_id, new_owner),
                                              status="reassigned", detail={"from": case.assigned_to, "to": new_owner}))
@@ -193,7 +214,7 @@ def reassign(store: RunStore, case: Case, reviewer: str, new_owner: str, reason:
 
 
 def reject(store: RunStore, case: Case, reviewer: str, reason: str) -> Case:
-    _require(case, "awaiting_owner")
+    _require(case, "awaiting_owner", actor=reviewer, action="reject")
     if not reason.strip():
         raise ActionError("A reason is required to reject.")
     case.decisions.append(Decision(action="reject", reviewer=reviewer, reason=reason))
@@ -204,8 +225,8 @@ def reject(store: RunStore, case: Case, reviewer: str, reason: str) -> Case:
 
 
 def approve(store: RunStore, case: Case, reviewer: str, fixer=None, on_event: EventFn = _noop) -> Case:
-    """The only path to an action: a human approval. Stop is simulated; a code fix becomes a pull request."""
-    _require(case, "awaiting_owner")
+    """The only path to an action: a human approval by the case owner. Stop is simulated; a code fix becomes a PR."""
+    _require(case, "awaiting_owner", actor=reviewer, action="approve")
     fix = case.report.proposed_fix if case.report else None
     if fix is None:
         raise ActionError("There is no proposed fix for this case. Use Planned, Not mine or Reject.")

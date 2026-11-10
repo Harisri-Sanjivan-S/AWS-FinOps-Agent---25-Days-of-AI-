@@ -1,0 +1,98 @@
+{
+  "scenario_id": "nov12",
+  "case_prefix": "N12",
+  "description": "Demo week, Thu 12 Nov 2026: Unexplained instances: no change event, no tags.",
+  "distractor_change_events": [
+    "ct-004"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-12",
+  "baseline_mean": 3228.03,
+  "baseline_sd": 12.87,
+  "spike_total": 3978.03,
+  "increase": 750.0,
+  "increase_pct": 23.23,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "mystery_instances",
+      "title": "Unexplained compute instances",
+      "resource_ids": [
+        "i-0f1",
+        "i-0f2",
+        "i-0f3",
+        "i-0f4",
+        "i-0f5",
+        "i-0f6"
+      ],
+      "daily_increase": 720.0,
+      "start_time": "2026-11-11T03:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261112-035",
+          "bill-20261112-036",
+          "bill-20261112-037",
+          "bill-20261112-038",
+          "bill-20261112-039",
+          "bill-20261112-040"
+        ],
+        "change_events": [],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": false,
+          "timing": false,
+          "exact_id": false,
+          "owner": false
+        },
+        "confidence": 0,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": true,
+        "action": "none",
+        "proposed_fix": null,
+        "saving_confirmed": null,
+        "verdict": "unexplained",
+        "notify": "finops-team"
+      },
+      "saving_per_day": 0.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

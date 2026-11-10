@@ -9,16 +9,17 @@ import ui  # noqa: I001 - sets sys.path for the detective package
 
 import streamlit as st
 
+from detective import rbac
 from detective.sources import FixtureSource
 
-ui.page("Case")
+me = ui.require_page("case")
 st.title("Case report")
 store = ui.current_store()
-if not store or not store.cases():
-    st.info("No cases yet. Start an investigation from the console.")
+cases = rbac.visible_cases(me.actor_id, store.cases()) if store else []
+if not cases:
+    st.info("No cases for you right now.")
     st.stop()
 
-cases = store.cases()
 ids = [c.case_id for c in cases]
 chosen = st.session_state.get("case_id") if st.session_state.get("case_id") in ids else ids[0]
 case_id = st.radio("Case", ids, index=ids.index(chosen), horizontal=True,
@@ -34,7 +35,7 @@ if not r:
 
 st.markdown(f"## {ui.badge(r.verdict, big=True)} &nbsp; {case.driver.title}", unsafe_allow_html=True)
 st.markdown(f"Confidence **{r.confidence} of 4**" + (" · **please confirm**" if r.needs_confirmation else "")
-            + f" · status **{ui.STATUS_LABELS[case.status]}** · routed to **{case.assigned_to or 'nobody (quiet)'}**")
+            + f" · status **{ui.STATUS_LABELS[case.status]}** · routed to **{ui.actor_name(case.assigned_to)}**")
 
 cols = st.columns(4)
 for col, (name, label) in zip(cols, [("size", "Size"), ("timing", "Timing"), ("exact_id", "Exact ID"), ("owner", "Owner")]):
@@ -56,9 +57,8 @@ with tab1:
     st.markdown(f"**{e.headline}**")
     for i, s in enumerate(e.sentences):
         st.markdown(f"{i + 1}. {s.text}")
-        ui.citations(source, s.evidence_ids, f"s{i}", limit=8)
-    st.caption(f"Written by {case.usage.models[-1] if case.usage.models else '?'} · prompts {case.prompt_versions} · "
-               "every sentence was checked by code for valid evidence IDs and matching numbers.")
+        ui.citations(source, s.evidence_ids, limit=8)
+    st.caption("Every sentence was checked by code for valid evidence IDs and matching numbers.")
 with tab2:
     st.markdown(f"**Usage:** {r.usage_summary}")
     if r.budget_note:
@@ -77,7 +77,7 @@ with tab2:
         st.markdown("**Agent's cited findings**")
         for i, c in enumerate(case.findings.claims):
             st.markdown(f"- {c.text}")
-            ui.citations(source, c.evidence_ids, f"f{i}", limit=8)
+            ui.citations(source, c.evidence_ids, limit=8)
 with tab3:
     st.dataframe([{"at": a.at, "actor": a.actor, "event": a.event, "detail": str(a.detail)[:160]} for a in case.audit],
                  hide_index=True, use_container_width=True)
