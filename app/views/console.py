@@ -45,14 +45,23 @@ with right:
                 unsafe_allow_html=True)
 
 st.divider()
-mode = st.session_state["mode"]
+mode = ui.run_mode()
+if not det.material:
+    st.success(f"Below the alert threshold (+{ui.money(det.increase)}/day, +{det.increase_pct:.1f}%; the gate is "
+               "> $100/day and > 20%). Nothing to investigate today, so no AI is called and nobody is paged.")
+    st.stop()
+
 approved = True
 if mode == "bedrock":
     est = estimate_usd(s.model_fast, len(det.drivers))
     st.warning(f"This run calls Amazon Bedrock ({s.model_fast}). Estimated cost about ${est:.2f} "
                f"(cap ${s.cost_cap_usd:.0f}; spend so far is shown in the sidebar).")
     approved = st.checkbox(f"I approve spending about ${est:.2f} on this investigation")
+existing = ui.day_store(scenario)
+if existing:
+    st.caption(f"This day was last investigated in run {existing.run_id}. Investigating again creates a new run; "
+               "earlier approvals stay on the proof page.")
 
-if st.button("Investigate", type="primary", disabled=not (det.material and approved), icon=":material/search:"):
+if st.button("Investigate", type="primary", disabled=not approved, icon=":material/search:"):
     st.session_state["pending_run"] = {"scenario": scenario, "mode": mode}
     st.switch_page("views/investigation.py")

@@ -40,8 +40,8 @@ def case_footer(case: Case) -> None:
 pending = st.session_state.pop("pending_run", None)
 if pending:
     store, source, det = start_run(pending["scenario"], pending["mode"])
-    st.session_state["run_dir"] = str(store.dir)
-    st.caption(f"Run {store.run_id}")
+    st.session_state["scenario"] = pending["scenario"]
+    st.caption(f"{ui.scenario_label(pending['scenario'])} · run {store.run_id}")
     agents = make_agents(pending["mode"])
     for i, driver in enumerate(det.drivers, 1):
         status = st.status(f"{driver.title} · {ui.money(driver.daily_increase)}/day", expanded=True)
@@ -64,11 +64,15 @@ if pending:
     if c2.button("Inbox", icon=":material/inbox:"):
         st.switch_page("views/inbox.py")
 else:
-    store = ui.current_store()
+    scenario = st.selectbox("Day", ui.scenario_names(), format_func=ui.scenario_label, key="scenario")
+    store = ui.day_store(scenario)
     if not store:
-        st.info("No run yet. Start one from the console.")
+        st.info("This day has not been investigated yet. Start it from the console.")
         st.stop()
-    st.caption(f"Run {store.run_id}")
+    if not store.cases():
+        st.success("Below the alert threshold: nothing was investigated on this day.")
+        st.stop()
+    st.caption(f"Latest investigation of this day · run {store.run_id}")
     for case in store.cases():
         with st.status(f"{case.case_id} · {case.driver.title} · {ui.money(case.driver.daily_increase)}/day",
                        state="complete" if case.report else "error", expanded=False):

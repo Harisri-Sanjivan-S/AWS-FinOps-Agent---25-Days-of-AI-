@@ -58,17 +58,19 @@ def score_case(case: Case) -> dict:
     return row
 
 
+def all_runs(mode: str = "bedrock", week_only: bool = True) -> list[RunStore]:
+    """Every run for the given mode (newest first), optionally only the demo week."""
+    return [s for s in list_runs() if s.meta().get("mode") == mode
+            and (not week_only or s.meta()["scenario_id"].startswith("nov"))]
+
+
 def latest_runs(mode: str = "bedrock", week_only: bool = True) -> list[RunStore]:
-    """Most recent run per scenario for the given mode (newest first)."""
+    """Most recent run per scenario for the given mode, sorted by day."""
     seen, out = set(), []
-    for store in list_runs():
-        meta = store.meta()
-        if meta.get("mode") != mode or meta["scenario_id"] in seen:
-            continue
-        if week_only and not meta["scenario_id"].startswith("nov"):
-            continue
-        seen.add(meta["scenario_id"])
-        out.append(store)
+    for store in all_runs(mode, week_only):
+        if store.meta()["scenario_id"] not in seen:
+            seen.add(store.meta()["scenario_id"])
+            out.append(store)
     return sorted(out, key=lambda s: s.meta()["scenario_id"])
 
 
@@ -97,8 +99,11 @@ def summarise(rows: list[dict]) -> dict:
     }
 
 
-def proof(stores: list[RunStore]) -> dict:
-    """Every action after an approval, with its evidence: stops + next-day bills, PRs + diffs, decisions."""
+def proof(stores: list[RunStore], history: list[RunStore] | None = None) -> dict:
+    """Every action after an approval, with its evidence: stops + next-day bills, PRs + diffs, decisions.
+
+    Money found is counted once per day (latest run of each day, `stores`); actions and decisions come from every run
+    (`history`), so re-investigating a day never hides proof that was already collected."""
     savings, prs, decisions, actions_without_approval = [], [], [], 0
     found = avoidable = 0.0
     for store in stores:
@@ -107,6 +112,9 @@ def proof(stores: list[RunStore]) -> dict:
             if r and r.verdict != "expected":
                 found += case.driver.daily_increase
                 avoidable += r.avoidable_per_day
+    for store in history or stores:
+        for case in store.cases():
+            r = case.report
             approvals = [d for d in case.decisions if d.action == "approve"]
             for d in case.decisions:
                 decisions.append({"case": case.case_id, "day": case.scenario_id, "decision": d.action, "by": d.reviewer,

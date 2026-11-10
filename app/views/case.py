@@ -9,22 +9,23 @@ import ui  # noqa: I001 - sets sys.path for the detective package
 
 import streamlit as st
 
-from detective import rbac
 from detective.sources import FixtureSource
 
 me = ui.require_page("case")
 st.title("Case report")
-store = ui.current_store()
-cases = rbac.visible_cases(me.actor_id, store.cases()) if store else []
-if not cases:
+pairs = ui.demo_cases(me.actor_id)
+if not pairs:
     st.info("No cases for you right now.")
     st.stop()
 
-ids = [c.case_id for c in cases]
+by_id = {c.case_id: (s, c) for s, c in pairs}
+ids = list(by_id)
 chosen = st.session_state.get("case_id") if st.session_state.get("case_id") in ids else ids[0]
-case_id = st.radio("Case", ids, index=ids.index(chosen), horizontal=True,
-                   format_func=lambda i: f"{i} · {next(c for c in cases if c.case_id == i).driver.title}")
+case_id = st.selectbox("Case", ids, index=ids.index(chosen), format_func=lambda i: (
+    f"{i} · {ui.scenario_label(by_id[i][1].scenario_id).split(' · ')[0]} · {by_id[i][1].driver.title} · "
+    f"{ui.STATUS_LABELS[by_id[i][1].status]}"))
 st.session_state["case_id"] = case_id
+store = by_id[case_id][0]
 case = store.load_case(case_id)
 source = FixtureSource(case.scenario_id, exceptions_path=store.exceptions_path)
 r = case.report

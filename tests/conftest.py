@@ -12,6 +12,7 @@ def isolated_runs(tmp_path, monkeypatch):
     monkeypatch.setenv("FINOPS_RUNS_DIR", str(tmp_path / "runs"))
     monkeypatch.setenv("AWS_PROFILE", "no-such-profile-in-tests")
     monkeypatch.delenv("FINOPS_COST_OVERRIDE", raising=False)
+    monkeypatch.setenv("FINOPS_UI_MODE", "offline")  # app screens use the scripted investigator in tests only
     monkeypatch.setenv("FINOPS_TF_VALIDATE", "0")  # real terraform init needs the network; tests use a fake binary
     config.get_settings.cache_clear()
     yield

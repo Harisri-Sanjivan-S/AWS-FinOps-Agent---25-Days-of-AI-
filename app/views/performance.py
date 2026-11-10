@@ -12,13 +12,15 @@ import streamlit as st
 from checks import check_badges
 from detective.pipeline import refresh_ci
 from detective.sources import FixtureSource
-from evals.score import latest_runs, proof, score_case, summarise
+from evals.score import proof, score_case, summarise
+from detective.config import ROOT
+import json
 
 ui.require_page("performance")
 st.title("AI performance & proof")
 
-mode = "offline" if st.session_state.get("include_dry_runs") else "bedrock"
-stores = latest_runs(mode=mode)
+stores = ui.demo_stores()
+history = ui.history_stores()
 if not stores:
     st.info("No Amazon Bedrock runs of the demo week yet. FinOps can run a day from the console, or the whole week with "
             "`uv run python scripts/run_week.py --confirm`.")
@@ -26,7 +28,7 @@ if not stores:
 
 rows = [score_case(c) for s in stores for c in s.cases()]
 summary = summarise(rows)
-evidence = proof(stores)
+evidence = proof(stores, history)
 days = sorted({s.meta()["scenario_id"] for s in stores})
 st.caption(f"Latest run of {len(days)} day(s): {', '.join(ui.scenario_label(d).split(' · ')[0] for d in days)} · "
            f"{summary.get('investigations', 0)} investigations by Claude on Amazon Bedrock")
@@ -54,6 +56,26 @@ with tab_perf:
             st.markdown(f"**Guardrails:** {summary['guardrail_passed']} of {summary['guardrail_tests']} passed "
                         "(unrelated change ignored, prompt injection in a ticket resisted). "
                         f"Actions taken before approval: **{evidence['actions_without_approval']}**.")
+
+        st.subheader("Agent + rules vs plain AI")
+        results_dir = ROOT / "evals" / "results"
+        evals_ = sorted(results_dir.glob("*-bedrock-haiku.json"), reverse=True)
+        base_ = sorted(results_dir.glob("*-baseline.json"), reverse=True)
+        if evals_ and base_:
+            ev, bl = json.loads(evals_[0].read_text())["summary"]["metrics"], json.loads(base_[0].read_text())
+            blm = bl["summary"]["metrics"]
+            comp = {"Verdict accuracy (%)": [float(ev["Verdict accuracy"].rstrip("%")), float(blm["Verdict accuracy"].rstrip("%"))],
+                    "Valid citations (%)": [float(ev["Valid citations"].rstrip("%")), float(blm["Valid citations"].rstrip("%"))]}
+            cols = st.columns(2)
+            for col, (label, (agent, plain)) in zip(cols, comp.items()):
+                col.metric(label, f"{agent:.0f}% vs {plain:.0f}%", f"{agent - plain:+.0f} points", delta_color="normal")
+            st.bar_chart({"Agent + rules": [v[0] for v in comp.values()], "Plain AI": [v[1] for v in comp.values()]},
+                         height=220, stack=False)
+            st.caption(f"Same model ({bl['model'].split('.')[-1][:24]}) on the same 7 test scenarios. Plain AI gets all "
+                       "the data in one prompt, with no tools and no rules. Agent: "
+                       f"{ev['Cost per investigation']} per investigation; plain AI: {blm['Cost per driver']} per driver.")
+        else:
+            st.caption("Run the eval suite and the plain-AI baseline to fill this comparison.")
 
         st.subheader("By day")
         per_day = {}
@@ -111,7 +133,7 @@ with tab_proof:
                        "(never plan or apply), then CI ran them again on the pull request.")
             if p["url"]:
                 st.link_button("Open pull request", p["url"], icon=":material/open_in_new:")
-                store = next(s for s in stores if s.meta()["scenario_id"] == p["day"])
+                store = next(s for s in history if any(c.case_id == p["case"] for c in s.cases()))
                 if p["url"].startswith("https://github.com/") and st.button("Check CI", key=f"ci-{p['case']}-{p['branch']}"):
                     try:
                         refresh_ci(store, store.load_case(p["case"]))

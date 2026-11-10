@@ -136,7 +136,7 @@ def generate(sc: dict) -> dict[str, object]:
     spike_items = nat_bump(base, nat_cost) + all_instances + noise_items
     bill_lines += render_day(spike_day, spike_items, f"bill-{spike_day.replace('-', '')}")
 
-    stopped = {sid for sid, s in scenes.items() if s["expected"]["action"] == "simulate_stop"}
+    stopped = {sid for sid, s in scenes.items() if s["expected"].get("proposed_fix") == "stop_instances"}
     still_billed = {sid for sid in stopped if scenes[sid].get("relaunched_after_stop")}
     next_base = nat_bump(base, round(nat_extra_per_hour * 24, 2))
     variants = {

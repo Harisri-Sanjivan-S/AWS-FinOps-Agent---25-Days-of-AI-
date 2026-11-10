@@ -1,10 +1,11 @@
-"""Demo week: batch runner (dry-run mode in tests), scoring, proof of changes and the performance page. No AWS calls."""
+"""Demo week: batch runner (scripted investigator in tests), scoring, proof of changes and the performance page.
+No AWS calls."""
 
 from streamlit.testing.v1 import AppTest
 
 from detective import rbac
 from detective.config import ROOT
-from evals.score import latest_runs, proof, score_case, summarise
+from evals.score import all_runs, latest_runs, proof, score_case, summarise
 from scripts import run_week
 
 
@@ -26,10 +27,19 @@ def test_week_with_owner_actions_scores_and_proves():
     evidence = proof(stores)
     confirmed = [s for s in evidence["savings"] if s["confirmed"]]
     not_confirmed = [s for s in evidence["savings"] if s["confirmed"] is False]
-    assert {s["case"] for s in confirmed} == {"N08-01", "N10-01", "N13-01"}
+    assert {s["case"] for s in confirmed} == {"N08-01", "N09-01", "N10-01", "N13-01"}, "N09: idle hosts stopped early"
     assert [s["case"] for s in not_confirmed] == ["N14-01"], "relaunched GPUs: the bill does not drop"
-    assert evidence["proven_per_day"] == 700 + 820 + 820 and evidence["actions_without_approval"] == 0
+    assert abs(evidence["proven_per_day"] - (700 + 700 + 820 + 820)) < 0.05 and evidence["actions_without_approval"] == 0
     assert all(d["by"] in rbac.ACTORS for d in evidence["decisions"])
+
+
+def test_reinvestigating_a_day_keeps_earlier_proof():
+    run_week.main(["--days", "nov08", "--owner-actions"], mode="offline")
+    run_week.main(["--days", "nov08"], mode="offline")  # a fresh run of the same day, no approvals yet
+    latest = latest_runs(mode="offline")
+    assert not proof(latest)["savings"], "the newest run alone has no stop yet"
+    evidence = proof(latest, all_runs(mode="offline"))
+    assert [s["case"] for s in evidence["savings"]] == ["N08-01"] and evidence["found_per_day"] == 700
 
 
 def test_performance_page_access_and_render():
@@ -37,7 +47,7 @@ def test_performance_page_access_and_render():
     page = str(ROOT / "app" / "views" / "performance.py")
     for actor in ("finops-team", "platform-team"):
         at = AppTest.from_file(page, default_timeout=60)
-        at.session_state["actor"], at.session_state["include_dry_runs"] = actor, True
+        at.session_state["actor"] = actor
         at.run()
         assert not at.exception, [e.message for e in at.exception]
         assert any(m.label == "Verdict accuracy" and m.value == "100%" for m in at.metric)

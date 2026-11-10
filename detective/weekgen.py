@@ -38,7 +38,7 @@ def _expected(verdict: str, notify: str | None, **over) -> dict:
         "expected": {"checks": all_pass, "confidence": 4, "planned": True, "used": True, "needs_confirmation": False,
                      "action": "none", "proposed_fix": None, "saving_confirmed": None},
         "oversized": {"checks": all_pass, "confidence": 4, "planned": True, "used": False, "needs_confirmation": False,
-                      "action": "ask_owner", "proposed_fix": None, "saving_confirmed": None},
+                      "action": "ask_owner", "proposed_fix": "stop_instances", "saving_confirmed": True},
         "unexplained": {"checks": none_pass, "confidence": 0, "planned": False, "used": False, "needs_confirmation": True,
                         "action": "none", "proposed_fix": None, "saving_confirmed": None},
     }

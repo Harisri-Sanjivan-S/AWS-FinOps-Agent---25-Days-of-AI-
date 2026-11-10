@@ -180,8 +180,8 @@
         "used": false,
         "needs_confirmation": false,
         "action": "ask_owner",
-        "proposed_fix": null,
-        "saving_confirmed": null,
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
         "verdict": "oversized",
         "notify": "priya.s"
       },

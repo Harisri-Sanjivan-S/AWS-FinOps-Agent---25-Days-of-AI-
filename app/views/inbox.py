@@ -22,11 +22,12 @@ me = ui.require_page("inbox")
 s = get_settings()
 st.title("Inbox")
 st.caption(f"{me.name} · {me.role}")
-store = ui.current_store()
-cases = rbac.visible_cases(me.actor_id, store.cases()) if store else []
-if not cases:
+pairs = ui.demo_cases(me.actor_id)
+if not pairs:
     st.success("Nothing for you right now.")
     st.stop()
+waiting = sum(1 for _, c in pairs if c.assigned_to == me.actor_id and c.status == "awaiting_owner")
+st.caption(f"{len(pairs)} case(s) across the demo week · {waiting} waiting for your decision")
 
 
 @st.cache_data(ttl=120)
@@ -43,7 +44,11 @@ def run_action(fn, *args, **kwargs) -> None:
     st.rerun()
 
 
-for case in cases:
+current_day = None
+for store, case in pairs:
+    if case.scenario_id != current_day:
+        current_day = case.scenario_id
+        st.subheader(ui.scenario_label(current_day))
     r = case.report
     mine = case.assigned_to == me.actor_id
     title = (f"{case.case_id} · {case.driver.title} · {ui.money(case.driver.daily_increase)}/day · "
@@ -72,7 +77,9 @@ for case in cases:
                         if not r.proposed_fix:
                             st.caption("No reversible fix proposed for this case. Use Planned, Not mine or Reject.")
                         elif r.proposed_fix == "stop_instances":
-                            st.markdown(f"Stop {len(case.driver.resource_ids)} instances (reversible; disks are kept).")
+                            what = ("Stop the idle hosts early: the work is approved, but they are not being used"
+                                    if r.verdict == "oversized" else "Stop the instances")
+                            st.markdown(f"{what} ({len(case.driver.resource_ids)} instances; reversible, disks are kept).")
                             if st.button("Approve stop", key=f"ap-{case.case_id}", type="primary"):
                                 run_action(approve, store, case, reviewer=me.actor_id)
                         else:

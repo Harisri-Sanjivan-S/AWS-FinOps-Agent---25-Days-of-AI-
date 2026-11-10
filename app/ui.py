@@ -13,14 +13,14 @@ if str(ROOT) not in sys.path:
 import streamlit as st
 
 from detective import rbac
-from detective.cases import RunStore, list_runs
+from detective.cases import RunStore
 from detective.config import get_settings
 from detective.fixturegen import scenario_paths
 from detective.ledger import Ledger
 from detective.models import VERDICT_LABELS, Case
 from detective.sources import FixtureSource
+from evals.score import all_runs, latest_runs
 
-MODES = {"bedrock": "Amazon Bedrock (Claude)", "offline": "Dry run (no model calls, $0)"}
 VERDICT_COLORS = {"likely_waste": "#c62828", "unbudgeted": "#ef6c00", "oversized": "#f9a825", "expected": "#2e7d32",
                   "unexplained": "#6d4c41"}
 STATUS_LABELS = {"quiet": "Quiet (no alert)", "awaiting_owner": "Awaiting owner", "planned": "Planned (exception)",
@@ -36,17 +36,19 @@ PAGES = {
 
 
 def defaults() -> None:
-    # A browser refresh starts a new session: restore the actor and run from the URL (?actor=...&run=...).
+    # A browser refresh starts a new session: restore the actor and the day from the URL (?actor=...&day=...).
     qp = st.query_params
     if "actor" not in st.session_state and qp.get("actor") in rbac.ACTORS:
         st.session_state["actor"] = qp["actor"]
-    if "run_dir" not in st.session_state and qp.get("run"):
-        run_dir = get_settings().runs_dir / Path(qp["run"]).name
-        if (run_dir / "run.json").exists():
-            st.session_state["run_dir"] = str(run_dir)
+    if "scenario" not in st.session_state and qp.get("day") in scenario_names():
+        st.session_state["scenario"] = qp["day"]
     st.session_state.setdefault("actor", "finops-team")
     st.session_state.setdefault("scenario", "nov10")
-    st.session_state.setdefault("mode", "bedrock")  # the app always uses Bedrock; tests set "offline"
+
+
+def run_mode() -> str:
+    """Always Amazon Bedrock in the app (the automated tests set FINOPS_UI_MODE=offline)."""
+    return get_settings().ui_mode
 
 
 def actor() -> rbac.Actor:
@@ -75,17 +77,27 @@ def scenario_label(name: str) -> str:
     return f"{day:%a %d %b} · {sc.get('title', name)}"
 
 
-def current_store() -> RunStore | None:
-    run_dir = st.session_state.get("run_dir")
-    if run_dir and (Path(run_dir) / "run.json").exists():
-        return RunStore(Path(run_dir))
-    runs = list_runs()
-    return runs[0] if runs else None
+def demo_stores() -> list[RunStore]:
+    """The latest Bedrock run of every demo day: what owners work on."""
+    return latest_runs(mode=run_mode())
+
+
+def history_stores() -> list[RunStore]:
+    """Every Bedrock run of the demo week (proof of past actions is never hidden by a re-run)."""
+    return all_runs(mode=run_mode())
+
+
+def day_store(scenario: str) -> RunStore | None:
+    return next((s for s in demo_stores() if s.meta()["scenario_id"] == scenario), None)
+
+
+def demo_cases(actor_id: str) -> list[tuple[RunStore, Case]]:
+    """(store, case) for every case this actor may see, across all demo days, oldest day first."""
+    return [(s, c) for s in demo_stores() for c in rbac.visible_cases(actor_id, s.cases())]
 
 
 def _open_count(actor_id: str) -> int:
-    store = current_store()
-    return sum(1 for c in store.cases() if c.assigned_to == actor_id and c.status == "awaiting_owner") if store else 0
+    return sum(1 for s in demo_stores() for c in s.cases() if c.assigned_to == actor_id and c.status == "awaiting_owner")
 
 
 def _actor_changed() -> None:
@@ -116,21 +128,12 @@ def navigation() -> None:
     if st.session_state.pop("actor_changed", False):
         st.switch_page(pages[0], query_params={"actor": a.actor_id})
     st.query_params["actor"] = a.actor_id
+    st.query_params["day"] = st.session_state["scenario"]
     with st.sidebar:
         for page in pages:
-            st.page_link(page, query_params={"actor": a.actor_id, **({"run": st.query_params["run"]}
-                                                                      if "run" in st.query_params else {})})
+            st.page_link(page, query_params={"actor": a.actor_id, "day": st.session_state["scenario"]})
         st.divider()
         if a.can_investigate:
-            runs = list_runs()
-            if runs:
-                labels = {r.dir.name: f"{r.meta()['scenario_id']} · {r.dir.name[4:8]} {r.dir.name[9:13]}" for r in runs}
-                options = list(labels)
-                current = Path(st.session_state["run_dir"]).name if st.session_state.get("run_dir") else options[0]
-                choice = st.selectbox("Run", options, index=options.index(current) if current in options else 0,
-                                      format_func=labels.get)
-                st.session_state["run_dir"] = str(get_settings().runs_dir / choice)
-                st.query_params["run"] = choice
             status = Ledger().status()
             color = {"ok": "green", "warning": "orange", "blocked": "red"}[status["level"]]
             st.markdown(f"**Bedrock spend:** :{color}[${status['total_usd']:.4f}] of ${status['cap_usd']:.0f} cap")
@@ -149,7 +152,7 @@ def money(x: float) -> str:
 
 
 def model_label(model_id: str) -> str:
-    return "dry run" if model_id == "scripted" else model_id.split(".")[-1].split("-v1")[0]
+    return model_id.split(".")[-1].split("-v1")[0]
 
 
 def actor_name(actor_id: str | None) -> str:

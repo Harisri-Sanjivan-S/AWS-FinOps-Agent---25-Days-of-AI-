@@ -189,8 +189,8 @@ def evaluate(driver: Driver, findings: Findings, pool: dict, source: FixtureSour
     traffic = next((v for k, v in pool.items() if k.startswith("net-") and v["nat_gateway_id"] in wanted), None)
     s3_share = max((d["share_pct"] for d in traffic["destinations"] if "s3" in d["destination"].lower()), default=0.0) if traffic else 0.0
     proposed_fix = None
-    if verdict == "likely_waste" and driver.kind == "compute":
-        proposed_fix = "stop_instances"
+    if verdict in ("likely_waste", "oversized") and driver.kind == "compute":
+        proposed_fix = "stop_instances"  # oversized: approved work, but idle, so stop early (reversible)
     elif verdict in ("unbudgeted", "oversized") and driver.kind == "network" and s3_share >= S3_SHARE_FOR_ENDPOINT:
         proposed_fix = "s3_gateway_endpoint"
     action = {"likely_waste": "simulate_stop" if driver.kind == "compute" else "ask_owner", "expected": "none",

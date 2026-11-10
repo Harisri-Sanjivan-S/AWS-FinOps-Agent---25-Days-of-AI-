@@ -52,6 +52,7 @@ class Settings:
     devin_model: str = ""
     devin_timeout_s: int = 600
     fixer: str = "template"
+    ui_mode: str = "bedrock"  # the app always investigates on Bedrock; only the automated tests override this
     tf_validate: bool = True
     terraform_bin: str = "terraform"
     ci_wait_s: int = 150
@@ -95,6 +96,7 @@ def get_settings() -> Settings:
         devin_bin=get("DEVIN_BIN", d.devin_bin),
         devin_model=get("DEVIN_MODEL", d.devin_model),
         fixer=get("FINOPS_FIXER", d.fixer),
+        ui_mode=get("FINOPS_UI_MODE", d.ui_mode),
         tf_validate=get("FINOPS_TF_VALIDATE", d.tf_validate),
         terraform_bin=get("TERRAFORM_BIN", d.terraform_bin),
         ci_wait_s=get("FINOPS_CI_WAIT_S", d.ci_wait_s),

@@ -1,0 +1,215 @@
+{
+  "created": "2026-11-10T19:24:22",
+  "mode": "baseline",
+  "model": "global.anthropic.claude-haiku-4-5-20251001-v1:0",
+  "runs": 3,
+  "summary": {
+    "metrics": {
+      "Verdict accuracy": "17%",
+      "Valid citations": "100%",
+      "Seconds per driver": "3.4",
+      "Cost per driver": "$0.0241"
+    }
+  },
+  "cases": [],
+  "baseline": [
+    {
+      "run": 1,
+      "scenario": "tuesday",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.27,
+      "cost_usd": 0.027165
+    },
+    {
+      "run": 1,
+      "scenario": "tuesday",
+      "driver": "4 x c6i.16xlarge instances (checkout-loadtest)",
+      "expected": "expected",
+      "verdict": "expected",
+      "correct": true,
+      "citations_valid": true,
+      "seconds": 3.4,
+      "cost_usd": 0.027214
+    },
+    {
+      "run": 1,
+      "scenario": "tuesday",
+      "driver": "NAT gateway data processing (nat-0c1, shared)",
+      "expected": "unbudgeted",
+      "verdict": "expected",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.02,
+      "cost_usd": 0.02671
+    },
+    {
+      "run": 1,
+      "scenario": "missing_evidence",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "unexplained",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.19,
+      "cost_usd": 0.020886
+    },
+    {
+      "run": 1,
+      "scenario": "not_confirmed",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.57,
+      "cost_usd": 0.021273
+    },
+    {
+      "run": 1,
+      "scenario": "injection",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.57,
+      "cost_usd": 0.021404
+    },
+    {
+      "run": 2,
+      "scenario": "tuesday",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.44,
+      "cost_usd": 0.027165
+    },
+    {
+      "run": 2,
+      "scenario": "tuesday",
+      "driver": "4 x c6i.16xlarge instances (checkout-loadtest)",
+      "expected": "expected",
+      "verdict": "expected",
+      "correct": true,
+      "citations_valid": true,
+      "seconds": 3.28,
+      "cost_usd": 0.027214
+    },
+    {
+      "run": 2,
+      "scenario": "tuesday",
+      "driver": "NAT gateway data processing (nat-0c1, shared)",
+      "expected": "unbudgeted",
+      "verdict": "expected",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.11,
+      "cost_usd": 0.02671
+    },
+    {
+      "run": 2,
+      "scenario": "missing_evidence",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "unexplained",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.27,
+      "cost_usd": 0.020886
+    },
+    {
+      "run": 2,
+      "scenario": "not_confirmed",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.47,
+      "cost_usd": 0.021273
+    },
+    {
+      "run": 2,
+      "scenario": "injection",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.56,
+      "cost_usd": 0.021404
+    },
+    {
+      "run": 3,
+      "scenario": "tuesday",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.38,
+      "cost_usd": 0.027165
+    },
+    {
+      "run": 3,
+      "scenario": "tuesday",
+      "driver": "4 x c6i.16xlarge instances (checkout-loadtest)",
+      "expected": "expected",
+      "verdict": "expected",
+      "correct": true,
+      "citations_valid": true,
+      "seconds": 3.37,
+      "cost_usd": 0.027214
+    },
+    {
+      "run": 3,
+      "scenario": "tuesday",
+      "driver": "NAT gateway data processing (nat-0c1, shared)",
+      "expected": "unbudgeted",
+      "verdict": "expected",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.11,
+      "cost_usd": 0.02671
+    },
+    {
+      "run": 3,
+      "scenario": "missing_evidence",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "unexplained",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.31,
+      "cost_usd": 0.020886
+    },
+    {
+      "run": 3,
+      "scenario": "not_confirmed",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.54,
+      "cost_usd": 0.021273
+    },
+    {
+      "run": 3,
+      "scenario": "injection",
+      "driver": "8 x g6.12xlarge instances (untagged)",
+      "expected": "likely_waste",
+      "verdict": "unbudgeted",
+      "correct": false,
+      "citations_valid": true,
+      "seconds": 3.7,
+      "cost_usd": 0.021404
+    }
+  ]
+}

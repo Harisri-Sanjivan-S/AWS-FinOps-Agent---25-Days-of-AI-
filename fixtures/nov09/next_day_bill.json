@@ -1,6 +1,8 @@
 {
   "date": "2026-11-10",
-  "stopped_scenes": [],
+  "stopped_scenes": [
+    "idle_rehearsal"
+  ],
   "variants": {
     "no_action": [
       {
@@ -1263,120 +1265,6 @@
         "evidence_id": "bill-20261110-afterfix-035",
         "line_item_usage_start_date": "2026-11-10T00:00:00Z",
         "line_item_usage_end_date": "2026-11-11T00:00:00Z",
-        "line_item_product_code": "AmazonEC2",
-        "line_item_usage_type": "USE1-BoxUsage:m6i.8xlarge",
-        "line_item_resource_id": "i-0e1",
-        "line_item_usage_amount": 24,
-        "pricing_unit": "Hrs",
-        "line_item_unblended_rate": 4.86125,
-        "line_item_unblended_cost": 116.67,
-        "resource_tags": {
-          "user_owner": "priya.s",
-          "user_team": "payments",
-          "user_project": "checkout-loadtest",
-          "user_change_id": "CHG-1107",
-          "user_expires": "2026-11-13"
-        }
-      },
-      {
-        "evidence_id": "bill-20261110-afterfix-036",
-        "line_item_usage_start_date": "2026-11-10T00:00:00Z",
-        "line_item_usage_end_date": "2026-11-11T00:00:00Z",
-        "line_item_product_code": "AmazonEC2",
-        "line_item_usage_type": "USE1-BoxUsage:m6i.8xlarge",
-        "line_item_resource_id": "i-0e2",
-        "line_item_usage_amount": 24,
-        "pricing_unit": "Hrs",
-        "line_item_unblended_rate": 4.86125,
-        "line_item_unblended_cost": 116.67,
-        "resource_tags": {
-          "user_owner": "priya.s",
-          "user_team": "payments",
-          "user_project": "checkout-loadtest",
-          "user_change_id": "CHG-1107",
-          "user_expires": "2026-11-13"
-        }
-      },
-      {
-        "evidence_id": "bill-20261110-afterfix-037",
-        "line_item_usage_start_date": "2026-11-10T00:00:00Z",
-        "line_item_usage_end_date": "2026-11-11T00:00:00Z",
-        "line_item_product_code": "AmazonEC2",
-        "line_item_usage_type": "USE1-BoxUsage:m6i.8xlarge",
-        "line_item_resource_id": "i-0e3",
-        "line_item_usage_amount": 24,
-        "pricing_unit": "Hrs",
-        "line_item_unblended_rate": 4.86125,
-        "line_item_unblended_cost": 116.67,
-        "resource_tags": {
-          "user_owner": "priya.s",
-          "user_team": "payments",
-          "user_project": "checkout-loadtest",
-          "user_change_id": "CHG-1107",
-          "user_expires": "2026-11-13"
-        }
-      },
-      {
-        "evidence_id": "bill-20261110-afterfix-038",
-        "line_item_usage_start_date": "2026-11-10T00:00:00Z",
-        "line_item_usage_end_date": "2026-11-11T00:00:00Z",
-        "line_item_product_code": "AmazonEC2",
-        "line_item_usage_type": "USE1-BoxUsage:m6i.8xlarge",
-        "line_item_resource_id": "i-0e4",
-        "line_item_usage_amount": 24,
-        "pricing_unit": "Hrs",
-        "line_item_unblended_rate": 4.86125,
-        "line_item_unblended_cost": 116.67,
-        "resource_tags": {
-          "user_owner": "priya.s",
-          "user_team": "payments",
-          "user_project": "checkout-loadtest",
-          "user_change_id": "CHG-1107",
-          "user_expires": "2026-11-13"
-        }
-      },
-      {
-        "evidence_id": "bill-20261110-afterfix-039",
-        "line_item_usage_start_date": "2026-11-10T00:00:00Z",
-        "line_item_usage_end_date": "2026-11-11T00:00:00Z",
-        "line_item_product_code": "AmazonEC2",
-        "line_item_usage_type": "USE1-BoxUsage:m6i.8xlarge",
-        "line_item_resource_id": "i-0e5",
-        "line_item_usage_amount": 24,
-        "pricing_unit": "Hrs",
-        "line_item_unblended_rate": 4.86125,
-        "line_item_unblended_cost": 116.67,
-        "resource_tags": {
-          "user_owner": "priya.s",
-          "user_team": "payments",
-          "user_project": "checkout-loadtest",
-          "user_change_id": "CHG-1107",
-          "user_expires": "2026-11-13"
-        }
-      },
-      {
-        "evidence_id": "bill-20261110-afterfix-040",
-        "line_item_usage_start_date": "2026-11-10T00:00:00Z",
-        "line_item_usage_end_date": "2026-11-11T00:00:00Z",
-        "line_item_product_code": "AmazonEC2",
-        "line_item_usage_type": "USE1-BoxUsage:m6i.8xlarge",
-        "line_item_resource_id": "i-0e6",
-        "line_item_usage_amount": 24,
-        "pricing_unit": "Hrs",
-        "line_item_unblended_rate": 4.86125,
-        "line_item_unblended_cost": 116.67,
-        "resource_tags": {
-          "user_owner": "priya.s",
-          "user_team": "payments",
-          "user_project": "checkout-loadtest",
-          "user_change_id": "CHG-1107",
-          "user_expires": "2026-11-13"
-        }
-      },
-      {
-        "evidence_id": "bill-20261110-afterfix-041",
-        "line_item_usage_start_date": "2026-11-10T00:00:00Z",
-        "line_item_usage_end_date": "2026-11-11T00:00:00Z",
         "line_item_product_code": "AmazonS3",
         "line_item_usage_type": "USE1-TimedStorage-ByteHrs",
         "line_item_resource_id": "winter-access-logs",
@@ -1390,7 +1278,7 @@
         }
       },
       {
-        "evidence_id": "bill-20261110-afterfix-042",
+        "evidence_id": "bill-20261110-afterfix-036",
         "line_item_usage_start_date": "2026-11-10T00:00:00Z",
         "line_item_usage_end_date": "2026-11-11T00:00:00Z",
         "line_item_product_code": "AmazonCloudWatch",
@@ -1406,7 +1294,7 @@
         }
       },
       {
-        "evidence_id": "bill-20261110-afterfix-043",
+        "evidence_id": "bill-20261110-afterfix-037",
         "line_item_usage_start_date": "2026-11-10T00:00:00Z",
         "line_item_usage_end_date": "2026-11-11T00:00:00Z",
         "line_item_product_code": "AmazonEC2",
