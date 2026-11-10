@@ -253,6 +253,20 @@ def approve(store: RunStore, case: Case, reviewer: str, fixer=None, on_event: Ev
     return case
 
 
+def refresh_ci(store: RunStore, case: Case, checker=None) -> Case:
+    """Re-read CI for the case's pull requests and store the result (proof shown on the inbox and proof page)."""
+    from detective.fixers.base import ci_status_text, gh_pr_status
+    checker = checker or gh_pr_status
+    for a in case.actions:
+        if a.kind == "pull_request" and a.url:
+            state = checker(a.url)
+            a.detail["ci"], a.detail["merged"] = state["ci"], state.get("merged", False)
+            a.status = "merged" if state.get("merged") else ci_status_text(state["ci"])
+            case.log("code", "CI status refreshed", ci=state["ci"], url=a.url)
+    store.save_case(case)
+    return case
+
+
 def next_day(store: RunStore, case: Case) -> Case:
     if not any(a.kind in ("stop", "pull_request") for a in case.actions):
         raise ActionError("Run the next-day check after a fix has been approved.")

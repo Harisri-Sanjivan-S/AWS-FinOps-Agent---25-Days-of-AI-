@@ -1,13 +1,17 @@
 """Shared flow for every code-fix executor:
-clone the demo repo -> build the brief -> branch -> executor edits -> code verifies -> commit, push, open the PR.
+clone the demo repo -> build the brief -> branch -> executor edits -> code verifies (paths, then terraform fmt/init/
+validate) -> commit, push, open the PR -> wait for CI.
 
-Safety: only the configured DEMO_REPO; never push to main; never merge; changed files must stay inside the target
-folder and be Terraform files."""
+Safety: only the configured DEMO_REPO; never push to main; never merge; never plan or apply; changed files must stay
+inside the target folder and be Terraform files."""
 
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import subprocess
+import time
 from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
@@ -39,6 +43,35 @@ class FixResult(BaseModel):
     error: str | None = None
     brief_path: str = ""
     log_tail: str = ""
+    tf_checks: dict = Field(default_factory=dict)
+    ci: str = "not checked"
+
+
+TF_STEPS = [("fmt", ["fmt", "-check", "-diff", "-no-color"]),
+            ("init", ["init", "-backend=false", "-input=false", "-no-color"]),
+            ("validate", ["validate", "-no-color"])]
+
+
+def terraform_checks(folder: Path, tf_bin: str = "terraform", timeout: int = 180) -> dict:
+    """Pre-push gate: terraform fmt -check, init (no backend, no AWS credentials) and validate in the target folder.
+    Never plan or apply. Stops at the first failing step."""
+    exe = shutil.which(tf_bin) or (tf_bin if Path(tf_bin).exists() else None)
+    if not exe:
+        return {"skipped": f"{tf_bin} not found; CI will still run fmt and validate"}
+    cache = Path.home() / ".terraform.d" / "plugin-cache"
+    cache.mkdir(parents=True, exist_ok=True)
+    env = {**os.environ, "TF_IN_AUTOMATION": "1", "TF_PLUGIN_CACHE_DIR": str(cache)}
+    results = {}
+    for name, args in TF_STEPS:
+        proc = subprocess.run([exe, *args], check=False, cwd=folder, capture_output=True, text=True, timeout=timeout, env=env)
+        results[name] = {"ok": proc.returncode == 0, "output": (proc.stdout + proc.stderr).strip()[-800:]}
+        if proc.returncode != 0:
+            break
+    return results
+
+
+def tf_passed(checks: dict) -> bool:
+    return "skipped" in checks or (bool(checks) and all(v["ok"] for v in checks.values()) and len(checks) == len(TF_STEPS))
 
 
 def run(cmd: list[str], cwd: Path | None = None, timeout: int = 120) -> str:
@@ -61,6 +94,11 @@ def gh_pr_status(pr_url: str) -> dict:
     ci = "pending" if not checks or {"IN_PROGRESS", "QUEUED", "PENDING", None} & states else \
         ("passed" if states <= {"SUCCESS", "SKIPPED", "NEUTRAL"} else "failed")
     return {"state": data["state"], "ci": ci, "merged": bool(data.get("mergedAt"))}
+
+
+def ci_status_text(ci: str) -> str:
+    return {"passed": "open, CI passed, awaiting review", "failed": "open, CI failed: needs attention",
+            "pending": "open, CI still running"}.get(ci, "open, awaiting review")
 
 
 def changed_files(work: Path) -> list[str]:
@@ -98,11 +136,28 @@ class CodeFixer:
     name = "base"
 
     def __init__(self, settings: Settings | None = None, remote_url: str | None = None,
-                 pr_creator: Callable[[str, str, str, Path], str] = gh_create_pr):
+                 pr_creator: Callable[[str, str, str, Path], str] = gh_create_pr,
+                 ci_checker: Callable[[str], dict] | None = None, poll_s: float = 10.0):
         self.settings = settings or get_settings()
         self.repo = self.settings.demo_repo
         self.remote_url = remote_url or f"https://github.com/{self.repo}.git"
         self.pr_creator = pr_creator
+        # Real CI is only watched for the real demo repo; tests inject a fake checker.
+        self.ci_checker = ci_checker or (gh_pr_status if remote_url is None else None)
+        self.poll_s = poll_s
+
+    def wait_for_ci(self, pr_url: str, on_event) -> str:
+        deadline = time.monotonic() + self.settings.ci_wait_s
+        state = "pending"
+        while True:
+            try:
+                state = self.ci_checker(pr_url)["ci"]
+            except Exception:  # noqa: BLE001 - CI status is informative; a gh hiccup must not fail the fix
+                state = "unknown"
+            if state not in ("pending",) or time.monotonic() >= deadline:
+                return state
+            on_event("fix", ("", "CI is running terraform fmt and validate on the pull request…"))
+            time.sleep(self.poll_s)
 
     def apply(self, work: Path, brief: FixBrief, brief_path: Path) -> tuple[str, str]:
         """Make the edit in `work`; return (summary markdown, log tail)."""
@@ -138,6 +193,15 @@ class CodeFixer:
                 raise FixError("Change rejected by code checks: " + "; ".join(errors))
             result.summary = summary
 
+            if self.settings.tf_validate:
+                on_event("fix", (case.case_id, "Checking the Terraform: fmt, init (no backend), validate"))
+                result.tf_checks = terraform_checks(work / brief.target_folder, self.settings.terraform_bin)
+                if not tf_passed(result.tf_checks):
+                    step = next(k for k, v in result.tf_checks.items() if not v["ok"])
+                    raise FixError(f"Terraform {step} failed, so nothing was pushed: {result.tf_checks[step]['output'][-300:]}")
+            else:
+                result.tf_checks = {"skipped": "disabled in settings"}
+
             on_event("fix", (case.case_id, "Checks passed; committing and pushing the branch"))
             run(["git", "add", "--", *result.changed_files], cwd=work)
             result.diff = run(["git", "diff", "--cached", "--no-color"], cwd=work)[:12_000]
@@ -149,6 +213,10 @@ class CodeFixer:
             on_event("fix", (case.case_id, "Opening the pull request"))
             result.pr_url = self.pr_creator(self.repo, brief.branch, brief.pr_title, body_path)
             result.status = "open, awaiting review"
+            if self.ci_checker:
+                on_event("fix", (case.case_id, "Pull request opened; waiting for CI"))
+                result.ci = self.wait_for_ci(result.pr_url, on_event)
+                result.status = ci_status_text(result.ci)
         except Exception as exc:  # noqa: BLE001 - every failure is reported on the case; nothing is pushed half-way
             result.status, result.error = "failed", str(exc)
         on_event("fix", (case.case_id, result.status))

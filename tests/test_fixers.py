@@ -140,6 +140,52 @@ printf '## What changed\\nS3 gateway endpoint for TUE-03.\\n' > PR_SUMMARY.md
     assert "S3 gateway endpoint for TUE-03" in pr.calls[0][3] and "Devin (CLI, headless)" in pr.calls[0][3]
 
 
+FAKE_TF_OK = """
+case "$1" in fmt|init|validate) echo "$1 ok"; exit 0;; esac; exit 2
+"""
+FAKE_TF_BAD_VALIDATE = """
+case "$1" in fmt|init) exit 0;; validate) echo 'Error: Reference to undeclared input variable "nope"' >&2; exit 1;; esac
+"""
+
+
+def tf_settings(tmp_path, script):
+    return dataclasses.replace(get_settings(), tf_validate=True, terraform_bin=fake_devin(tmp_path, script), ci_wait_s=5)
+
+
+def test_terraform_gate_and_ci_are_recorded_as_proof(nat_case, remote, tmp_path):
+    store, case = nat_case
+    states = iter([{"ci": "pending"}, {"ci": "passed"}])
+    fixer = TemplateFixer(settings=tf_settings(tmp_path, FAKE_TF_OK), remote_url=str(remote), pr_creator=FakePR(),
+                          ci_checker=lambda url: next(states), poll_s=0)
+    case = approve(store, case, reviewer="orders-team", fixer=fixer)
+    [action] = case.actions
+    assert action.detail["tf_checks"]["fmt"]["ok"] and action.detail["tf_checks"]["validate"]["ok"]
+    assert action.detail["ci"] == "passed" and action.status == "open, CI passed, awaiting review"
+
+
+def test_terraform_validate_failure_blocks_the_push(nat_case, remote, tmp_path):
+    store, case = nat_case
+    pr = FakePR()
+    fixer = TemplateFixer(settings=tf_settings(tmp_path, FAKE_TF_BAD_VALIDATE), remote_url=str(remote), pr_creator=pr)
+    case = approve(store, case, reviewer="orders-team", fixer=fixer)
+    [action] = case.actions
+    assert action.status == "failed" and "Terraform validate failed, so nothing was pushed" in action.detail["error"]
+    assert not pr.calls and case.status == "awaiting_owner"
+    refs = subprocess.run(["git", "branch", "--list"], check=True, cwd=remote, capture_output=True, text=True).stdout
+    assert "finops/" not in refs
+
+
+def test_ci_failure_and_refresh(nat_case, remote, tmp_path):
+    from detective.pipeline import refresh_ci
+    store, case = nat_case
+    fixer = TemplateFixer(settings=tf_settings(tmp_path, FAKE_TF_OK), remote_url=str(remote), pr_creator=FakePR(),
+                          ci_checker=lambda url: {"ci": "failed"}, poll_s=0)
+    case = approve(store, case, reviewer="orders-team", fixer=fixer)
+    assert case.actions[0].status == "open, CI failed: needs attention"
+    case = refresh_ci(store, case, checker=lambda url: {"ci": "passed", "merged": False})
+    assert case.actions[0].detail["ci"] == "passed" and store.load_case(case.case_id).actions[0].status.startswith("open, CI passed")
+
+
 def test_devin_failure_is_reported_not_pushed(nat_case, remote, tmp_path):
     store, case = nat_case
     settings = dataclasses.replace(get_settings(), devin_bin=fake_devin(tmp_path, "echo 'auth error' >&2; exit 3"))

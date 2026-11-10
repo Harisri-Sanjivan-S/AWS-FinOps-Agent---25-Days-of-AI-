@@ -44,6 +44,22 @@ def test_router_shows_pages_by_role(run_dir):
     assert owner.title[0].value == "Inbox", "owners land on their inbox; console is not in their navigation"
 
 
+def test_refresh_keeps_actor_and_run_from_the_url(run_dir):
+    from pathlib import Path
+    at = AppTest.from_file(str(APP / "Home.py"), default_timeout=60)
+    at.query_params["actor"] = "ravi.m"
+    at.query_params["run"] = Path(run_dir).name
+    at.run()  # fresh session, as after a browser refresh
+    no_errors(at)
+    assert at.session_state["actor"] == "ravi.m" and at.title[0].value == "Inbox"
+    assert Path(at.session_state["run_dir"]).name == Path(run_dir).name
+    assert at.query_params["actor"] == ["ravi.m"] or at.query_params["actor"] == "ravi.m"
+    bad = AppTest.from_file(str(APP / "Home.py"), default_timeout=60)
+    bad.query_params["actor"] = "mallory"
+    bad.run()
+    assert bad.session_state["actor"] == "finops-team", "unknown actors in the URL are ignored"
+
+
 def test_console_has_no_internal_labels():
     at = run("views/console.py", mode="offline")
     no_errors(at)

@@ -52,6 +52,9 @@ class Settings:
     devin_model: str = ""
     devin_timeout_s: int = 600
     fixer: str = "template"
+    tf_validate: bool = True
+    terraform_bin: str = "terraform"
+    ci_wait_s: int = 150
     runs_dir: Path = field(default=ROOT / "runs")
 
     def price(self, model_id: str) -> tuple[float, float]:
@@ -92,5 +95,8 @@ def get_settings() -> Settings:
         devin_bin=get("DEVIN_BIN", d.devin_bin),
         devin_model=get("DEVIN_MODEL", d.devin_model),
         fixer=get("FINOPS_FIXER", d.fixer),
+        tf_validate=get("FINOPS_TF_VALIDATE", d.tf_validate),
+        terraform_bin=get("TERRAFORM_BIN", d.terraform_bin),
+        ci_wait_s=get("FINOPS_CI_WAIT_S", d.ci_wait_s),
         runs_dir=get("FINOPS_RUNS_DIR", d.runs_dir),
     )

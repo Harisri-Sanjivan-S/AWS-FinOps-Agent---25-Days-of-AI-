@@ -14,9 +14,9 @@ import streamlit as st
 from detective import rbac
 from detective.config import get_settings
 from detective.fixers import make_fixer
-from detective.fixers.base import gh_pr_status
+from checks import check_badges
 from detective.fixers.devin import devin_status
-from detective.pipeline import ActionError, approve, mark_planned, next_day, reassign, reject
+from detective.pipeline import ActionError, approve, mark_planned, next_day, reassign, refresh_ci, reject
 
 me = ui.require_page("inbox")
 s = get_settings()
@@ -37,9 +37,10 @@ def devin_state(devin_bin: str) -> dict:
 def run_action(fn, *args, **kwargs) -> None:
     try:
         fn(*args, **kwargs)
-        st.rerun()
-    except (ActionError, ValueError) as exc:
+    except (ActionError, ValueError, RuntimeError) as exc:
         st.error(str(exc))
+        return
+    st.rerun()
 
 
 for case in cases:
@@ -116,13 +117,13 @@ for case in cases:
             for a in case.actions:
                 with st.container(border=True):
                     st.markdown(f"**{a.kind.replace('_', ' ').title()}** · {a.status}")
+                    if a.kind == "pull_request":
+                        st.markdown(check_badges(a.detail.get("tf_checks", {}), a.detail.get("ci", "not checked")),
+                                    unsafe_allow_html=True)
                     if a.url:
                         st.link_button("Open pull request", a.url, icon=":material/open_in_new:")
                         if a.url.startswith("https://github.com/") and st.button("Refresh CI status", key=f"ci-{a.action_id}"):
-                            try:
-                                st.write(gh_pr_status(a.url))
-                            except Exception as exc:  # noqa: BLE001 - show any gh error to the user
-                                st.error(str(exc))
+                            run_action(refresh_ci, store, case)
                     if a.detail.get("error"):
                         st.error(a.detail["error"])
                     if a.kind == "stop":

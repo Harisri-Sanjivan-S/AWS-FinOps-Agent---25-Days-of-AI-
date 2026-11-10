@@ -9,7 +9,8 @@ import ui  # noqa: I001 - sets sys.path for the detective package
 
 import streamlit as st
 
-from detective.fixers.base import gh_pr_status
+from checks import check_badges
+from detective.pipeline import refresh_ci
 from detective.sources import FixtureSource
 from evals.score import latest_runs, proof, score_case, summarise
 
@@ -105,11 +106,16 @@ with tab_proof:
         with st.container(border=True):
             st.markdown(f"**{p['case']}** · approved by **{ui.actor_name(p['approved_by'])}** · written by {p['executor']} · "
                         f"{p['status']} · expected {ui.money(p['avoidable_usd'])}/day after merge and apply")
+            st.markdown(check_badges(p["tf_checks"], p["ci"]), unsafe_allow_html=True)
+            st.caption("Checked before a human sees it: terraform fmt and validate ran locally before the push "
+                       "(never plan or apply), then CI ran them again on the pull request.")
             if p["url"]:
                 st.link_button("Open pull request", p["url"], icon=":material/open_in_new:")
+                store = next(s for s in stores if s.meta()["scenario_id"] == p["day"])
                 if p["url"].startswith("https://github.com/") and st.button("Check CI", key=f"ci-{p['case']}-{p['branch']}"):
                     try:
-                        st.write(gh_pr_status(p["url"]))
+                        refresh_ci(store, store.load_case(p["case"]))
+                        st.rerun()
                     except Exception as exc:  # noqa: BLE001 - show any gh error to the user
                         st.error(str(exc))
             if p["error"]:

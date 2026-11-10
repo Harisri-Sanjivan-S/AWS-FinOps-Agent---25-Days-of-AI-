@@ -36,6 +36,14 @@ PAGES = {
 
 
 def defaults() -> None:
+    # A browser refresh starts a new session: restore the actor and run from the URL (?actor=...&run=...).
+    qp = st.query_params
+    if "actor" not in st.session_state and qp.get("actor") in rbac.ACTORS:
+        st.session_state["actor"] = qp["actor"]
+    if "run_dir" not in st.session_state and qp.get("run"):
+        run_dir = get_settings().runs_dir / Path(qp["run"]).name
+        if (run_dir / "run.json").exists():
+            st.session_state["run_dir"] = str(run_dir)
     st.session_state.setdefault("actor", "finops-team")
     st.session_state.setdefault("scenario", "nov10")
     st.session_state.setdefault("mode", "bedrock")  # the app always uses Bedrock; tests set "offline"
@@ -106,10 +114,12 @@ def navigation() -> None:
              for i, p in enumerate(a.pages)]
     nav = st.navigation(pages, position="hidden")
     if st.session_state.pop("actor_changed", False):
-        st.switch_page(pages[0])
+        st.switch_page(pages[0], query_params={"actor": a.actor_id})
+    st.query_params["actor"] = a.actor_id
     with st.sidebar:
         for page in pages:
-            st.page_link(page)
+            st.page_link(page, query_params={"actor": a.actor_id, **({"run": st.query_params["run"]}
+                                                                      if "run" in st.query_params else {})})
         st.divider()
         if a.can_investigate:
             runs = list_runs()
@@ -120,6 +130,7 @@ def navigation() -> None:
                 choice = st.selectbox("Run", options, index=options.index(current) if current in options else 0,
                                       format_func=labels.get)
                 st.session_state["run_dir"] = str(get_settings().runs_dir / choice)
+                st.query_params["run"] = choice
             status = Ledger().status()
             color = {"ok": "green", "warning": "orange", "blocked": "red"}[status["level"]]
             st.markdown(f"**Bedrock spend:** :{color}[${status['total_usd']:.4f}] of ${status['cap_usd']:.0f} cap")

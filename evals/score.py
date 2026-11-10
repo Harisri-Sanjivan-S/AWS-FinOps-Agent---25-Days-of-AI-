@@ -130,6 +130,7 @@ def proof(stores: list[RunStore]) -> dict:
                     prs.append({"case": case.case_id, "day": case.scenario_id, "url": a.url, "status": a.status,
                                 "branch": a.detail.get("branch"), "executor": a.detail.get("executor"),
                                 "files": a.detail.get("changed_files", []), "diff": a.detail.get("diff", ""),
+                                "tf_checks": a.detail.get("tf_checks", {}), "ci": a.detail.get("ci", "not checked"),
                                 "approved_by": approvals[0].reviewer if approvals else "?",
                                 "avoidable_usd": r.avoidable_per_day if r else 0.0, "error": a.detail.get("error")})
     proven = sum(s["saving_usd"] or 0 for s in savings if s["confirmed"])
