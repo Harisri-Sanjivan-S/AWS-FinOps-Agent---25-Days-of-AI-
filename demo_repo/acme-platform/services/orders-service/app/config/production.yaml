@@ -1,0 +1,10 @@
+# orders-service runtime config (demo). v2.14 moved image and asset pulls to the private subnets (SEC-311).
+service: orders-service
+version: 2.14.0
+network:
+  subnets: private
+assets:
+  bucket: s3://acme-orders-assets
+  prefetch_on_start: true
+images:
+  source: s3://acme-orders-images

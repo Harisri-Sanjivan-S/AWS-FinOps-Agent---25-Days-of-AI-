@@ -1,0 +1,6 @@
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+PR_SUMMARY.md

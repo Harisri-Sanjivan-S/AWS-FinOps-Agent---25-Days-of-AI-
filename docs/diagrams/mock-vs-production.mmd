@@ -1,0 +1,63 @@
+flowchart LR
+    subgraph POC["POC: planted JSON on the laptop"]
+        direction TB
+        P1["anomaly.json<br/>anom-001: +$1,240, +38%"]
+        P2["bill_lines.json<br/>185 daily lines, CUR 2.0 columns"]
+        P3["cloudtrail_events.json<br/>6 events, 3 distractors"]
+        P4["metrics.json<br/>21 hourly CPU / GPU / NAT series"]
+        P5["tags.json<br/>49 resources, GPUs untagged"]
+        P6["tickets.json<br/>CHG-1042 load test"]
+        P7["budgets.json<br/>3 cost budgets"]
+        P8["exceptions.json<br/>approved 'planned' spend"]
+        P9["deploy notes + NAT traffic record<br/>orders-service v2.14, bytes to S3"]
+        P10["next_day_bill.json<br/>no action / after fix"]
+    end
+
+    subgraph TOOLS["Agent tools (same signature)"]
+        direction TB
+        T1["start investigation<br/>(code)"]
+        T2["get_cost_breakdown()<br/>get_bill_lines()"]
+        T3["lookup_change_events()"]
+        T4["get_utilization()"]
+        T5["get_tags()"]
+        T6["find_ticket()"]
+        T7["get_budget()"]
+        T8["check_exception()<br/>record_exception()"]
+        T9["get_deployment()<br/>get_traffic_destinations()"]
+        T10["get_next_day_bill()"]
+    end
+
+    subgraph PROD["Production: live source, read-only role"]
+        direction TB
+        R1["AWS Cost Anomaly Detection<br/>monitor + alert subscription to SNS;<br/>GetAnomalies for the root causes"]
+        R2["CUR 2.0 via AWS Data Exports<br/>Parquet in S3, queried with Athena<br/>(resource IDs + hourly)"]
+        R3["AWS CloudTrail<br/>LookupEvents (90 days) or<br/>organisation trail in S3 + Athena"]
+        R4["Amazon CloudWatch GetMetricData<br/>(CloudWatch agent for GPU metrics)<br/>+ Compute Optimizer idle findings"]
+        R5["Resource Groups Tagging API<br/>+ tag policies in AWS Organizations"]
+        R6["Jira / ServiceNow<br/>change-request API"]
+        R7["AWS Budgets<br/>DescribeBudgets"]
+        R8["Amazon DynamoDB<br/>exceptions table (owner, reason, expiry)"]
+        R9["CI/CD deployment records + Git commits;<br/>VPC Flow Logs in S3 + Athena"]
+        R10["Next day's CUR 2.0 lines,<br/>checked by an EventBridge schedule"]
+    end
+
+    P1 --> T1 --> R1
+    P2 --> T2 --> R2
+    P3 --> T3 --> R3
+    P4 --> T4 --> R4
+    P5 --> T5 --> R5
+    P6 --> T6 --> R6
+    P7 --> T7 --> R7
+    P8 --> T8 --> R8
+    P9 --> T9 --> R9
+    P10 --> T10 --> R10
+
+    classDef sim fill:#ECEFF1,stroke:#455A64,color:#1C2A31
+    classDef code fill:#E3F2FD,stroke:#1565C0,color:#0D2B52
+    classDef aws fill:#FFF3E0,stroke:#E65100,color:#4E2600
+    classDef ext fill:#F5F5F5,stroke:#616161,color:#212121,stroke-dasharray: 4 2
+
+    class P1,P2,P3,P4,P5,P6,P7,P8,P9,P10 sim
+    class T1,T2,T3,T4,T5,T6,T7,T8,T9,T10 code
+    class R1,R2,R3,R4,R5,R7,R8,R10 aws
+    class R6,R9 ext

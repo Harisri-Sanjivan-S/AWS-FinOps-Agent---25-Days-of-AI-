@@ -1,0 +1,53 @@
+flowchart TB
+    UI["Streamlit demo app<br/>console · live trace · case · owner inbox · results"]
+
+    subgraph LOCAL["Runs locally (laptop)"]
+        direction TB
+        DET["Detect (code)<br/>materiality gate, drivers"]
+        AG["Investigator agent<br/>Strands Agents"]
+        TOOLS["Read-only tools<br/>bill, CloudTrail, tags, tickets,<br/>budgets, exceptions, utilization,<br/>deployments, flow logs"]
+        RULES["Rules (code)<br/>evidence check, 4 checks, verdict,<br/>money, routing, write-up check"]
+        WR["Writer agent<br/>plain-English, cited"]
+        LEDGER["Cost ledger<br/>$25 guard"]
+    end
+
+    LLM["Amazon Bedrock<br/>Claude Haiku 4.5 · Sonnet 4.6 escalation"]
+    SIM["Planted JSON shaped like AWS<br/>Cost Anomaly Detection, CUR 2.0,<br/>CloudTrail, CloudWatch, Budgets"]
+    OWNER["Resource owner<br/>Planned / Not mine / Reject / Approve"]
+    STOP["Simulated stop<br/>ec2:StopInstances (mocked)"]
+    DEVIN["Devin CLI (headless)<br/>or template fixer<br/>edits the target folder only"]
+    GH["GitHub: acme-platform<br/>real pull request, Terraform CI,<br/>human merges"]
+    NEXT["Next day's bill (code)<br/>saving confirmed or not"]
+
+    subgraph FUTURE["Production path (not built)"]
+        direction LR
+        LIVE["Live AWS + official MCP servers"]
+        CORE["AgentCore Runtime, Gateway,<br/>Observability"]
+        CHAT["Slack / Teams"]
+    end
+
+    UI --> DET --> AG
+    AG <-->|reasoning| LLM
+    AG --> TOOLS --> SIM
+    AG -->|findings + evidence IDs| RULES --> WR
+    WR <--> LLM
+    AG -.-> LEDGER
+    WR --> UI
+    UI --> OWNER
+    OWNER -->|approve stop| STOP --> NEXT
+    OWNER -->|approve code fix| DEVIN --> GH
+    TOOLS -.-> LIVE
+    AG -.-> CORE
+    OWNER -.-> CHAT
+
+    classDef aws fill:#FFF3E0,stroke:#E65100,color:#4E2600
+    classDef code fill:#E3F2FD,stroke:#1565C0,color:#0D2B52
+    classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#3B0A57
+    classDef human fill:#E8F5E9,stroke:#2E7D32,color:#123D17
+    classDef ext fill:#ECEFF1,stroke:#455A64,color:#1C2A31
+
+    class LLM,SIM,LIVE,CORE aws
+    class DET,TOOLS,RULES,LEDGER,NEXT code
+    class AG,WR,DEVIN ai
+    class UI,OWNER human
+    class STOP,GH,CHAT ext

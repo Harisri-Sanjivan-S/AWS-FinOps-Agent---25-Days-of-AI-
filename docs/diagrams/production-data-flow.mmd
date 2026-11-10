@@ -1,0 +1,57 @@
+flowchart TB
+    subgraph SIGNAL["1. The signal: source of truth for 'something changed'"]
+        direction LR
+        PAY["Management (payer) account<br/>spend across all accounts"]
+        CAD["AWS Cost Anomaly Detection<br/>ML monitor on spend"]
+        SNS["Amazon SNS<br/>alert subscription"]
+        LAM["AWS Lambda<br/>start investigation"]
+        PAY --> CAD --> SNS --> LAM
+    end
+
+    subgraph AGENT["2. Investigation on Amazon Bedrock AgentCore"]
+        direction LR
+        RT["AgentCore Runtime<br/>Strands agent + Bedrock model"]
+        RULES["Rules in code<br/>checks, verdict, money"]
+        GW["AgentCore Gateway<br/>tools as MCP, scoped by<br/>Identity + Policy"]
+        RULES <--> RT <--> GW
+    end
+
+    subgraph EVID["3. Evidence sources (read-only)"]
+        direction LR
+        ATH["Amazon Athena over S3<br/>CUR 2.0 (Data Exports),<br/>CloudTrail org trail,<br/>VPC Flow Logs"]
+        CW["CloudWatch metrics<br/>+ Compute Optimizer"]
+        TAG["Tagging API<br/>+ AWS Budgets"]
+        TIX["Jira / ServiceNow<br/>CI/CD + Git commits"]
+    end
+
+    subgraph HUMAN["4. Decision and fix"]
+        direction LR
+        DDB["DynamoDB<br/>cases, exceptions, audit"]
+        CHAT["Slack / Teams<br/>owner message"]
+        OWN["Resource owner"]
+        SF["Step Functions approval<br/>then Lambda reversible stop"]
+        PR["GitHub pull request<br/>CI checks, human merges"]
+        CHAT --> OWN
+        OWN -->|Approve stop| SF
+        OWN -->|Approve code fix| PR
+    end
+
+    LAM --> RT
+    GW --> ATH
+    GW --> CW
+    GW --> TAG
+    GW --> TIX
+    RT --> DDB
+    RT --> CHAT
+
+    classDef aws fill:#FFF3E0,stroke:#E65100,color:#4E2600
+    classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#3B0A57
+    classDef code fill:#E3F2FD,stroke:#1565C0,color:#0D2B52
+    classDef human fill:#E8F5E9,stroke:#2E7D32,color:#123D17
+    classDef ext fill:#ECEFF1,stroke:#455A64,color:#1C2A31
+
+    class PAY,CAD,SNS,LAM,GW,ATH,CW,TAG,DDB,SF aws
+    class RT ai
+    class RULES code
+    class OWN human
+    class TIX,CHAT,PR ext

@@ -1,0 +1,23 @@
+# Service catalog: which folder each service lives in and which team owns it.
+# Used to route cost fixes to the right place (like a Backstage catalog).
+services:
+  orders-service:
+    path: services/orders-service
+    infra: services/orders-service/infra
+    team: orders-team
+    resources:
+      - arn:aws:ecs:us-east-1:111122223333:service/prod/orders-service
+  checkout:
+    path: services/checkout
+    infra: services/checkout/infra
+    team: payments-team
+  search:
+    path: services/search
+    infra: services/search/infra
+    team: search-team
+platform:
+  network:
+    path: platform/network
+    team: platform-team
+    resources:
+      - nat-0c1

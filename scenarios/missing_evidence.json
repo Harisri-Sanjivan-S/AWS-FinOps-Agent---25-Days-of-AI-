@@ -1,0 +1,25 @@
+{
+  "extends": "tuesday",
+  "scenario_id": "missing_evidence",
+  "case_prefix": "MIS",
+  "description": "Test scenario 5: GPU instances appear on the bill with no change event, no tags and no ticket. Expected: Unexplained, gaps listed.",
+  "drop_scenes": ["load_test", "nat_after_deploy"],
+  "scene_overrides": {
+    "forgotten_gpus": {
+      "title": "Unexplained GPU instances",
+      "launch": { "omit_event": true },
+      "expected": {
+        "checks": { "size": false, "timing": false, "exact_id": false, "owner": false },
+        "confidence": 0,
+        "planned": false,
+        "used": false,
+        "verdict": "unexplained",
+        "needs_confirmation": true,
+        "action": "none",
+        "proposed_fix": null,
+        "notify": "finops-team",
+        "saving_confirmed": null
+      }
+    }
+  }
+}

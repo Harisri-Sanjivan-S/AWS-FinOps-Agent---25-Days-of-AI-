@@ -1,0 +1,13 @@
+{
+  "extends": "tuesday",
+  "scenario_id": "not_confirmed",
+  "case_prefix": "NCF",
+  "description": "Test scenario 6: the forgotten GPUs are stopped, but a script relaunches them, so the next day's bill does not drop. Expected: saving not confirmed.",
+  "drop_scenes": ["load_test", "nat_after_deploy"],
+  "scene_overrides": {
+    "forgotten_gpus": {
+      "relaunched_after_stop": true,
+      "expected": { "saving_confirmed": false }
+    }
+  }
+}

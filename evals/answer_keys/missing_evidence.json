@@ -1,0 +1,114 @@
+{
+  "scenario_id": "missing_evidence",
+  "case_prefix": "MIS",
+  "description": "Test scenario 5: GPU instances appear on the bill with no change event, no tags and no ticket. Expected: Unexplained, gaps listed.",
+  "distractor_change_events": [
+    "ct-004"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-10-20",
+  "baseline_mean": 3260.0,
+  "baseline_sd": 42.43,
+  "spike_total": 4110.0,
+  "increase": 850.0,
+  "increase_pct": 26.07,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "forgotten_gpus",
+      "title": "Unexplained GPU instances",
+      "resource_ids": [
+        "i-0a1",
+        "i-0a2",
+        "i-0a3",
+        "i-0a4",
+        "i-0a5",
+        "i-0a6",
+        "i-0a7",
+        "i-0a8"
+      ],
+      "daily_increase": 820.0,
+      "start_time": "2026-10-19T22:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261020-035",
+          "bill-20261020-036",
+          "bill-20261020-037",
+          "bill-20261020-038",
+          "bill-20261020-039",
+          "bill-20261020-040",
+          "bill-20261020-041",
+          "bill-20261020-042"
+        ],
+        "change_events": [],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039",
+          "tag-040",
+          "tag-041"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008",
+          "met-009",
+          "met-010",
+          "met-011",
+          "met-012",
+          "met-013",
+          "met-014",
+          "met-015",
+          "met-016"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": false,
+          "timing": false,
+          "exact_id": false,
+          "owner": false
+        },
+        "confidence": 0,
+        "planned": false,
+        "used": false,
+        "verdict": "unexplained",
+        "needs_confirmation": true,
+        "action": "none",
+        "proposed_fix": null,
+        "notify": "finops-team",
+        "saving_confirmed": null
+      },
+      "saving_per_day": 0.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

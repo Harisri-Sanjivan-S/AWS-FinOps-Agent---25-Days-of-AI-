@@ -1,0 +1,24 @@
+[project]
+name = "cloud-bill-detective"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "boto3==1.43.123",
+    "pydantic==2.14.2",
+    "pyyaml==6.0.3",
+    "strands-agents==1.63.0",
+    "streamlit==1.66.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.ruff]
+line-length = 130
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.3",
+]
