@@ -1,0 +1,27 @@
+[
+  {
+    "evidence_id": "net-001",
+    "nat_gateway_id": "nat-0c1",
+    "window_start": "2026-11-06T10:00:00Z",
+    "window_end": "2026-11-07T00:00:00Z",
+    "source": "VPC Flow Logs (aggregated, traffic added after the window start)",
+    "total_bytes": 5777777777778,
+    "destinations": [
+      {
+        "destination": "com.amazonaws.us-east-1.s3 (prefix list pl-63a5400a)",
+        "bytes": 5257777777778,
+        "share_pct": 91.0
+      },
+      {
+        "destination": "registry-1.docker.io",
+        "bytes": 346666666667,
+        "share_pct": 6.0
+      },
+      {
+        "destination": "other internet destinations",
+        "bytes": 173333333333,
+        "share_pct": 3.0
+      }
+    ]
+  }
+]

@@ -24,4 +24,4 @@ def answer_key(scenario: str) -> dict:
 
 
 SCENARIOS = ["tuesday", "missing_evidence", "not_confirmed", "injection"]
-WEEK = [f"nov{d:02d}" for d in range(7, 15)]
+WEEK = [f"nov{d:02d}" for d in range(6, 15)]

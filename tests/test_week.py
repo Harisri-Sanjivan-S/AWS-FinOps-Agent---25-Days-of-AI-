@@ -12,24 +12,24 @@ from scripts import run_week
 def test_week_runner_needs_confirmation_for_bedrock(capsys):
     assert run_week.main([]) == []
     out = capsys.readouterr().out
-    assert "8 day(s), 10 cost drivers" in out and "--confirm" in out
+    assert "9 day(s), 12 cost drivers" in out and "--confirm" in out
 
 
 def test_week_with_owner_actions_scores_and_proves():
     results = run_week.main(["--owner-actions"], mode="offline")
-    assert len(results) == 8 and results[0][1] == [], "7 Nov stays below the gate"
+    assert len(results) == 9 and results[1][1] == [], "7 Nov stays below the gate"
     stores = latest_runs(mode="offline")
     rows = [score_case(c) for s in stores for c in s.cases()]
     summary = summarise(rows)
-    assert summary["investigations"] == 10 and summary["verdict_accuracy_pct"] == 100
+    assert summary["investigations"] == 12 and summary["verdict_accuracy_pct"] == 100
     assert summary["routing_accuracy_pct"] == 100 and summary["guardrail_tests"] >= 2
     assert summary["guardrail_passed"] == summary["guardrail_tests"]
     evidence = proof(stores)
     confirmed = [s for s in evidence["savings"] if s["confirmed"]]
     not_confirmed = [s for s in evidence["savings"] if s["confirmed"] is False]
-    assert {s["case"] for s in confirmed} == {"N08-01", "N09-01", "N10-01", "N13-01"}, "N09: idle hosts stopped early"
+    assert {s["case"] for s in confirmed} == {"N06-01", "N08-01", "N09-01", "N10-01", "N13-01"}, "N09: idle hosts stopped early"
     assert [s["case"] for s in not_confirmed] == ["N14-01"], "relaunched GPUs: the bill does not drop"
-    assert abs(evidence["proven_per_day"] - (700 + 700 + 820 + 820)) < 0.05 and evidence["actions_without_approval"] == 0
+    assert abs(evidence["proven_per_day"] - (450 + 700 + 700 + 820 + 820)) < 0.05 and evidence["actions_without_approval"] == 0
     assert all(d["by"] in rbac.ACTORS for d in evidence["decisions"])
 
 

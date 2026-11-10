@@ -1,0 +1,155 @@
+{
+  "scenario_id": "nov06",
+  "case_prefix": "N06",
+  "description": "Demo week, Fri 06 Nov 2026: Two fixes waiting: idle dev GPUs (Ravi) and NAT charge after a deploy (Orders team).",
+  "distractor_change_events": [
+    "ct-006"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-06",
+  "baseline_mean": 3247.96,
+  "baseline_sd": 39.27,
+  "spike_total": 3987.96,
+  "increase": 740.0,
+  "increase_pct": 22.78,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "dev_gpus",
+      "title": "Idle dev GPU instances",
+      "resource_ids": [
+        "i-0h1",
+        "i-0h2",
+        "i-0h3",
+        "i-0h4",
+        "i-0h5",
+        "i-0h6"
+      ],
+      "daily_increase": 450.0,
+      "start_time": "2026-11-05T17:45:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261106-035",
+          "bill-20261106-036",
+          "bill-20261106-037",
+          "bill-20261106-038",
+          "bill-20261106-039",
+          "bill-20261106-040"
+        ],
+        "change_events": [
+          "ct-003"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008",
+          "met-009",
+          "met-010",
+          "met-011",
+          "met-012"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "likely_waste",
+        "notify": "ravi.m"
+      },
+      "saving_per_day": 450.0
+    },
+    {
+      "scene_id": "nat_after_deploy",
+      "title": "Network charge after a deploy",
+      "resource_ids": [
+        "nat-0c1"
+      ],
+      "daily_increase": 260.0,
+      "start_time": "2026-11-06T10:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261106-031"
+        ],
+        "change_events": [
+          "ct-005"
+        ],
+        "tags": [
+          "tag-030",
+          "tag-043"
+        ],
+        "metrics": [
+          "met-013"
+        ],
+        "tickets": [],
+        "deployments": [
+          "dep-001"
+        ],
+        "traffic": [
+          "net-001"
+        ]
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": false,
+          "owner": false
+        },
+        "confidence": 2,
+        "planned": false,
+        "used": true,
+        "verdict": "unbudgeted",
+        "needs_confirmation": true,
+        "action": "ask_owner",
+        "proposed_fix": "s3_gateway_endpoint",
+        "notify": "orders-team",
+        "saving_confirmed": null
+      },
+      "saving_per_day": 0.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

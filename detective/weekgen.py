@@ -78,6 +78,10 @@ def days() -> list[dict]:
         return (date(2026, 11, day) + timedelta(days=delta)).isoformat()
 
     out = []
+    out.append({"day": 6, "title": "Two fixes waiting: idle dev GPUs (Ravi) and NAT charge after a deploy (Orders team)",
+                "nat_daily": 260.0, "scenes": [
+        instances("dev_gpus", "Idle dev GPU instances", "i-0h", 6, "g4dn.12xlarge", 450.0, f"{d(6, -1)}T17:45:00Z",
+                  "ravi.m", expected=_expected("likely_waste", "ravi.m"))]})
     out.append({"day": 7, "title": "Quiet day: noise only, no alert", "scenes": []})
     out.append({"day": 8, "title": "Forgotten GPU notebooks (Anika)", "scenes": [
         instances("forgotten_gpus", "Forgotten GPU notebooks", "i-0d", 4, "g5.12xlarge", 700.0, f"{d(8, -1)}T19:30:00Z",

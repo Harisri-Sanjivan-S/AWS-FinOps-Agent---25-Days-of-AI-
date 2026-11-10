@@ -22,7 +22,7 @@ from detective.ledger import Ledger, estimate_usd
 from detective.pipeline import approve, investigate_all, next_day
 from detective.sources import FixtureSource
 
-WEEK = [f"nov{d:02d}" for d in range(7, 15)]
+WEEK = [f"nov{d:02d}" for d in range(6, 15)]
 
 
 def play_owner_actions(store, cases, open_prs: bool, log=print) -> None:
