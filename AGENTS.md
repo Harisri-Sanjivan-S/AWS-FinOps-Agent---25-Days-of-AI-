@@ -1,11 +1,11 @@
 # Agentic FinOps on AWS: code repository rules
 
-Full title: "Agentic FinOps on AWS: From Cost Spikes to Owner-Approved Remediation" (formerly "Cloud Bill Detective"; the Python package keeps the old name). Winter "25 Days of AI" POC on the AWS partner track. Builder: Harisri Sanjivan S. Built in one stretch; keep it simple.
+Title: "Agentic FinOps with AWS Bedrock and Devin" (earlier "Agentic FinOps on AWS…", originally "Cloud Bill Detective"; the Python package keeps the old name). Winter "25 Days of AI" POC on the AWS partner track. Builder: Harisri Sanjivan S. Built in one stretch; keep it simple.
 
 ## Where things live
 - **This repository is the only place for code and coding docs.** Path: `/Users/sanjivan/Documents/AWS FinOps Agent/AWS FinOps Agent - 25 Days of AI ` (note the trailing space in the folder name; always quote the path). Remote: `Harisri-Sanjivan-S/AWS-FinOps-Agent---25-Days-of-AI-`.
 - `docs/implementation-plan.md`: the current implementation plan and specification. Read it before any coding task.
-- Planning and reference docs stay in `/Users/sanjivan/Documents/25DOAI/`: `00-project-context.md` (all decisions), `Agentic_FinOps_on_AWS_Detailed_POC.docx` (source of truth), `01`–`08`. The old `25DOAI/cloud-bill-detective/` folder is a superseded copy; do not edit it.
+- Planning and reference docs stay in `/Users/sanjivan/Documents/25DOAI/`: `00-project-context.md` (all decisions), `Agentic_FinOps_with_AWS_Bedrock_and_Devin_POC.docx` (current POC document, generated from `08-poc-document.md`; the older `Agentic_FinOps_on_AWS_Detailed_POC.docx` is the original), `01`–`08`. The old `25DOAI/cloud-bill-detective/` folder is a superseded copy; do not edit it.
 
 ## Design rules (non-negotiable)
 - Code measures, AI investigates, humans judge. The LLM never does arithmetic and never decides the verdict.
