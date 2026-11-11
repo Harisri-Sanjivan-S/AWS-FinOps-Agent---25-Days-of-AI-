@@ -25,8 +25,9 @@ def trace(case: Case) -> None:
     if case.tool_calls:
         st.dataframe([call_row(c) for c in case.tool_calls], hide_index=True, width="stretch")
     u = case.usage
-    ui.muted(f"{len(case.tool_calls)} tool calls · {', '.join(ui.model_label(m) for m in u.models)} · "
-             f"{u.input_tokens + u.output_tokens:,} tokens · ${u.cost_usd:.3f} · {u.seconds:.0f} s")
+    ui.facts_line([("Tool calls", str(len(case.tool_calls))), ("Model", ", ".join(ui.model_label(m) for m in u.models)),
+                   ("Tokens", f"{u.input_tokens + u.output_tokens:,}"), ("Cost", f"${u.cost_usd:.3f}"),
+                   ("Time", f"{u.seconds:.0f} s")])
     if not case.report:
         st.markdown("Needs review: " + "; ".join(case.validation_errors[:2]))
 

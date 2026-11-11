@@ -71,11 +71,13 @@ with right, ui.card("Evidence", fill="main"):
                  "exact_id": "Change names the resources", "owner": "Owner identified"}
         st.dataframe([{"Check": names[k], "Result": "Pass" if getattr(r.checks, k) else "Fail",
                        "Detail": r.checks.notes.get(k, "")} for k in names], hide_index=True, width="stretch")
-        ui.muted(f"Confidence {r.confidence} of 4")
+        ui.facts_line([("Confidence", f"{r.confidence} of 4")])
     with tab_audit:
         st.dataframe([{"Time": a.at[:19].replace("T", " "),
                        "By": ui.actor_name(a.actor) if a.actor in ui.rbac.ACTORS else ui.model_label(a.actor),
                        "Event": a.event} for a in case.audit], hide_index=True, width="stretch")
         u = case.usage
-        ui.muted(f"{len(case.tool_calls)} tool calls · {', '.join(ui.model_label(m) for m in u.models)} · "
-                 f"{u.input_tokens + u.output_tokens:,} tokens · ${u.cost_usd:.3f} · {u.seconds:.0f} s")
+        ui.facts_line([("Tool calls", str(len(case.tool_calls))),
+                       ("Model", ", ".join(ui.model_label(m) for m in u.models)),
+                       ("Tokens", f"{u.input_tokens + u.output_tokens:,}"), ("Cost", f"${u.cost_usd:.3f}"),
+                       ("Time", f"{u.seconds:.0f} s")])

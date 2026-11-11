@@ -69,7 +69,7 @@ with right, ui.card("Selected case", fill="main"):
         st.stop()
     if case.status == "quiet":
         st.markdown("Planned and in use, so no alert was sent.")
-        ui.muted(f"Planned by {', '.join(r.planned_evidence_ids)} · {r.usage_summary}")
+        ui.facts_line([("Planned by", ", ".join(r.planned_evidence_ids)), ("Usage", r.usage_summary)])
         st.stop()
 
     ui.kv([("Increase", f"{ui.money(case.driver.daily_increase)} / day"), ("Already spent", ui.money(r.already_spent)),

@@ -58,8 +58,8 @@ if tab == "Overview" and summary:
             agent, plain = float(ev["Verdict accuracy"].rstrip("%")), float(bl["Verdict accuracy"].rstrip("%"))
             st.bar_chart({"Verdict accuracy (%)": [agent, plain]}, color=ui.ORANGE, height=370, x_label="",
                          y_label="Accuracy %")
-            ui.muted(f"Left: agent with rules {agent:.0f}% · right: plain AI {plain:.0f}%. Same model, same seven "
-                     "test scenarios.")
+            ui.facts_line([("Agent with rules", f"{agent:.0f}%"), ("Plain AI", f"{plain:.0f}%")])
+            ui.muted("Left bar: agent with rules · right bar: plain AI. Same model, same seven test scenarios.")
         else:
             st.markdown("Run the eval suite and the baseline to fill this chart.")
     with c2, ui.card("Time and cost by day", fill="low"):

@@ -79,6 +79,8 @@ CSS = f"""
   .crumbs {{color: {MUTED}; font-size: .8rem; margin-bottom: .1rem;}}
   .crumbs b {{color: {BLUE}; font-weight: 600;}}
   .muted {{color: {MUTED}; font-size: .86rem;}}
+  .fact {{color: #000000; font-weight: 800; text-transform: uppercase; letter-spacing: .03em;}}
+  .factline {{font-size: .95rem; color: #16191F; margin: .1rem 0 .35rem 0;}}
   .dot {{display:inline-block; width:.6rem; height:.6rem; border-radius:50%; margin-right:.4rem; vertical-align: .02rem;}}
   .pill {{display:inline-block; color:#FFFFFF; font-weight:700; font-size:.74rem; padding:.1rem .55rem;
        border-radius: 999px; letter-spacing:.02em;}}
@@ -248,6 +250,16 @@ def kv(rows: list[tuple[str, str]]) -> None:
     st.markdown(f"<table class='kv'>{body}</table>", unsafe_allow_html=True)
 
 
+def facts(items: list[tuple[str, str]], lead: str = "") -> str:
+    """A free-text summary line: each label in black, bold capitals, followed by its value."""
+    parts = [f"<span class='fact'>{k}</span> {v}" if k else f"<span class='fact'>{v}</span>" for k, v in items]
+    return (f"{lead} · " if lead else "") + " &nbsp;·&nbsp; ".join(parts)
+
+
+def facts_line(items: list[tuple[str, str]], lead: str = "") -> None:
+    st.markdown(f"<div class='factline'>{facts(items, lead)}</div>", unsafe_allow_html=True)
+
+
 def muted(text: str) -> None:
     st.markdown(f"<div class='muted'>{text}</div>", unsafe_allow_html=True)
 
@@ -336,7 +348,8 @@ def case_status_line(case: Case) -> str:
     r = case.report
     if not r:
         return "Needs review"
-    parts = [pill(r.verdict), f"confidence {r.confidence} of 4", STATUS_LABELS[case.status].lower()]
+    items = [("Confidence", f"{r.confidence} of 4")]
     if case.assigned_to:
-        parts.insert(2, f"owner {actor_name(case.assigned_to)}")
-    return " · ".join(parts)
+        items.append(("Owner", actor_name(case.assigned_to)))
+    items.append(("Status", STATUS_LABELS[case.status].lower()))
+    return f"<div class='factline'>{pill(r.verdict)} &nbsp; {facts(items)}</div>"

@@ -30,16 +30,16 @@ with head:
 
 source = FixtureSource(scenario)
 det = detect(source)
-st.markdown(ui.md(f"{source.scenario.get('title', '')} · Spend **{ui.money(det.spike_total)}** · expected "
-                  f"{ui.money(det.baseline_mean)} · {det.increase_pct:+.0f}% · {len(det.drivers)} cost driver"
-                  f"{'s' if len(det.drivers) != 1 else ''}"))
+ui.facts_line([("Spend", ui.money(det.spike_total)), ("Expected", ui.money(det.baseline_mean)),
+               ("", f"{det.increase_pct:+.0f}%"),
+               ("Cost drivers", str(len(det.drivers)))], lead=source.scenario.get("title", ""))
 
 left, right = st.columns([3, 2])
 with left, ui.card("Daily spend (USD)", fill="main"):
     days = {**det.baseline_days, det.spike_date: det.spike_total}
     st.bar_chart({"Spend": list(days.values())}, color=ui.BLUE, height=500, x_label="Same weekday, last 4 weeks → today",
                  y_label="USD")
-    ui.muted(f"Expected {ui.money(det.baseline_mean)} · today {ui.money(det.spike_total)}")
+    ui.facts_line([("Expected", ui.money(det.baseline_mean)), ("Today", ui.money(det.spike_total))])
 
 
 def start() -> None:
@@ -72,7 +72,7 @@ with right, ui.card("Cost drivers", fill="main"):
         b, c = st.columns([1, 1.4], vertical_alignment="center")
         clicked = b.button("Investigate", type="primary")
         with c:
-            ui.muted(f"Estimated cost ${est:.2f}")
+            ui.facts_line([("Estimated cost", f"${est:.2f}")])
         if clicked:
             if ui.run_mode() == "bedrock":
                 confirm()

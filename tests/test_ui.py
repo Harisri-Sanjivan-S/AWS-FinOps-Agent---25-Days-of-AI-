@@ -72,7 +72,8 @@ def test_console_is_clean_and_breadcrumbed():
     no_errors(at)
     page = text(at)
     assert "Console</b>" not in page and "Tue 10 Nov" in page, "breadcrumb shows the selected day"
-    assert "Spend **\\$4,496.44** · expected \\$3,256.44" in page and "3 cost drivers" in page
+    assert "<span class='fact'>Spend</span> $4,496.44" in page and "<span class='fact'>Expected</span> $3,256.44" in page
+    assert "<span class='fact'>+38%</span>" in page and "<span class='fact'>Cost drivers</span> 3" in page
     assert "Investigate" in buttons(at) and "Estimated cost" in page
     assert not [w for w in HIDDEN_WORDS if w in page.lower()], page
     assert not at.metric, "no big number tiles"
