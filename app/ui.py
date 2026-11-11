@@ -22,37 +22,69 @@ from detective.models import VERDICT_LABELS, Case
 from detective.sources import FixtureSource
 from evals.score import all_runs, latest_runs
 
-ACCENT = "#1F3A5F"
-MUTED = "#6B7280"
-VERDICT_COLORS = {"likely_waste": "#B4413C", "unbudgeted": "#B7791F", "oversized": "#A08A2A", "expected": "#3C7A57",
-                  "unexplained": "#6B7280"}
+NAVY = "#232F3E"      # AWS squid ink (top bar)
+ORANGE = "#EC7211"    # AWS orange (primary actions, active page)
+BLUE = "#0972D3"      # AWS link blue (charts, links)
+ACCENT = NAVY
+MUTED = "#414D5C"
+BORDER = "#D1D5DB"
+VERDICT_COLORS = {"likely_waste": "#D13212", "unbudgeted": "#C77700", "oversized": "#8D6E00", "expected": "#037F0C",
+                  "unexplained": "#5F6B7A"}
 STATUS_LABELS = {"quiet": "No alert", "awaiting_owner": "Awaiting decision", "planned": "Planned",
                  "rejected": "Rejected", "fix_in_progress": "Fix in review", "fixed": "Fixed", "needs_review": "Needs review"}
 PAGES = {
-    "console": ("views/console.py", "Console", ":material/query_stats:"),
-    "investigation": ("views/investigation.py", "Investigation", ":material/manage_search:"),
-    "case": ("views/case.py", "Cases", ":material/description:"),
-    "inbox": ("views/inbox.py", "Inbox", ":material/inbox:"),
-    "performance": ("views/performance.py", "AI performance", ":material/monitoring:"),
-    "results": ("views/results.py", "Settings", ":material/tune:"),
+    "console": ("views/console.py", "Console", None),
+    "investigation": ("views/investigation.py", "Investigation", None),
+    "case": ("views/case.py", "Cases", None),
+    "inbox": ("views/inbox.py", "Inbox", None),
+    "performance": ("views/performance.py", "AI performance", None),
+    "results": ("views/results.py", "Settings", None),
 }
 
 CSS = f"""
 <style>
-  .block-container {{max-width: 1080px; padding-top: 2.2rem; padding-bottom: 3rem;}}
+  [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] {{display:none;}}
+  header[data-testid="stHeader"] {{height: 0; background: transparent;}}
   footer, [data-testid="stDecoration"], [data-testid="stStatusWidget"] {{visibility: hidden; height: 0;}}
-  h1 {{font-size: 1.55rem !important; font-weight: 600 !important; margin-bottom: .2rem !important;}}
-  h2 {{font-size: 1.15rem !important; font-weight: 600 !important;}}
-  h3 {{font-size: 1.0rem !important; font-weight: 600 !important; color: {ACCENT};}}
-  [data-testid="stMetricValue"] {{font-size: 1.1rem !important;}}
-  .crumbs {{color: {MUTED}; font-size: .82rem; letter-spacing: .01em; margin-bottom: .15rem;}}
-  .crumbs b {{color: {ACCENT}; font-weight: 600;}}
-  .muted {{color: {MUTED}; font-size: .88rem;}}
-  .dot {{display:inline-block; width:.55rem; height:.55rem; border-radius:50%; margin-right:.4rem; vertical-align: .05rem;}}
-  .kv {{width:100%; border-collapse: collapse; font-size:.92rem;}}
-  .kv td {{padding:.32rem 0; border-bottom:1px solid #EEF1F4; vertical-align: top;}}
-  .kv td:first-child {{color:{MUTED}; width: 38%;}}
-  [data-testid="stSidebar"] {{border-right: 1px solid #EEF1F4;}}
+  .block-container {{max-width: 100%; padding: .5rem 1.1rem .4rem 1.1rem;}}
+  [class*="st-key-fill_main"] {{height: calc(100vh - 205px); overflow-y: auto;}}
+  [class*="st-key-fill_low"] {{height: calc(100vh - 320px); overflow-y: auto;}}
+  [class*="st-key-fill_proof"] {{height: calc(100vh - 335px); overflow-y: auto;}}
+  /* top bar */
+  .st-key-topbar {{background: {NAVY}; border-radius: 8px; padding: .35rem .9rem; margin-bottom: .35rem;}}
+  .st-key-topbar p, .st-key-topbar span, .st-key-topbar label {{color: #FFFFFF !important;}}
+  .st-key-topbar [data-testid="stPageLink"] a {{border-radius: 6px; padding: .15rem .55rem;}}
+  .st-key-topbar [data-testid="stPageLink"] a:hover {{background: #37475A;}}
+  .st-key-topbar [data-testid="stPageLink-NavLink"][aria-current="page"],
+  .st-key-topbar a[aria-current="page"] {{border-bottom: 3px solid {ORANGE}; border-radius: 0;}}
+  .st-key-topbar [data-baseweb="select"] > div {{background: #FFFFFF; min-height: 2rem;}}
+  .st-key-topbar [data-baseweb="select"] span {{color: #16191F !important;}}
+  .brand {{font-weight: 700; font-size: 1.02rem; color: #FFFFFF; white-space: nowrap; line-height: 2.25rem;
+       margin: 0; padding: 0;}}
+  .st-key-topbar [data-testid="stMarkdownContainer"] {{margin: 0; padding: 0;}}
+  .st-key-topbar [data-testid="stMarkdownContainer"] p, .st-key-topbar [data-testid="stMarkdown"] {{margin: 0 !important;}}
+  .st-key-topbar [data-testid="stPageLink"] {{margin: 0;}}
+  .st-key-topbar [data-testid="stPageLink"] a {{line-height: 2.25rem; padding-top: 0; padding-bottom: 0;}}
+  /* type and cards */
+  h1 {{font-size: 1.35rem !important; font-weight: 700 !important; color: #16191F; margin: 0 0 .15rem 0 !important;
+       padding: 0 !important;}}
+  h2, h3 {{font-size: 1rem !important; font-weight: 700 !important; color: #16191F;}}
+  [data-testid="stVerticalBlockBorderWrapper"] {{border-color: #DADAD3 !important; border-radius: 8px;
+       background: #FFFFFF; box-shadow: 0 1px 3px rgba(0,28,36,.08);}}
+  [data-testid="stMetricValue"] {{font-size: 1.25rem !important; font-weight: 700; color: #16191F;}}
+  [data-testid="stMetricLabel"] p {{color: {MUTED}; font-weight: 600; text-transform: uppercase; font-size: .72rem;
+       letter-spacing: .04em;}}
+  .label {{color: {MUTED}; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+       margin-bottom: .25rem;}}
+  .crumbs {{color: {MUTED}; font-size: .8rem; margin-bottom: .1rem;}}
+  .crumbs b {{color: {BLUE}; font-weight: 600;}}
+  .muted {{color: {MUTED}; font-size: .86rem;}}
+  .dot {{display:inline-block; width:.6rem; height:.6rem; border-radius:50%; margin-right:.4rem; vertical-align: .02rem;}}
+  .pill {{display:inline-block; color:#FFFFFF; font-weight:700; font-size:.74rem; padding:.1rem .55rem;
+       border-radius: 999px; letter-spacing:.02em;}}
+  .kv {{width:100%; border-collapse: collapse; font-size:.9rem;}}
+  .kv td {{padding:.3rem 0; border-bottom:1px solid #E9EBED; vertical-align: top; color:#16191F;}}
+  .kv td:first-child {{color:{NAVY}; width: 40%; font-weight: 700;}}
 </style>
 """
 
@@ -85,6 +117,7 @@ def actor() -> rbac.Actor:
 def require_page(name: str) -> rbac.Actor:
     """Guard inside each view, so a page can never render for an actor whose role does not include it."""
     style()
+    _card_seq["n"] = 0
     a = actor()
     if name not in a.pages:
         st.error(f"{a.name} ({a.role}) does not have access to this page.")
@@ -150,24 +183,15 @@ def _actor_changed() -> None:
 
 
 def actor_switcher() -> rbac.Actor:
-    """Top of the sidebar: who is using the app. Each actor gets only the pages and cases their role allows."""
+    """Kept for the entry point: the switcher now lives on the right of the top bar (see navigation)."""
     defaults()
-    style()
-    with st.sidebar:
-        st.markdown(f"<div style='font-weight:600;color:{ACCENT};font-size:1rem;margin-bottom:.6rem'>"
-                    "Agentic FinOps</div>", unsafe_allow_html=True)
-
-        def label(a: str) -> str:
-            x, n = rbac.ACTORS[a], _open_count(a)
-            return f"{x.name}" + (f"  ({n})" if n else "")
-
-        st.selectbox("Acting as", list(rbac.ACTORS), format_func=label, key="actor", on_change=_actor_changed)
-        st.markdown(f"<div class='muted' style='margin-top:-.4rem'>{actor().role}</div>", unsafe_allow_html=True)
     return actor()
 
 
 def navigation() -> None:
-    """Build role-based navigation (hidden default nav) and render links under the actor switcher."""
+    """Top bar: brand, the pages this actor's role allows, and the actor switcher on the right."""
+    defaults()
+    style()
     a = actor()
     pages = [st.Page(PAGES[p][0], title=PAGES[p][1], icon=PAGES[p][2], url_path=p, default=(i == 0))
              for i, p in enumerate(a.pages)]
@@ -176,11 +200,35 @@ def navigation() -> None:
         st.switch_page(pages[0], query_params={"actor": a.actor_id})
     st.query_params["actor"] = a.actor_id
     st.query_params["day"] = st.session_state["scenario"]
-    with st.sidebar:
-        st.divider()
-        for page in pages:
-            st.page_link(page, query_params={"actor": a.actor_id, "day": st.session_state["scenario"]})
+    with st.container(key="topbar"):
+        cols = st.columns([1.6] + [1.2] * len(pages) + [1.5], vertical_alignment="center")
+        cols[0].markdown("<div class='brand'>Agentic FinOps</div>", unsafe_allow_html=True)
+        for col, page in zip(cols[1:-1], pages):
+            col.page_link(page, query_params={"actor": a.actor_id, "day": st.session_state["scenario"]})
+
+        def label(x: str) -> str:
+            n = _open_count(x)
+            return rbac.ACTORS[x].name + (f"  ({n})" if n else "")
+
+        cols[-1].selectbox("Acting as", list(rbac.ACTORS), format_func=label, key="actor", on_change=_actor_changed,
+                           label_visibility="collapsed")
     nav.run()
+
+
+_card_seq = {"n": 0}
+
+
+def card(title: str, fill: str = "main"):
+    """A bordered card with a small uppercase title. Its height follows the window (fill = how much sits above it:
+    "main" under a page header, "low" under a header plus a row of stat cards); long content scrolls inside."""
+    _card_seq["n"] += 1
+    box = st.container(border=True, key=f"fill_{fill}_{_card_seq['n']}")
+    box.markdown(f"<div class='label'>{title}</div>", unsafe_allow_html=True)
+    return box
+
+
+def pill(verdict: str) -> str:
+    return f"<span class='pill' style='background:{VERDICT_COLORS[verdict]}'>{VERDICT_LABELS[verdict]}</span>"
 
 
 # --- small presentation helpers -----------------------------------------------------------------------------
@@ -261,6 +309,15 @@ def describe(eid: str, r: dict) -> tuple[str, str]:
     return ("Record", eid)
 
 
+def evidence_table(source: FixtureSource, ids: list[str]) -> None:
+    rows = []
+    for eid in dict.fromkeys(ids):
+        rec = source.record(eid)
+        kind, detail = describe(eid, rec) if rec else ("Not found", "")
+        rows.append({"Source": kind, "Detail": detail, "ID": eid})
+    st.dataframe(rows, hide_index=True, width="stretch")
+
+
 def citations(source: FixtureSource, ids: list[str], limit: int = 0) -> None:
     """One small 'Evidence' link under a sentence; it opens a readable list of the cited records."""
     ids = list(dict.fromkeys(ids))
@@ -279,7 +336,7 @@ def case_status_line(case: Case) -> str:
     r = case.report
     if not r:
         return "Needs review"
-    parts = [dot(r.verdict), f"confidence {r.confidence} of 4", STATUS_LABELS[case.status].lower()]
+    parts = [pill(r.verdict), f"confidence {r.confidence} of 4", STATUS_LABELS[case.status].lower()]
     if case.assigned_to:
         parts.insert(2, f"owner {actor_name(case.assigned_to)}")
     return " · ".join(parts)

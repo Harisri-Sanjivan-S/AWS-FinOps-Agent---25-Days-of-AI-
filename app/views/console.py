@@ -1,4 +1,4 @@
-"""Console (FinOps): pick a day, see code's measurement and the ranked drivers, start an investigation."""
+"""Console (FinOps): pick a day; the daily-spend chart and the ranked drivers sit side by side in cards."""
 
 import sys
 from pathlib import Path
@@ -18,29 +18,28 @@ ui.require_page("console")
 s = get_settings()
 names = ui.scenario_names()
 
-picked = st.segmented_control("Day", names, format_func=ui.day_short, default=st.session_state["scenario"],
-                              key="day_strip", label_visibility="collapsed")
+head, days_col = st.columns([1, 2.4], vertical_alignment="bottom")
+with days_col:
+    picked = st.segmented_control("Day", names, format_func=ui.day_short, default=st.session_state["scenario"],
+                                  key="day_strip", label_visibility="collapsed")
 if picked and picked != st.session_state["scenario"]:
     st.session_state["scenario"] = picked
 scenario = st.session_state["scenario"]
-ui.header("Console", "Console", ui.day_short(scenario))
+with head:
+    ui.header("Console", "Console", ui.day_short(scenario))
 
 source = FixtureSource(scenario)
 det = detect(source)
-ui.muted(f"{source.scenario.get('title', '')}")
-st.markdown(ui.md(f"Spend **{ui.money(det.spike_total)}** · expected {ui.money(det.baseline_mean)} · "
-                  f"{det.increase_pct:+.0f}% · {len(det.drivers)} cost driver{'s' if len(det.drivers) != 1 else ''}"))
+st.markdown(ui.md(f"{source.scenario.get('title', '')} · Spend **{ui.money(det.spike_total)}** · expected "
+                  f"{ui.money(det.baseline_mean)} · {det.increase_pct:+.0f}% · {len(det.drivers)} cost driver"
+                  f"{'s' if len(det.drivers) != 1 else ''}"))
 
-days = {**det.baseline_days, det.spike_date: det.spike_total}
-st.line_chart({"Daily spend (USD)": list(days.values())}, height=170, x_label="", y_label="")
-
-if not det.material:
-    st.markdown("Below the alert threshold. Nothing to investigate.")
-    st.stop()
-
-st.subheader("Cost drivers")
-st.dataframe([{"Driver": d.title, "Resources": len(d.resource_ids), "USD / day": round(d.daily_increase, 2),
-               "Share": f"{d.share_pct:.0f}%"} for d in det.drivers], hide_index=True, width="stretch")
+left, right = st.columns([3, 2])
+with left, ui.card("Daily spend (USD)", fill="main"):
+    days = {**det.baseline_days, det.spike_date: det.spike_total}
+    st.bar_chart({"Spend": list(days.values())}, color=ui.BLUE, height=500, x_label="Same weekday, last 4 weeks → today",
+                 y_label="USD")
+    ui.muted(f"Expected {ui.money(det.baseline_mean)} · today {ui.money(det.spike_total)}")
 
 
 def start() -> None:
@@ -62,12 +61,20 @@ def confirm() -> None:
         start()
 
 
-left, right = st.columns([1, 3], vertical_alignment="center")
-clicked = left.button("Investigate", type="primary", icon=":material/search:")
-with right:
-    ui.muted(f"Estimated cost ${est:.2f}")
-if clicked:
-    if ui.run_mode() == "bedrock":
-        confirm()
+with right, ui.card("Cost drivers", fill="main"):
+    if not det.material:
+        st.markdown("Below the alert threshold. Nothing to investigate.")
     else:
-        start()
+        st.dataframe([{"Driver": d.title, "USD / day": round(d.daily_increase, 2), "Share": d.share_pct / 100}
+                      for d in det.drivers], hide_index=True, width="stretch", height=420,
+                     column_config={"Share": st.column_config.ProgressColumn("Share", format="percent", min_value=0,
+                                                                             max_value=1)})
+        b, c = st.columns([1, 1.4], vertical_alignment="center")
+        clicked = b.button("Investigate", type="primary")
+        with c:
+            ui.muted(f"Estimated cost ${est:.2f}")
+        if clicked:
+            if ui.run_mode() == "bedrock":
+                confirm()
+            else:
+                start()

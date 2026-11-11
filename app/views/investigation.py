@@ -71,6 +71,12 @@ else:
     if not store.cases():
         st.markdown("Below the alert threshold. Nothing was investigated on this day.")
         st.stop()
-    for case in store.cases():
-        with st.status(label(case), state="complete" if case.report else "error", expanded=False):
-            trace(case)
+    cases = {c.case_id: c for c in store.cases()}
+    left, right = st.columns([2, 3])
+    with left, ui.card("Cost drivers", fill="main"):
+        for c in cases.values():
+            with st.status(label(c), state="complete" if c.report else "error", expanded=False):
+                st.markdown(ui.case_status_line(c), unsafe_allow_html=True)
+        pick = st.radio("Show trace for", list(cases), horizontal=True, key="trace_case")
+    with right, ui.card(f"Tool calls · {pick}", fill="main"):
+        trace(cases[pick])

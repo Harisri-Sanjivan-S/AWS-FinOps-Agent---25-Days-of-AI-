@@ -4,6 +4,6 @@ import ui  # noqa: I001 - sets sys.path
 
 import streamlit as st
 
-st.set_page_config(page_title="Agentic FinOps on AWS", page_icon=":material/query_stats:", layout="wide")
+st.set_page_config(page_title="Agentic FinOps with AWS Bedrock and Devin", layout="wide", initial_sidebar_state="collapsed")
 ui.actor_switcher()
 ui.navigation()

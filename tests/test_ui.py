@@ -46,7 +46,7 @@ def test_router_shows_pages_by_role(week):
     finops = run("Home.py", actor="finops-team")
     no_errors(finops)
     assert finops.title[0].value == "Console"
-    assert finops.sidebar.selectbox[0].label == "Acting as"
+    assert any(s.label == "Acting as" for s in finops.selectbox)
     assert not [w for w in HIDDEN_WORDS if w in text(finops).lower()]
     owner = run("Home.py", actor="ravi.m")
     no_errors(owner)

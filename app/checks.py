@@ -6,7 +6,7 @@ from __future__ import annotations
 def check_badges(tf_checks: dict, ci: str) -> str:
     def item(label: str, state: str) -> str:
         color = {"pass": "#3C7A57", "fail": "#B4413C", "pending": "#B7791F"}.get(state, "#6B7280")
-        mark = {"pass": "✓", "fail": "✗", "pending": "…", "skipped": "skipped"}.get(state, "–")
+        mark = {"pass": "passed", "fail": "failed", "pending": "running", "skipped": "skipped"}.get(state, "not run")
         return f"<span style='color:{color}'>{label} {mark}</span>"
 
     if "skipped" in tf_checks:
