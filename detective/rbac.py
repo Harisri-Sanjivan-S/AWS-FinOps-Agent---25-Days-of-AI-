@@ -8,9 +8,9 @@ from dataclasses import dataclass
 
 from detective.models import Case
 
-PAGES_ALL = ("console", "investigation", "case", "inbox", "performance", "results")
+PAGES_ALL = ("console", "investigation", "case", "inbox", "results")
 PAGES_OWNER = ("inbox", "case")
-PAGES_PLATFORM = ("inbox", "case", "performance")
+PAGES_PLATFORM = ("inbox", "case", "results")  # Settings: AI performance only
 
 
 @dataclass(frozen=True)

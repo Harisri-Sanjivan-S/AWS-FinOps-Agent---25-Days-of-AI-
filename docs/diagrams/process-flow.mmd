@@ -1,0 +1,55 @@
+flowchart LR
+    subgraph S1["1. Detect (code)"]
+        direction TB
+        A1["Cost spike alert<br/>(Cost Anomaly Detection shape)"] --> A2{"Material?<br/>> $100/day and > 20%"}
+        A2 -->|No| A3["No alert<br/>nothing to investigate"]
+        A2 -->|Yes| A4["Split into cost drivers<br/>until ~90% explained"]
+    end
+
+    subgraph S2["2. Investigate (Claude on Amazon Bedrock)"]
+        direction TB
+        B1["Usage or rate?<br/>bill lines"] --> B2["What changed? who?<br/>CloudTrail, deployments"]
+        B2 --> B3["Owner? planned?<br/>tags, tickets, budgets, exceptions"]
+        B3 --> B4["Used? where does traffic go?<br/>CloudWatch, flow logs"]
+        B4 --> B5["Findings with evidence IDs"]
+    end
+
+    subgraph S3["3. Decide (code)"]
+        direction TB
+        C1["Validate every claim<br/>unknown ID = rejected"] --> C2["4 checks<br/>size · timing · exact ID · owner"]
+        C2 --> C3{"Planned? Used?"}
+        C3 --> C4["Verdict, money,<br/>proposed fix, owner"]
+    end
+
+    subgraph S4["4. Owner (human)"]
+        direction TB
+        D1{"Owner decides"} -->|Planned| D2["Exception with expiry"]
+        D1 -->|Not mine| D3["Re-route"]
+        D1 -->|Reject| D4["Closed with reason"]
+        D1 -->|Approve| D5["Fix"]
+    end
+
+    subgraph S5["5. Fix"]
+        direction TB
+        E1{"Code-managed?"} -->|No| E2["Reversible stop<br/>(simulated)"]
+        E1 -->|Yes| E3["Devin writes the change<br/>in the target folder"]
+        E3 --> E4["Code checks paths,<br/>terraform fmt + validate"]
+        E4 --> E5["Pull request + CI<br/>human merges"]
+    end
+
+    subgraph S6["6. Confirm (code)"]
+        direction TB
+        F1{"Next day's bill<br/>dropped?"} -->|Yes| F2["Saving confirmed"]
+        F1 -->|No| F3["Not confirmed<br/>follow up"]
+    end
+
+    S1 --> S2 --> S3 --> S4 --> S5 --> S6
+
+    classDef code fill:#E3F2FD,stroke:#1565C0,color:#0D2B52
+    classDef ai fill:#F3E5F5,stroke:#6A1B9A,color:#3B0A57
+    classDef human fill:#E8F5E9,stroke:#2E7D32,color:#123D17
+    classDef devin fill:#FFF3E0,stroke:#E65100,color:#4E2600
+    class A1,A2,A3,A4,C1,C2,C3,C4,E4,F1,F2,F3 code
+    class B1,B2,B3,B4,B5 ai
+    class D1,D2,D3,D4,D5 human
+    class E1,E2,E3,E5 devin

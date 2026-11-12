@@ -99,6 +99,7 @@ def investigate_driver(store: RunStore, source: FixtureSource, driver: Driver, i
                 case.validation_errors = [str(exc)]
                 continue
             _record_usage(case, run, ledger)
+            case.agent_notes = list(run.notes)
             case.prompt_versions["investigator"] = run.prompt_version
             on_event("step", (case.case_id, "Verifying"))
             errors = validate_findings(run.output, toolbox.pool)

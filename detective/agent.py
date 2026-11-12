@@ -35,7 +35,7 @@ class AgentRun:
     output_tokens: int = 0
     seconds: float = 0.0
     stop_reason: str = ""
-    notes: list[str] = field(default_factory=list)
+    notes: list[dict] = field(default_factory=list)
 
 
 class AgentIncomplete(RuntimeError):
@@ -255,6 +255,20 @@ def strands_tools(toolbox: Toolbox) -> list:
             get_utilization, get_deployment, get_traffic_destinations]
 
 
+def agent_notes(messages: list) -> list[dict]:
+    """The agent's short plain-English notes, each paired with the tool it called next (for the investigation view)."""
+    notes = []
+    for m in messages:
+        if m.get("role") != "assistant":
+            continue
+        blocks = m.get("content", [])
+        text = " ".join(b["text"].strip() for b in blocks if isinstance(b, dict) and b.get("text"))
+        tools = [b["toolUse"]["name"] for b in blocks if isinstance(b, dict) and b.get("toolUse")]
+        if text and tools:
+            notes.append({"text": text[:300], "tool": tools[0]})
+    return notes
+
+
 class BedrockInvestigator:
     def __init__(self, model_id: str, settings: Settings | None = None, ledger: Ledger | None = None):
         self.model_id = model_id
@@ -273,7 +287,7 @@ class BedrockInvestigator:
         tin, tout = _usage(result)
         self.ledger.record(self.model_id, tin, tout, purpose=f"investigate {driver.driver_id}")
         run = AgentRun(result.structured_output, self.model_id, version, tin, tout, time.perf_counter() - started,
-                       str(result.stop_reason))
+                       str(result.stop_reason), notes=agent_notes(agent.messages))
         if run.output is None:
             raise AgentIncomplete(f"Investigator returned no structured findings (stop reason: {result.stop_reason}).", run)
         return run
@@ -374,7 +388,18 @@ class ScriptedInvestigator:
         findings = Findings(linked_change_ids=[e["evidence_id"] for e in linked], ignored_change_ids=ignored,
                             intent_evidence_ids=intent, usage_evidence_ids=usage_ids, deployment_evidence_ids=dep_ids,
                             traffic_evidence_ids=net_ids, owner_hint=owner_hint, claims=claims, gaps=gaps)
-        return AgentRun(findings, self.model_id, "scripted-1", seconds=time.perf_counter() - started, stop_reason="end_turn")
+        why = {"get_bill_lines": "Checking the bill lines to see whether usage or the rate went up.",
+               "lookup_change_events": "Looking for the change that came just before the cost started.",
+               "get_tags": "Checking the tags to find the owner and any project or change ID.",
+               "find_ticket": "Searching for an approved ticket that covers this spend.",
+               "check_exception": "Checking for a recorded exception.",
+               "get_budget": "Checking the project's budget.",
+               "get_utilization": "Checking whether the resources are actually being used.",
+               "get_deployment": "Reading the deployment record behind the change.",
+               "get_traffic_destinations": "Checking where the NAT traffic is going."}
+        notes = [{"text": why.get(c.name, f"Calling {c.name}."), "tool": c.name} for c in toolbox.calls]
+        return AgentRun(findings, self.model_id, "scripted-1", seconds=time.perf_counter() - started, stop_reason="end_turn",
+                        notes=notes)
 
 
 class TemplateWriter:

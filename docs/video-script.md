@@ -28,7 +28,7 @@ One story: one bad Tuesday, three cost drivers, one proven saving. Record with t
 
 ### Why AgentCore in production (for questions after the demo)
 - **Runtime:** hosts the agent as a managed, isolated, auto-scaling service instead of a laptop; triggered by the Cost Anomaly Detection alert.
-- **Gateway:** live tools (Cost Explorer/CUR via Athena, CloudTrail, CloudWatch, Jira, GitHub) over MCP with authentication; replaces the planted files without changing tool signatures.
+- **Gateway:** live tools (Cost Explorer/CUR via Athena, CloudTrail, CloudWatch, Jira, GitHub) over MCP with authentication; replaces the sample data without changing tool signatures.
 - **Identity:** scoped credentials per tool (read-only to billing and CloudTrail; a separate right to open PRs); no keys in code.
 - **Policy (Cedar):** hard rules outside the prompt, e.g. "may open pull requests; may never stop a resource without an approval".
 - **Observability and Evaluations:** every step traced in CloudWatch; live scoring of real investigations (the production version of our 7-scenario test).
@@ -37,6 +37,6 @@ One story: one bad Tuesday, three cost drivers, one proven saving. Record with t
 - Not built in the POC: the account is on the AWS Free plan (AgentCore needs the Paid plan), and the idea is proven locally; the agent is already UI-independent, so moving is a wrap-and-deploy.
 
 ## Rules
-- Say "planted data shaped like AWS" once in the narration (the app does not show it); never claim it changes production on its own or guarantees savings.
+- Say "sample data in AWS formats" once in the narration (the app does not show it); never claim it changes production on its own or guarantees savings.
 - Only real output from the recorded Bedrock run. If the PR step fails on camera, use the template fixer and re-record shot 8.
 - Devin takes minutes: cut from the click to the finished PR.

@@ -225,6 +225,7 @@ class Case(BaseModel):
     report: Report | None = None
     explanation: Explanation | None = None
     tool_calls: list[ToolCall] = Field(default_factory=list)
+    agent_notes: list[dict] = Field(default_factory=list)
     usage: UsageTotals = Field(default_factory=UsageTotals)
     prompt_versions: dict[str, str] = Field(default_factory=dict)
     assigned_to: str | None = None

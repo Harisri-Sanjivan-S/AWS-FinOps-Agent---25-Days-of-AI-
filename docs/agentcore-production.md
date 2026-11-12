@@ -28,7 +28,7 @@ Source: [`diagrams/agentcore-production.mmd`](diagrams/agentcore-production.mmd)
 | Service | Job in production | Replaces in the POC |
 |---|---|---|
 | Runtime | Hosts the agent, one isolated session per investigation | `uv run streamlit` on a laptop |
-| Gateway | Live tools over MCP, authenticated | Planted JSON files behind the same tool signatures |
+| Gateway | Live tools over MCP, authenticated | Sample data in AWS formats behind the same tool signatures |
 | Identity | Scoped credentials per tool, across accounts | The `finops-poc` CLI profile and `gh` login |
 | Policy | Hard rules on every tool call (Cedar) | Code-only guard: action tools never given to the agent |
 | Memory | Past cases, preferences, exceptions | None (each run starts fresh) |

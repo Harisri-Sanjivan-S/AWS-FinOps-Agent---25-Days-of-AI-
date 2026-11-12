@@ -12,12 +12,12 @@ Code measures, AI investigates, humans judge:
    are rejected, retried, then escalated to Sonnet.
 4. **Explain (AI, checked by code).** A plain-English write-up. Numbers and IDs are verified against code's facts.
 5. **Owner inbox (human).** Planned / Not mine / Reject / Approve fix. Nothing happens without a click.
-6. **Fix.** A simulated `ec2:StopInstances` for console-made GPUs, or a real pull request on the demo monorepo
+6. **Fix.** A reversible `ec2:StopInstances` (demonstrated, no real instance) for console-made GPUs, or a real pull request on the demo monorepo
    [`acme-platform`](https://github.com/Harisri-Sanjivan-S/acme-platform), written by Devin (CLI) or a fixed template.
    Code checks the changed files before pushing. A human merges.
 7. **Confirm (code).** The next day's bill proves (or doesn't) the saving.
 
-All AWS data is planted, shaped like the real services. The only AWS service used is Bedrock. No resources are created.
+All AWS data is sample data in the exact formats of the real services. The only AWS service used is Bedrock. No resources are created.
 
 **Production path:** the same agent on Amazon Bedrock AgentCore (Runtime, Gateway, Identity, Policy, Memory,
 Observability, Evaluations). See [docs/agentcore-production.md](docs/agentcore-production.md).
@@ -87,7 +87,7 @@ uv run streamlit run app/Home.py          # console, investigation, case, inbox,
   - `fixers/`: fix brief, template and Devin executors.
   - `ledger.py`: cost guard.
 - `app/`: Streamlit UI.
-- `scenarios/`, `fixtures/`: planted data.
+- `scenarios/`, `fixtures/`: sample data in AWS formats.
 - `evals/`: answer keys (tests only), runner, baseline, results.
 - `demo_repo/acme-platform/`: source of the demo monorepo.
 - `docs/`: implementation plan, video script, diagrams.

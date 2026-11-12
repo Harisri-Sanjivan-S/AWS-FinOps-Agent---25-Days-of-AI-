@@ -33,7 +33,7 @@ VERDICT_COLORS = {"likely_waste": "#D13212", "unbudgeted": "#C77700", "oversized
 STATUS_LABELS = {"quiet": "No alert", "awaiting_owner": "Awaiting decision", "planned": "Planned",
                  "rejected": "Rejected", "fix_in_progress": "Fix in review", "fixed": "Fixed", "needs_review": "Needs review"}
 PAGES = {
-    "console": ("views/console.py", "Console", None),
+    "console": ("views/console.py", "Command Center", None),
     "investigation": ("views/investigation.py", "Investigation", None),
     "case": ("views/case.py", "Cases", None),
     "inbox": ("views/inbox.py", "Inbox", None),
@@ -46,25 +46,34 @@ CSS = f"""
   [data-testid="stSidebar"], [data-testid="stSidebarCollapsedControl"], [data-testid="collapsedControl"] {{display:none;}}
   header[data-testid="stHeader"] {{height: 0; background: transparent;}}
   footer, [data-testid="stDecoration"], [data-testid="stStatusWidget"] {{visibility: hidden; height: 0;}}
-  .block-container {{max-width: 100%; padding: .5rem 1.1rem .4rem 1.1rem;}}
-  [class*="st-key-fill_main"] {{height: calc(100vh - 205px); overflow-y: auto;}}
-  [class*="st-key-fill_low"] {{height: calc(100vh - 320px); overflow-y: auto;}}
-  [class*="st-key-fill_proof"] {{height: calc(100vh - 335px); overflow-y: auto;}}
+  .block-container, [data-testid="stMainBlockContainer"] {{max-width: 100%; padding: .2rem 1.1rem .4rem 1.1rem !important;}}
+  [data-testid="stAppViewContainer"] > section, [data-testid="stMain"] {{padding-top: 0 !important;}}
+  [data-testid="stElementContainer"]:has(style), .element-container:has(style) {{display: none;}}
+  .st-key-topbar {{margin-top: 0 !important;}}
+  [class*="fill_main_"] {{height: calc(100vh - 205px); overflow-y: auto;}}
+  [class*="fill_low_"] {{height: calc(100vh - 320px); overflow-y: auto;}}
+  [class*="fill_proof_"] {{height: calc(100vh - 335px); overflow-y: auto;}}
   /* top bar */
-  .st-key-topbar {{background: {NAVY}; border-radius: 8px; padding: .35rem .9rem; margin-bottom: .35rem;}}
+  .st-key-topbar {{background: {NAVY}; border-radius: 0; padding: 0 1.1rem; margin: 0 -1.1rem .5rem -1.1rem;
+       border-bottom: 2px solid {ORANGE}; min-height: 46px;}}
   .st-key-topbar p, .st-key-topbar span, .st-key-topbar label {{color: #FFFFFF !important;}}
-  .st-key-topbar [data-testid="stPageLink"] a {{border-radius: 6px; padding: .15rem .55rem;}}
-  .st-key-topbar [data-testid="stPageLink"] a:hover {{background: #37475A;}}
-  .st-key-topbar [data-testid="stPageLink-NavLink"][aria-current="page"],
-  .st-key-topbar a[aria-current="page"] {{border-bottom: 3px solid {ORANGE}; border-radius: 0;}}
-  .st-key-topbar [data-baseweb="select"] > div {{background: #FFFFFF; min-height: 2rem;}}
-  .st-key-topbar [data-baseweb="select"] span {{color: #16191F !important;}}
-  .brand {{font-weight: 700; font-size: 1.02rem; color: #FFFFFF; white-space: nowrap; line-height: 2.25rem;
-       margin: 0; padding: 0;}}
   .st-key-topbar [data-testid="stMarkdownContainer"] {{margin: 0; padding: 0;}}
   .st-key-topbar [data-testid="stMarkdownContainer"] p, .st-key-topbar [data-testid="stMarkdown"] {{margin: 0 !important;}}
+  .brand {{font-weight: 700; font-size: 1rem; color: #FFFFFF; white-space: nowrap; line-height: 44px; letter-spacing: .01em;}}
   .st-key-topbar [data-testid="stPageLink"] {{margin: 0;}}
-  .st-key-topbar [data-testid="stPageLink"] a {{line-height: 2.25rem; padding-top: 0; padding-bottom: 0;}}
+  .st-key-topbar [data-testid="stPageLink"] a {{background: transparent !important; padding: 0 !important;
+       line-height: 44px; border-radius: 0;}}
+  .st-key-topbar [data-testid="stPageLink"] a p, .st-key-topbar [data-testid="stPageLink"] a span {{color: #AAB7C4 !important;
+       font-size: .88rem;}}
+  .st-key-topbar [data-testid="stPageLink"] a:hover p {{color: #FFFFFF !important;}}
+  .navon {{display:inline-block; color:#FFFFFF; font-weight:600; font-size:.88rem; line-height:41px;
+       box-shadow: inset 0 -3px 0 {ORANGE}; white-space: nowrap;}}
+  .navlive {{color:#FFFFFF; font-size:.82rem; white-space:nowrap; line-height:44px; text-align:right;}}
+  .st-key-topbar [data-testid="stPopover"] button {{background: #37475A !important; border: 0 !important;
+       border-radius: 999px !important; min-height: 30px !important; padding: 2px 12px 2px 4px !important;}}
+  .st-key-topbar [data-testid="stPopover"] button p {{color: #FFFFFF !important; font-size: .8rem; font-weight: 600;}}
+  .initials {{display:inline-block; width:22px; height:22px; border-radius:50%; background:{ORANGE}; color:#FFF;
+       font-size:.66rem; font-weight:800; text-align:center; line-height:22px; margin-right:6px;}}
   /* type and cards */
   h1 {{font-size: 1.35rem !important; font-weight: 700 !important; color: #16191F; margin: 0 0 .15rem 0 !important;
        padding: 0 !important;}}
@@ -79,6 +88,32 @@ CSS = f"""
   .crumbs {{color: {MUTED}; font-size: .8rem; margin-bottom: .1rem;}}
   .crumbs b {{color: {BLUE}; font-weight: 600;}}
   .muted {{color: {MUTED}; font-size: .86rem;}}
+  .live {{display:inline-block; width:.55rem; height:.55rem; border-radius:50%; background:#D13212; margin-right:.35rem;
+       animation: pulse 1.6s infinite; vertical-align: .05rem;}}
+  @keyframes pulse {{0% {{box-shadow:0 0 0 0 rgba(209,50,18,.55);}} 70% {{box-shadow:0 0 0 8px rgba(209,50,18,0);}}
+       100% {{box-shadow:0 0 0 0 rgba(209,50,18,0);}}}}
+  .feed {{width:100%; border-collapse: collapse; font-size:.86rem;}}
+  .feed td {{padding:.42rem .3rem; border-bottom:1px solid #E9EBED; vertical-align: middle;}}
+  .feed .t {{font-weight:800; color:#000; white-space:nowrap; width: 5.2rem;}}
+  .feed .d {{color:#414D5C; font-size:.78rem; display:block;}}
+  .feed .m {{font-weight:700; white-space:nowrap; text-align:right;}}
+  .chip {{display:inline-block; border:1px solid #D1D5DB; border-radius:999px; padding:.05rem .5rem; font-size:.74rem;
+       font-weight:700; margin:0 .25rem .25rem 0; background:#FFFFFF;}}
+  .chip.on {{background:#037F0C; border-color:#037F0C; color:#FFFFFF;}}
+  .chip.off {{color:#5F6B7A;}}
+  [class*="st-key-tint_blue_"], [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [class*="st-key-tint_blue_"])
+       {{background: #EAF2FB !important;}}
+  [class*="st-key-tint_orange_"], [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [class*="st-key-tint_orange_"])
+       {{background: #FFF3E6 !important;}}
+  [class*="st-key-tint_green_"], [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [class*="st-key-tint_green_"])
+       {{background: #EAF6EC !important;}}
+  [class*="st-key-tint_purple_"], [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [class*="st-key-tint_purple_"])
+       {{background: #F3EEFA !important;}}
+  [class*="st-key-tint_sand_"], [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [class*="st-key-tint_sand_"])
+       {{background: #F7F3EA !important;}}
+  [class*="st-key-tint_slate_"], [data-testid="stVerticalBlockBorderWrapper"]:has(> div > [class*="st-key-tint_slate_"])
+       {{background: #EEF1F4 !important;}}
+  [data-testid="stMetric"] {{background: #EEF1F4; border-radius: 8px; padding: .5rem .7rem !important;}}
   .fact {{color: #000000; font-weight: 800; text-transform: uppercase; letter-spacing: .03em;}}
   .factline {{font-size: .95rem; color: #16191F; margin: .1rem 0 .35rem 0;}}
   .dot {{display:inline-block; width:.6rem; height:.6rem; border-radius:50%; margin-right:.4rem; vertical-align: .02rem;}}
@@ -203,28 +238,43 @@ def navigation() -> None:
     st.query_params["actor"] = a.actor_id
     st.query_params["day"] = st.session_state["scenario"]
     with st.container(key="topbar"):
-        cols = st.columns([1.6] + [1.2] * len(pages) + [1.5], vertical_alignment="center")
+        cols = st.columns([1.5] + [1.05] * len(pages) + [0.9, 1.25], vertical_alignment="center")
         cols[0].markdown("<div class='brand'>Agentic FinOps</div>", unsafe_allow_html=True)
-        for col, page in zip(cols[1:-1], pages):
-            col.page_link(page, query_params={"actor": a.actor_id, "day": st.session_state["scenario"]})
+        for col, page, key in zip(cols[1:-2], pages, a.pages):
+            if page.title == nav.title:
+                col.markdown(f"<span class='navon'>{page.title}</span>", unsafe_allow_html=True)
+            else:
+                col.page_link(page, query_params={"actor": a.actor_id, "day": st.session_state["scenario"]})
+        n_open = _open_count(a.actor_id) if not a.sees_all_cases else sum(
+            1 for s in demo_stores() for c in s.cases() if c.status == "awaiting_owner")
+        cols[-2].markdown(f"<div class='navlive'>{'<span class=live></span>' if n_open else ''}{n_open} open</div>",
+                          unsafe_allow_html=True)
+        initials = "".join(w[0] for w in a.name.replace(".", "").split()[:2]).upper()
+        with cols[-1].popover(f"{initials} · {a.name}", use_container_width=True):
 
-        def label(x: str) -> str:
-            n = _open_count(x)
-            return rbac.ACTORS[x].name + (f"  ({n})" if n else "")
+            def label(x: str) -> str:
+                n = _open_count(x)
+                return f"{rbac.ACTORS[x].name} · {rbac.ACTORS[x].role}" + (f"  ({n} open)" if n else "")
 
-        cols[-1].selectbox("Acting as", list(rbac.ACTORS), format_func=label, key="actor", on_change=_actor_changed,
-                           label_visibility="collapsed")
+            st.selectbox("Acting as", list(rbac.ACTORS), format_func=label, key="actor", on_change=_actor_changed)
     nav.run()
 
 
 _card_seq = {"n": 0}
 
 
-def card(title: str, fill: str = "main"):
+TINTS = {"blue": "#EAF2FB", "orange": "#FFF3E6", "green": "#EAF6EC", "purple": "#F3EEFA", "sand": "#F7F3EA",
+         "slate": "#EEF1F4"}
+
+
+def card(title: str, fill: str = "main", height: int | None = None, tint: str | None = "slate"):
     """A bordered card with a small uppercase title. Its height follows the window (fill = how much sits above it:
-    "main" under a page header, "low" under a header plus a row of stat cards); long content scrolls inside."""
+    "main" under a page header, "low" under a header plus a row of stat cards), or is fixed when `height` is given;
+    `tint` gives the card its own light background colour. Long content scrolls inside."""
     _card_seq["n"] += 1
-    box = st.container(border=True, key=f"fill_{fill}_{_card_seq['n']}")
+    t = f"tint_{tint}_" if tint else ""
+    box = (st.container(border=True, height=height, key=f"{t}card_{_card_seq['n']}") if height
+           else st.container(border=True, key=f"{t}fill_{fill}_{_card_seq['n']}"))
     box.markdown(f"<div class='label'>{title}</div>", unsafe_allow_html=True)
     return box
 

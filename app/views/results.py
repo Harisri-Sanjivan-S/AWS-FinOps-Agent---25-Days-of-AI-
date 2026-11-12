@@ -9,6 +9,7 @@ import ui  # noqa: I001 - sets sys.path for the detective package
 
 import json
 
+import perf_view
 import streamlit as st
 
 from detective import integrations, rbac
@@ -17,12 +18,18 @@ from detective.ledger import Ledger
 
 me = ui.require_page("results")
 s = get_settings()
-tab = st.segmented_control("Section", ["Results", "Models", "Integrations", "Access", "Cost", "Reset"],
-                           default="Results", key="settings_tab", label_visibility="collapsed") or "Results"
+sections = (["AI performance", "Results", "Models", "Integrations", "Access", "Cost", "Reset"] if me.can_change_settings
+            else ["AI performance"])
+tab = st.segmented_control("Section", sections, default=sections[0], key="settings_tab",
+                           label_visibility="collapsed") or sections[0]
+if tab not in sections:
+    tab = sections[0]
 ui.header("Settings", "Settings", tab)
-with st.container(border=True, key="fill_main_settings"):
+with st.container(border=True, key="tint_slate_fill_main_settings"):
+    if tab == "AI performance":
+        perf_view.render()
 
-    if tab == "Results":
+    elif tab == "Results":
         results = sorted((ROOT / "evals" / "results").glob("*.json"), reverse=True)
         if not results:
             st.markdown("No measured results yet.")

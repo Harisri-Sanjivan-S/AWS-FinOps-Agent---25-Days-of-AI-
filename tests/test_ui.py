@@ -45,7 +45,7 @@ def week():
 def test_router_shows_pages_by_role(week):
     finops = run("Home.py", actor="finops-team")
     no_errors(finops)
-    assert finops.title[0].value == "Console"
+    assert finops.title[0].value == "Command Center"
     assert any(s.label == "Acting as" for s in finops.selectbox)
     assert not [w for w in HIDDEN_WORDS if w in text(finops).lower()]
     owner = run("Home.py", actor="ravi.m")
@@ -72,11 +72,10 @@ def test_console_is_clean_and_breadcrumbed():
     no_errors(at)
     page = text(at)
     assert "Console</b>" not in page and "Tue 10 Nov" in page, "breadcrumb shows the selected day"
-    assert "<span class='fact'>Spend</span> $4,496.44" in page and "<span class='fact'>Expected</span> $3,256.44" in page
-    assert "<span class='fact'>+38%</span>" in page and "<span class='fact'>Cost drivers</span> 3" in page
+    assert "Command Center" in page and "Incidents · last 24 hours" in page and "Where the increase went" in page
+    assert "Spend today</div>" in page and "$4,496.44" in page
     assert "Investigate" in buttons(at) and "Estimated cost" in page
     assert not [w for w in HIDDEN_WORDS if w in page.lower()], page
-    assert not at.metric, "no big number tiles"
 
 
 def test_console_bedrock_asks_for_cost_approval_before_running(monkeypatch):
@@ -111,7 +110,10 @@ def test_live_investigation_then_replay_follows_the_selected_day():
     assert any("Investigation finished" in s.value for s in at.success)
     replay = run("views/investigation.py", scenario="nov10")
     no_errors(replay)
-    assert len(replay.status) == 3
+    assert len(replay.selectbox[1].options) == 3
+    page = text(replay)
+    assert "Incident timeline" in page and "Evidence map" in page and "The four checks" in page
+    assert "Checking the bill lines" in page, "the agent's notes sit beside its tool calls"
     other = run("views/investigation.py", scenario="nov08")
     assert "not been investigated yet" in text(other)
 
