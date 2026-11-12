@@ -38,7 +38,8 @@ def score_case(case: Case) -> dict:
         "case": case.case_id, "scenario": case.scenario_id, "driver": case.driver.title,
         "expected": exp.get("verdict"), "verdict": r.verdict if r else "needs_review",
         "verdict_ok": bool(r) and r.verdict == exp.get("verdict"),
-        "route_ok": bool(r) and r.route_to == exp.get("notify"),
+        "route_ok": bool(r) and next((a.detail.get("to") for a in case.audit if a.event == "routed"),
+                                    r.route_to) == exp.get("notify"),  # the AI's routing, before any owner re-route
         "confidence_ok": bool(r) and r.confidence == exp.get("confidence"),
         "fix_ok": bool(r) and r.proposed_fix == exp.get("proposed_fix"),
         "citations_valid": bool(r) and not case.validation_errors,
@@ -141,7 +142,10 @@ def proof(stores: list[RunStore], history: list[RunStore] | None = None) -> dict
                                 "tf_checks": a.detail.get("tf_checks", {}), "ci": a.detail.get("ci", "not checked"),
                                 "approved_by": approvals[0].reviewer if approvals else "?",
                                 "avoidable_usd": r.avoidable_per_day if r else 0.0, "error": a.detail.get("error")})
-    proven = sum(s["saving_usd"] or 0 for s in savings if s["confirmed"])
+    latest = {}  # one saving per day and driver (the newest run), however many times it was re-run
+    for s_ in savings:
+        latest.setdefault((s_["day"], s_["driver"]), s_)
+    proven = sum(s_["saving_usd"] or 0 for s_ in latest.values() if s_["confirmed"])
     pending_pr = sum(p["avoidable_usd"] for p in prs if p["url"])
     return {"found_per_day": round(found, 2), "avoidable_per_day": round(avoidable, 2), "proven_per_day": round(proven, 2),
             "pending_pr_per_day": round(pending_pr, 2), "savings": savings, "pull_requests": prs, "decisions": decisions,

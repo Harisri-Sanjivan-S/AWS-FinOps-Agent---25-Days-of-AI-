@@ -1,0 +1,32 @@
+{
+  "evidence_id": "anom-001",
+  "AnomalyId": "6f748d3c-d562-41d5-941a-d5783b32af2c",
+  "AnomalyStartDate": "2026-11-26",
+  "DimensionValue": "AWS services",
+  "Impact": {
+    "TotalActualSpend": 4208.8,
+    "TotalExpectedSpend": 3238.8,
+    "TotalImpact": 970.0,
+    "TotalImpactPercentage": 29.95
+  },
+  "RootCauses": [
+    {
+      "Service": "Amazon Elastic Compute Cloud - Compute",
+      "Region": "us-east-1",
+      "LinkedAccount": "111122223333",
+      "UsageType": "USE1-BoxUsage:g5.12xlarge",
+      "Impact": {
+        "Contribution": 610.0
+      }
+    },
+    {
+      "Service": "Amazon Elastic Compute Cloud - Compute",
+      "Region": "us-east-1",
+      "LinkedAccount": "111122223333",
+      "UsageType": "USE1-BoxUsage:m6i.8xlarge",
+      "Impact": {
+        "Contribution": 330.0
+      }
+    }
+  ]
+}

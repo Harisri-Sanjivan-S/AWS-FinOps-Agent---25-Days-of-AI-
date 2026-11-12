@@ -279,6 +279,24 @@ def card(title: str, fill: str = "main", height: int | None = None, tint: str | 
     return box
 
 
+PRIORITY_COLORS = {"High": "#D13212", "Medium": "#C77700", "Low": "#5F6B7A"}
+
+
+def priority_of(case: Case) -> str:
+    from detective.rules import priority
+    src = FixtureSource(case.scenario_id)
+    tickets = [src.record(e) for c in case.tool_calls if c.name == "find_ticket" for e in c.evidence_ids]
+    injected = any(t and "ignore your previous" in str(t.get("description", "")).lower() for t in tickets)
+    return priority(case.report, injected)
+
+
+def priority_tag(case: Case) -> str:
+    p = priority_of(case)
+    c = PRIORITY_COLORS[p]
+    return (f"<span style='border:1.5px solid {c};color:{c};border-radius:4px;padding:0 .35rem;font-size:.68rem;"
+            f"font-weight:800;letter-spacing:.04em'>{p.upper()}</span>")
+
+
 def pill(verdict: str) -> str:
     return f"<span class='pill' style='background:{VERDICT_COLORS[verdict]}'>{VERDICT_LABELS[verdict]}</span>"
 
@@ -402,4 +420,4 @@ def case_status_line(case: Case) -> str:
     if case.assigned_to:
         items.append(("Owner", actor_name(case.assigned_to)))
     items.append(("Status", STATUS_LABELS[case.status].lower()))
-    return f"<div class='factline'>{pill(r.verdict)} &nbsp; {facts(items)}</div>"
+    return f"<div class='factline'>{priority_tag(case)} &nbsp;{pill(r.verdict)} &nbsp; {facts(items)}</div>"

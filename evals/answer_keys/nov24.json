@@ -1,0 +1,110 @@
+{
+  "scenario_id": "nov24",
+  "case_prefix": "N24",
+  "description": "Demo week, Tue 24 Nov 2026: Large approved load test: planned, so no alert.",
+  "distractor_change_events": [
+    "ct-005"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-24",
+  "baseline_mean": 3272.49,
+  "baseline_sd": 22.13,
+  "spike_total": 4002.49,
+  "increase": 730.0,
+  "increase_pct": 22.31,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "load",
+      "title": "Approved load test",
+      "resource_ids": [
+        "i-0b1",
+        "i-0b2",
+        "i-0b3",
+        "i-0b4",
+        "i-0b5",
+        "i-0b6",
+        "i-0b7",
+        "i-0b8"
+      ],
+      "daily_increase": 700.0,
+      "start_time": "2026-11-23T09:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261124-035",
+          "bill-20261124-036",
+          "bill-20261124-037",
+          "bill-20261124-038",
+          "bill-20261124-039",
+          "bill-20261124-040",
+          "bill-20261124-041",
+          "bill-20261124-042"
+        ],
+        "change_events": [
+          "ct-001"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039",
+          "tag-040",
+          "tag-041"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008"
+        ],
+        "tickets": [
+          "CHG-1224"
+        ],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": true,
+        "used": true,
+        "needs_confirmation": false,
+        "action": "none",
+        "proposed_fix": null,
+        "saving_confirmed": null,
+        "verdict": "expected",
+        "notify": null
+      },
+      "saving_per_day": 0.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

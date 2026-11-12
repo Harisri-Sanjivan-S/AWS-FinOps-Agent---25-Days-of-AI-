@@ -1,0 +1,226 @@
+[
+  {
+    "evidence_id": "ct-001",
+    "EventId": "f55b18ca-e475-4049-95fc-0d9889c1cd1e",
+    "EventName": "PutBucketLogging",
+    "EventTime": "2026-11-16T14:10:00Z",
+    "EventSource": "s3.amazonaws.com",
+    "Username": "sam.k",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::S3::Bucket",
+        "ResourceName": "winter-access-logs"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::111122223333:user/sam.k",
+        "userName": "sam.k"
+      },
+      "eventTime": "2026-11-16T14:10:00Z",
+      "eventSource": "s3.amazonaws.com",
+      "eventName": "PutBucketLogging",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "198.51.100.21",
+      "userAgent": "aws-cli/2.17.0",
+      "requestParameters": {},
+      "readOnly": false,
+      "eventID": "f55b18ca-e475-4049-95fc-0d9889c1cd1e",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-002",
+    "EventId": "2284b6b4-e931-4540-8abd-7b68f93f28db",
+    "EventName": "CreateLogGroup",
+    "EventTime": "2026-11-16T16:40:00Z",
+    "EventSource": "logs.amazonaws.com",
+    "Username": "search-ci",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::Logs::LogGroup",
+        "ResourceName": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/search-deployer/search-ci"
+      },
+      "eventTime": "2026-11-16T16:40:00Z",
+      "eventSource": "logs.amazonaws.com",
+      "eventName": "CreateLogGroup",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "192.0.2.55",
+      "userAgent": "aws-sdk-go-v2/1.30.0",
+      "requestParameters": {},
+      "readOnly": false,
+      "eventID": "2284b6b4-e931-4540-8abd-7b68f93f28db",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-003",
+    "EventId": "2c264cc9-7890-4a5d-a626-f868bbfd200f",
+    "EventName": "RunInstances",
+    "EventTime": "2026-11-16T21:15:00Z",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "ravi.m",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0a1"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0a2"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0a3"
+      },
+      {
+        "ResourceType": "AWS::EC2::Instance",
+        "ResourceName": "i-0a4"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "IAMUser",
+        "arn": "arn:aws:iam::111122223333:user/ravi.m",
+        "userName": "ravi.m"
+      },
+      "eventTime": "2026-11-16T21:15:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "RunInstances",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "203.0.113.24",
+      "userAgent": "AWS Internal",
+      "requestParameters": {
+        "instanceType": "g6.12xlarge",
+        "minCount": 4,
+        "maxCount": 4
+      },
+      "readOnly": false,
+      "eventID": "2c264cc9-7890-4a5d-a626-f868bbfd200f",
+      "recipientAccountId": "111122223333",
+      "sessionCredentialFromConsole": "true"
+    }
+  },
+  {
+    "evidence_id": "ct-006",
+    "EventId": "9ef00f06-9533-41ab-aa57-592d8ed8b01e",
+    "EventName": "CreateSecurityGroup",
+    "EventTime": "2026-11-16T22:05:00Z",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "ops-bot",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::SecurityGroup",
+        "ResourceName": "sg-0f1"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/ops-automation/ops-bot"
+      },
+      "eventTime": "2026-11-16T22:05:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "CreateSecurityGroup",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "192.0.2.77",
+      "userAgent": "aws-sdk-go-v2/1.30.0",
+      "requestParameters": {
+        "groupName": "batch-workers-sg",
+        "vpcId": "vpc-0a1"
+      },
+      "readOnly": false,
+      "eventID": "9ef00f06-9533-41ab-aa57-592d8ed8b01e",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-004",
+    "EventId": "d57d6049-ea06-4c2d-bc37-32439c11be22",
+    "EventName": "CreateSnapshot",
+    "EventTime": "2026-11-17T03:00:00Z",
+    "EventSource": "ec2.amazonaws.com",
+    "Username": "backup",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::EC2::Snapshot",
+        "ResourceName": "snap-0e1"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/AWSBackupDefaultServiceRole/backup"
+      },
+      "eventTime": "2026-11-17T03:00:00Z",
+      "eventSource": "ec2.amazonaws.com",
+      "eventName": "CreateSnapshot",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "backup.amazonaws.com",
+      "userAgent": "backup.amazonaws.com",
+      "requestParameters": {},
+      "readOnly": false,
+      "eventID": "d57d6049-ea06-4c2d-bc37-32439c11be22",
+      "recipientAccountId": "111122223333"
+    }
+  },
+  {
+    "evidence_id": "ct-005",
+    "EventId": "aa18b4a3-a827-45c9-8d3e-e01120e92b44",
+    "EventName": "UpdateService",
+    "EventTime": "2026-11-17T09:52:00Z",
+    "EventSource": "ecs.amazonaws.com",
+    "Username": "orders-service-ci",
+    "ReadOnly": "false",
+    "Resources": [
+      {
+        "ResourceType": "AWS::ECS::Service",
+        "ResourceName": "arn:aws:ecs:us-east-1:111122223333:service/prod/orders-service"
+      }
+    ],
+    "CloudTrailEvent": {
+      "eventVersion": "1.10",
+      "userIdentity": {
+        "accountId": "111122223333",
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/github-actions-deploy/orders-service-ci"
+      },
+      "eventTime": "2026-11-17T09:52:00Z",
+      "eventSource": "ecs.amazonaws.com",
+      "eventName": "UpdateService",
+      "awsRegion": "us-east-1",
+      "sourceIPAddress": "192.0.2.40",
+      "userAgent": "aws-sdk-js/3.600.0",
+      "requestParameters": {
+        "cluster": "prod",
+        "service": "orders-service",
+        "taskDefinition": "orders-service:214"
+      },
+      "readOnly": false,
+      "eventID": "aa18b4a3-a827-45c9-8d3e-e01120e92b44",
+      "recipientAccountId": "111122223333"
+    }
+  }
+]

@@ -66,3 +66,22 @@ def test_performance_page_access_and_render():
     at.session_state["actor"] = "ravi.m"
     at.run()
     assert any("does not have access" in e.value for e in at.error)
+
+
+def test_regression_dry_pass_and_owner_decisions(capsys):
+    from scripts import regression
+    assert regression.main([]) == {}, "no Bedrock spend without --confirm"
+    totals = regression.main([], mode="offline")
+    assert totals["passes"] == 1 and totals["investigations"] == 37
+    out = capsys.readouterr().out
+    assert "23 alerting days" in out and "'approved'" in out
+
+
+def test_priority_rule():
+    from types import SimpleNamespace
+
+    from detective.rules import priority
+    assert priority(SimpleNamespace(avoidable_per_day=820)) == "High"
+    assert priority(SimpleNamespace(avoidable_per_day=300)) == "Medium"
+    assert priority(SimpleNamespace(avoidable_per_day=0)) == "Low"
+    assert priority(SimpleNamespace(avoidable_per_day=0), injected=True) == "High"

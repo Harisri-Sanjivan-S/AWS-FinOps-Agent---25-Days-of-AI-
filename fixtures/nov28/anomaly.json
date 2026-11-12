@@ -1,0 +1,13 @@
+{
+  "evidence_id": "anom-001",
+  "AnomalyId": "c9ce5ddc-2a52-483e-96df-d21e9d1f5c01",
+  "AnomalyStartDate": "2026-11-28",
+  "DimensionValue": "AWS services",
+  "Impact": {
+    "TotalActualSpend": 3283.45,
+    "TotalExpectedSpend": 3253.45,
+    "TotalImpact": 30.0,
+    "TotalImpactPercentage": 0.92
+  },
+  "RootCauses": []
+}

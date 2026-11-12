@@ -1,0 +1,150 @@
+{
+  "scenario_id": "nov20",
+  "case_prefix": "N20",
+  "description": "Demo week, Fri 20 Nov 2026: Idle rehearsal hosts (Priya) and idle dev boxes (Ravi).",
+  "distractor_change_events": [
+    "ct-006"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-20",
+  "baseline_mean": 3239.0,
+  "baseline_sd": 16.99,
+  "spike_total": 3949.0,
+  "increase": 710.0,
+  "increase_pct": 21.92,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "rehearsal",
+      "title": "Approved but idle environment",
+      "resource_ids": [
+        "i-0e1",
+        "i-0e2",
+        "i-0e3",
+        "i-0e4"
+      ],
+      "daily_increase": 520.0,
+      "start_time": "2026-11-19T08:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261120-035",
+          "bill-20261120-036",
+          "bill-20261120-037",
+          "bill-20261120-038"
+        ],
+        "change_events": [
+          "ct-001"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004"
+        ],
+        "tickets": [
+          "CHG-1220"
+        ],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": true,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "ask_owner",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "oversized",
+        "notify": "priya.s"
+      },
+      "saving_per_day": 520.0
+    },
+    {
+      "scene_id": "dev",
+      "title": "Idle dev instances (ravi.m)",
+      "resource_ids": [
+        "i-0d1",
+        "i-0d2",
+        "i-0d3",
+        "i-0d4"
+      ],
+      "daily_increase": 160.0,
+      "start_time": "2026-11-19T11:15:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261120-039",
+          "bill-20261120-040",
+          "bill-20261120-041",
+          "bill-20261120-042"
+        ],
+        "change_events": [
+          "ct-002"
+        ],
+        "tags": [
+          "tag-038",
+          "tag-039",
+          "tag-040",
+          "tag-041"
+        ],
+        "metrics": [
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "likely_waste",
+        "notify": "ravi.m"
+      },
+      "saving_per_day": 160.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

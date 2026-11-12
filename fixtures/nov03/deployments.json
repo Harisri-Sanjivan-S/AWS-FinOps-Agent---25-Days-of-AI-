@@ -1,0 +1,16 @@
+[
+  {
+    "evidence_id": "dep-001",
+    "event_id": "ct-005",
+    "deployed_at": "2026-11-03T09:52:00Z",
+    "resource_id": "arn:aws:ecs:us-east-1:111122223333:service/prod/orders-service",
+    "service": "orders-service",
+    "version": "v2.15.0",
+    "repository": "acme-platform",
+    "path": "services/orders-service",
+    "commit": "4f9c2e1",
+    "team": "orders-team",
+    "pipeline": "github-actions/orders-service-deploy",
+    "note": "orders-service v2.15: asset prefetch enabled on start-up; image pulls still go through the private subnets (fix PR from TUE awaiting review)."
+  }
+]

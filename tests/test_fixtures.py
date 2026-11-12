@@ -7,6 +7,8 @@ from datetime import datetime, timedelta
 
 import pytest
 
+QUIET_DAYS = {"nov04", "nov07", "nov15", "nov21", "nov28"}
+
 from detective.fixturegen import ROOT, dump, generate, load_scenario, scenario_paths
 
 SCENARIO = load_scenario(ROOT / "scenarios" / "tuesday.json")
@@ -77,7 +79,7 @@ def test_every_scenario_has_unique_ids_and_valid_answer_key(name):
     records += [line for v in nxt["variants"].values() for line in v]
     ids = [r["evidence_id"] for r in records]
     assert len(ids) == len(set(ids))
-    assert key["materiality_passed"] is (name != "nov07"), "only the quiet day stays below the gate"
+    assert key["materiality_passed"] is (name not in QUIET_DAYS), "only the quiet days stay below the gate"
     for d in key["drivers"]:
         for kind, refs in d["evidence"].items():
             assert set(refs) <= set(ids), (name, d["scene_id"], kind)

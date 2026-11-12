@@ -1,0 +1,96 @@
+{
+  "scenario_id": "nov22",
+  "case_prefix": "N22",
+  "description": "Demo week, Sun 22 Nov 2026: GPUs relaunched by a script after a stop (Anika).",
+  "distractor_change_events": [
+    "ct-005"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-22",
+  "baseline_mean": 3265.98,
+  "baseline_sd": 37.62,
+  "spike_total": 3985.98,
+  "increase": 720.0,
+  "increase_pct": 22.05,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "relaunch",
+      "title": "GPUs relaunched after a stop",
+      "resource_ids": [
+        "i-0g1",
+        "i-0g2",
+        "i-0g3",
+        "i-0g4"
+      ],
+      "daily_increase": 690.0,
+      "start_time": "2026-11-21T18:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261122-035",
+          "bill-20261122-036",
+          "bill-20261122-037",
+          "bill-20261122-038"
+        ],
+        "change_events": [
+          "ct-003"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": false,
+        "verdict": "likely_waste",
+        "notify": "anika.r"
+      },
+      "saving_per_day": 690.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

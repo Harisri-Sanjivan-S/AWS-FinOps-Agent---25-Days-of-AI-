@@ -1,0 +1,102 @@
+{
+  "scenario_id": "nov05",
+  "case_prefix": "N05",
+  "description": "Demo week, Thu 05 Nov 2026: Approved but idle rehearsal hosts (Priya).",
+  "distractor_change_events": [
+    "ct-005"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-05",
+  "baseline_mean": 3279.97,
+  "baseline_sd": 22.01,
+  "spike_total": 3989.95,
+  "increase": 709.98,
+  "increase_pct": 21.65,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "rehearsal",
+      "title": "Approved but idle environment",
+      "resource_ids": [
+        "i-0e1",
+        "i-0e2",
+        "i-0e3",
+        "i-0e4",
+        "i-0e5",
+        "i-0e6"
+      ],
+      "daily_increase": 680.0,
+      "start_time": "2026-11-04T08:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261105-035",
+          "bill-20261105-036",
+          "bill-20261105-037",
+          "bill-20261105-038",
+          "bill-20261105-039",
+          "bill-20261105-040"
+        ],
+        "change_events": [
+          "ct-001"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006"
+        ],
+        "tickets": [
+          "CHG-1205"
+        ],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": true,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "ask_owner",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "oversized",
+        "notify": "priya.s"
+      },
+      "saving_per_day": 680.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "scenario_id": "nov02",
+  "case_prefix": "N02",
+  "description": "Demo week, Mon 02 Nov 2026: Idle GPUs (Ravi) and small idle dev boxes (Anika).",
+  "distractor_change_events": [
+    "ct-006"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-02",
+  "baseline_mean": 3242.34,
+  "baseline_sd": 17.92,
+  "spike_total": 4062.32,
+  "increase": 819.98,
+  "increase_pct": 25.29,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "gpus",
+      "title": "Idle GPU instances (ravi.m)",
+      "resource_ids": [
+        "i-0a1",
+        "i-0a2",
+        "i-0a3",
+        "i-0a4",
+        "i-0a5",
+        "i-0a6"
+      ],
+      "daily_increase": 650.0,
+      "start_time": "2026-11-01T20:15:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261102-035",
+          "bill-20261102-036",
+          "bill-20261102-037",
+          "bill-20261102-038",
+          "bill-20261102-039",
+          "bill-20261102-040"
+        ],
+        "change_events": [
+          "ct-004"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037",
+          "tag-038",
+          "tag-039"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008",
+          "met-009",
+          "met-010",
+          "met-011",
+          "met-012"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "likely_waste",
+        "notify": "ravi.m"
+      },
+      "saving_per_day": 650.0
+    },
+    {
+      "scene_id": "dev",
+      "title": "Idle dev instances (anika.r)",
+      "resource_ids": [
+        "i-0d1",
+        "i-0d2",
+        "i-0d3",
+        "i-0d4"
+      ],
+      "daily_increase": 140.0,
+      "start_time": "2026-11-01T14:15:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261102-041",
+          "bill-20261102-042",
+          "bill-20261102-043",
+          "bill-20261102-044"
+        ],
+        "change_events": [
+          "ct-002"
+        ],
+        "tags": [
+          "tag-040",
+          "tag-041",
+          "tag-042",
+          "tag-043"
+        ],
+        "metrics": [
+          "met-013",
+          "met-014",
+          "met-015",
+          "met-016"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "likely_waste",
+        "notify": "anika.r"
+      },
+      "saving_per_day": 140.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

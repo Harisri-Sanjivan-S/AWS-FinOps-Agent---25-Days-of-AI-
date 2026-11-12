@@ -1,0 +1,150 @@
+{
+  "scenario_id": "nov26",
+  "case_prefix": "N26",
+  "description": "Demo week, Thu 26 Nov 2026: Forgotten GPUs (Anika) and idle rehearsal hosts (Priya).",
+  "distractor_change_events": [
+    "ct-006"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-26",
+  "baseline_mean": 3238.8,
+  "baseline_sd": 19.49,
+  "spike_total": 4208.8,
+  "increase": 970.0,
+  "increase_pct": 29.95,
+  "materiality_passed": true,
+  "anomaly_id": "anom-001",
+  "drivers": [
+    {
+      "scene_id": "gpus",
+      "title": "Idle GPU instances (anika.r)",
+      "resource_ids": [
+        "i-0a1",
+        "i-0a2",
+        "i-0a3",
+        "i-0a4"
+      ],
+      "daily_increase": 610.0,
+      "start_time": "2026-11-25T18:15:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261126-035",
+          "bill-20261126-036",
+          "bill-20261126-037",
+          "bill-20261126-038"
+        ],
+        "change_events": [
+          "ct-004"
+        ],
+        "tags": [
+          "tag-034",
+          "tag-035",
+          "tag-036",
+          "tag-037"
+        ],
+        "metrics": [
+          "met-001",
+          "met-002",
+          "met-003",
+          "met-004",
+          "met-005",
+          "met-006",
+          "met-007",
+          "met-008"
+        ],
+        "tickets": [],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "likely_waste",
+        "notify": "anika.r"
+      },
+      "saving_per_day": 610.0
+    },
+    {
+      "scene_id": "rehearsal",
+      "title": "Approved but idle environment",
+      "resource_ids": [
+        "i-0e1",
+        "i-0e2",
+        "i-0e3"
+      ],
+      "daily_increase": 330.0,
+      "start_time": "2026-11-25T08:00:00Z",
+      "evidence": {
+        "bill_lines": [
+          "bill-20261126-039",
+          "bill-20261126-040",
+          "bill-20261126-041"
+        ],
+        "change_events": [
+          "ct-001"
+        ],
+        "tags": [
+          "tag-038",
+          "tag-039",
+          "tag-040"
+        ],
+        "metrics": [
+          "met-009",
+          "met-010",
+          "met-011"
+        ],
+        "tickets": [
+          "CHG-1226"
+        ],
+        "deployments": [],
+        "traffic": []
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": true,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "ask_owner",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "oversized",
+        "notify": "priya.s"
+      },
+      "saving_per_day": 330.0
+    }
+  ],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

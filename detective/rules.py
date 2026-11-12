@@ -260,6 +260,14 @@ def validate_findings(findings: Findings, pool: dict) -> list[str]:
         bad = [e for e in claim.evidence_ids if e not in pool]
         if bad:
             errors.append(f"claim {i} cites IDs not returned by any tool: {', '.join(bad)}")
+    # A release record that was read but not linked: for shared network costs the release is the lead (owner + code).
+    releases = [v for k, v in pool.items() if k.startswith("dep-")]
+    lead = findings.linked_change_ids[0] if findings.linked_change_ids else None
+    if releases and lead not in {r["event_id"] for r in releases}:
+        rel = releases[0]
+        errors.append(f"linked_change_ids: you read release record {rel['evidence_id']} for change {rel['event_id']}; "
+                      f"if that release came before the cost started, link {rel['event_id']} first and cite "
+                      f"{rel['evidence_id']} in deployment_evidence_ids (other changes go in ignored_change_ids)")
     return errors
 
 
@@ -318,3 +326,12 @@ def validate_explanation(expl: Explanation, driver: Driver, report: Report, pool
         if label in expl.headline.lower():
             errors.append(f"headline uses the label '{label}', but code's verdict is {report.verdict}")
     return errors
+
+
+def priority(report, injected: bool = False) -> str:
+    """Code-only priority: High at $600+/day avoidable (or an injection attempt), Medium at $250+, otherwise Low."""
+    if report is None:
+        return "Medium"
+    if injected or report.avoidable_per_day >= 600:
+        return "High"
+    return "Medium" if report.avoidable_per_day >= 250 else "Low"

@@ -1,0 +1,15 @@
+[
+  {
+    "evidence_id": "CHG-1220",
+    "key": "CHG-1220",
+    "type": "Change",
+    "status": "Approved",
+    "summary": "Payments rehearsal environment",
+    "description": "Run 4 m6i.8xlarge hosts from 2026-11-19 to 2026-11-24. Expected cost about $520/day.",
+    "reporter": "priya.s",
+    "approver": "maria.l",
+    "start_date": "2026-11-19",
+    "end_date": "2026-11-24",
+    "estimated_daily_cost": 520.0
+  }
+]

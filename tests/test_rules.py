@@ -1,7 +1,7 @@
 """Code's decisions reproduce the answer key from the evidence the tools returned (answer key is read only here)."""
 
 import pytest
-from conftest import SCENARIOS, WEEK, answer_key
+from conftest import MONTH, SCENARIOS, answer_key
 
 from detective.agent import ScriptedInvestigator, TemplateWriter
 from detective.detect import detect
@@ -21,7 +21,7 @@ def investigate(scenario: str):
     return out
 
 
-@pytest.mark.parametrize("scenario", SCENARIOS + WEEK)
+@pytest.mark.parametrize("scenario", SCENARIOS + MONTH)
 def test_decisions_match_answer_key(scenario):
     key = {tuple(sorted(d["resource_ids"])): d for d in answer_key(scenario)["drivers"]}
     for driver, findings, tb, report in investigate(scenario):
@@ -106,3 +106,15 @@ def test_writeup_numbers_ids_and_verdict_are_checked():
     assert any("$999.00" in e for e in errors)
     assert any("sentence 2 has no evidence" in e for e in errors)
     assert any("40%" in e for e in errors) and any("unbudgeted" in e for e in errors)
+
+
+def test_release_record_read_but_not_linked_is_rejected():
+    from detective.models import Claim
+    pool = {"ct-003": {"evidence_id": "ct-003"}, "ct-005": {"evidence_id": "ct-005"},
+            "dep-001": {"evidence_id": "dep-001", "event_id": "ct-005"}, "bill-1": {"evidence_id": "bill-1"}}
+    wrong = Findings(linked_change_ids=["ct-003"], claims=[Claim(text="NAT cost rose.", evidence_ids=["bill-1"])])
+    errors = validate_findings(wrong, pool)
+    assert any("link ct-005 first" in e for e in errors)
+    right = Findings(linked_change_ids=["ct-005"], deployment_evidence_ids=["dep-001"],
+                     claims=[Claim(text="NAT cost rose.", evidence_ids=["bill-1"])])
+    assert validate_findings(right, pool) == []

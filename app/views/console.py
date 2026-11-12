@@ -165,7 +165,7 @@ with feed, ui.card("Incidents · last 24 hours", height=430, tint="sand"):
         rows.append(f"<tr><td class='t'>{when[5:10].replace('-', '/')} {when[11:16]}</td>"
                     f"<td>{ui.md(c.driver.title)}<span class='d'>{c.case_id} · {ui.actor_name(c.assigned_to)} · "
                     f"{ui.STATUS_LABELS[c.status]}</span></td>"
-                    f"<td>{ui.pill(r.verdict) if r else 'Needs review'}</td>"
+                    f"<td>{ui.priority_tag(c)}<br>{ui.pill(r.verdict) if r else 'Needs review'}</td>"
                     f"<td class='m'>{ui.money(c.driver.daily_increase)}/day</td></tr>")
     if scenario not in stores and today["material"]:
         for d in today["drivers"]:

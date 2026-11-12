@@ -52,7 +52,7 @@ with left, ui.card("My cases" if view == "Needs my decision" else "All cases", f
     chosen = st.session_state.get("inbox_case") if st.session_state.get("inbox_case") in ids else ids[0]
     case_id = st.selectbox("Open case", ids, index=ids.index(chosen), key="inbox_case",
                            format_func=lambda i: f"{i} · {by_id[i][1].driver.title}")
-    st.dataframe([{"Day": ui.day_short(c.scenario_id), "Case": c.case_id,
+    st.dataframe([{"Day": ui.day_short(c.scenario_id), "Case": c.case_id, "Priority": ui.priority_of(c),
                    "Verdict": VERDICT_LABELS[c.report.verdict] if c.report else "Needs review",
                    "USD / day": round(c.driver.daily_increase, 2), "Status": ui.STATUS_LABELS[c.status],
                    "Owner": ui.actor_name(c.assigned_to)} for _, c in pairs], hide_index=True, width="stretch",

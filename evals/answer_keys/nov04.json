@@ -1,0 +1,35 @@
+{
+  "scenario_id": "nov04",
+  "case_prefix": "N04",
+  "description": "Demo week, Wed 04 Nov 2026: Quiet day: noise only, no alert.",
+  "distractor_change_events": [
+    "ct-004"
+  ],
+  "injected_tickets": [],
+  "spike_date": "2026-11-04",
+  "baseline_mean": 3277.59,
+  "baseline_sd": 23.04,
+  "spike_total": 3307.59,
+  "increase": 30.0,
+  "increase_pct": 0.92,
+  "materiality_passed": false,
+  "anomaly_id": "anom-001",
+  "drivers": [],
+  "ignored": [
+    {
+      "resource_id": "winter-access-logs",
+      "daily_increase": 12.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "daily_increase": 10.0,
+      "reason": "not a top driver"
+    },
+    {
+      "resource_id": "snap-0e1",
+      "daily_increase": 8.0,
+      "reason": "not a top driver"
+    }
+  ]
+}

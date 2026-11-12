@@ -1,0 +1,461 @@
+{
+  "scenario_id": "nov23",
+  "case_prefix": "N23",
+  "description": "Demo week, Mon 23 Nov 2026: Busy Monday: idle GPUs, approved load test, NAT after a release.",
+  "seed": 20261123,
+  "account_id": "111122223333",
+  "region": "us-east-1",
+  "spike_date": "2026-11-23",
+  "next_day_date": "2026-11-24",
+  "lookback_hours": 48,
+  "metrics_window": {
+    "start": "2026-11-21T00:00:00Z",
+    "end": "2026-11-24T00:00:00Z"
+  },
+  "baseline_days": {
+    "2026-10-26": 3258.86,
+    "2026-11-02": 3255.18,
+    "2026-11-09": 3309.57,
+    "2026-11-16": 3252.2
+  },
+  "steady": [
+    {
+      "name": "eks-nodes",
+      "id_prefix": "i-0c",
+      "count": 24,
+      "product_code": "AmazonEC2",
+      "usage_type": "USE1-BoxUsage:m6i.16xlarge",
+      "unit": "Hrs",
+      "rate": 3.072,
+      "usage_per_day": 24,
+      "tags": {
+        "owner": "platform-team",
+        "project": "eks-prod"
+      }
+    },
+    {
+      "name": "orders-db",
+      "resource_id": "arn:aws:rds:us-east-1:111122223333:db:orders-prod",
+      "product_code": "AmazonRDS",
+      "usage_type": "USE1-Multi-AZUsage:db.r6g.8xlarge",
+      "unit": "Hrs",
+      "rate": 7.68,
+      "usage_per_day": 24,
+      "tags": {
+        "owner": "orders-team",
+        "project": "orders"
+      }
+    },
+    {
+      "name": "warehouse",
+      "id_prefix": "arn:aws:redshift:us-east-1:111122223333:cluster:analytics-node-",
+      "count": 4,
+      "product_code": "AmazonRedshift",
+      "usage_type": "USE1-Node:ra3.4xlarge",
+      "unit": "Hrs",
+      "rate": 3.26,
+      "usage_per_day": 24,
+      "tags": {
+        "owner": "data-team",
+        "project": "analytics"
+      }
+    },
+    {
+      "name": "nat-hours",
+      "resource_id": "nat-0c1",
+      "product_code": "AmazonEC2",
+      "usage_type": "USE1-NatGateway-Hours",
+      "unit": "Hrs",
+      "rate": 0.045,
+      "usage_per_day": 24,
+      "tags": {
+        "owner": "platform-team",
+        "project": "shared-network",
+        "shared": "true"
+      }
+    },
+    {
+      "name": "nat-bytes",
+      "resource_id": "nat-0c1",
+      "product_code": "AmazonEC2",
+      "usage_type": "USE1-NatGateway-Bytes",
+      "unit": "GB",
+      "rate": 0.045,
+      "daily_cost": 90.0,
+      "tags": {
+        "owner": "platform-team",
+        "project": "shared-network",
+        "shared": "true"
+      }
+    },
+    {
+      "name": "eks-logs",
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/eks/prod",
+      "product_code": "AmazonCloudWatch",
+      "usage_type": "USE1-DataProcessing-Bytes",
+      "unit": "GB",
+      "rate": 0.5,
+      "daily_cost": 140.0,
+      "elastic": true,
+      "tags": {
+        "owner": "platform-team",
+        "project": "eks-prod"
+      }
+    },
+    {
+      "name": "carts-table",
+      "resource_id": "arn:aws:dynamodb:us-east-1:111122223333:table/carts",
+      "product_code": "AmazonDynamoDB",
+      "usage_type": "USE1-WriteRequestUnits",
+      "unit": "WriteRequestUnits",
+      "rate": 1.25e-06,
+      "daily_cost": 310.0,
+      "elastic": true,
+      "tags": {
+        "owner": "orders-team",
+        "project": "orders"
+      }
+    },
+    {
+      "name": "assets-bucket",
+      "resource_id": "winter-shop-assets",
+      "product_code": "AmazonS3",
+      "usage_type": "USE1-TimedStorage-ByteHrs",
+      "unit": "GB-Mo",
+      "rate": 0.023,
+      "balance": true,
+      "elastic": true,
+      "tags": {
+        "owner": "web-team",
+        "project": "storefront"
+      }
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "gpus",
+      "title": "Idle GPU instances (ravi.m)",
+      "kind": "new_instances",
+      "daily_cost": 900.0,
+      "instances": {
+        "id_prefix": "i-0a",
+        "count": 8,
+        "instance_type": "g6.12xlarge"
+      },
+      "launch": {
+        "time": "2026-11-22T20:15:00Z",
+        "identity": {
+          "type": "IAMUser",
+          "arn": "arn:aws:iam::111122223333:user/ravi.m",
+          "userName": "ravi.m"
+        },
+        "user_agent": "AWS Internal",
+        "console": true,
+        "source_ip": "203.0.113.24"
+      },
+      "tags": {},
+      "metrics": [
+        {
+          "namespace": "AWS/EC2",
+          "name": "CPUUtilization",
+          "unit": "Percent",
+          "mean": 2.0,
+          "sd": 0.5
+        },
+        {
+          "namespace": "CWAgent",
+          "name": "nvidia_smi_utilization_gpu",
+          "unit": "Percent",
+          "mean": 1.0,
+          "sd": 0.3
+        }
+      ],
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": false,
+        "used": false,
+        "needs_confirmation": false,
+        "action": "simulate_stop",
+        "proposed_fix": "stop_instances",
+        "saving_confirmed": true,
+        "verdict": "likely_waste",
+        "notify": "ravi.m"
+      }
+    },
+    {
+      "scene_id": "load",
+      "title": "Approved load test",
+      "kind": "new_instances",
+      "daily_cost": 260.0,
+      "instances": {
+        "id_prefix": "i-0b",
+        "count": 4,
+        "instance_type": "c6i.8xlarge"
+      },
+      "launch": {
+        "time": "2026-11-22T09:00:00Z",
+        "identity": {
+          "type": "AssumedRole",
+          "arn": "arn:aws:sts::111122223333:assumed-role/loadtest-runner/priya.s"
+        },
+        "user_agent": "aws-cli/2.17.0",
+        "console": false,
+        "source_ip": "198.51.100.7"
+      },
+      "tags": {
+        "owner": "priya.s",
+        "team": "payments",
+        "project": "checkout-loadtest",
+        "change-id": "CHG-1223",
+        "expires": "2026-11-25"
+      },
+      "metrics": [
+        {
+          "namespace": "AWS/EC2",
+          "name": "CPUUtilization",
+          "unit": "Percent",
+          "mean": 80.0,
+          "sd": 4.0
+        }
+      ],
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": true,
+          "owner": true
+        },
+        "confidence": 4,
+        "planned": true,
+        "used": true,
+        "needs_confirmation": false,
+        "action": "none",
+        "proposed_fix": null,
+        "saving_confirmed": null,
+        "verdict": "expected",
+        "notify": null
+      },
+      "ticket": {
+        "key": "CHG-1223",
+        "type": "Change",
+        "status": "Approved",
+        "summary": "Checkout load test",
+        "description": "Run 4 c6i.8xlarge load generators from 2026-11-22 to 2026-11-25. Expected cost about $260/day.",
+        "reporter": "priya.s",
+        "approver": "maria.l",
+        "start_date": "2026-11-22",
+        "end_date": "2026-11-25",
+        "estimated_daily_cost": 260.0
+      }
+    },
+    {
+      "scene_id": "nat_after_deploy",
+      "title": "Network charge after a deploy",
+      "kind": "shared_nat_after_deploy",
+      "daily_cost": 210.0,
+      "nat_gateway_id": "nat-0c1",
+      "data_start": "2026-11-23T10:00:00Z",
+      "metric": {
+        "namespace": "AWS/NATGateway",
+        "name": "BytesOutToDestination",
+        "unit": "Bytes"
+      },
+      "deploy": {
+        "time": "2026-11-23T09:52:00Z",
+        "event_name": "UpdateService",
+        "event_source": "ecs.amazonaws.com",
+        "resource_type": "AWS::ECS::Service",
+        "resource_id": "arn:aws:ecs:us-east-1:111122223333:service/prod/orders-service",
+        "request": {
+          "cluster": "prod",
+          "service": "orders-service",
+          "taskDefinition": "orders-service:214"
+        },
+        "identity": {
+          "type": "AssumedRole",
+          "arn": "arn:aws:sts::111122223333:assumed-role/github-actions-deploy/orders-service-ci"
+        },
+        "user_agent": "aws-sdk-js/3.600.0",
+        "source_ip": "192.0.2.40",
+        "tags": {
+          "owner": "orders-team",
+          "project": "orders",
+          "service": "orders-service"
+        },
+        "record": {
+          "service": "orders-service",
+          "version": "v2.15.0",
+          "repository": "acme-platform",
+          "path": "services/orders-service",
+          "commit": "4f9c2e1",
+          "team": "orders-team",
+          "pipeline": "github-actions/orders-service-deploy",
+          "note": "orders-service v2.15: asset prefetch enabled on start-up; image pulls still go through the private subnets (fix PR from TUE awaiting review)."
+        }
+      },
+      "traffic": {
+        "destinations": [
+          {
+            "destination": "com.amazonaws.us-east-1.s3 (prefix list pl-63a5400a)",
+            "share": 0.91
+          },
+          {
+            "destination": "registry-1.docker.io",
+            "share": 0.06
+          },
+          {
+            "destination": "other internet destinations",
+            "share": 0.03
+          }
+        ]
+      },
+      "expected": {
+        "checks": {
+          "size": true,
+          "timing": true,
+          "exact_id": false,
+          "owner": false
+        },
+        "confidence": 2,
+        "planned": false,
+        "used": true,
+        "verdict": "unbudgeted",
+        "needs_confirmation": true,
+        "action": "ask_owner",
+        "proposed_fix": "s3_gateway_endpoint",
+        "notify": "orders-team",
+        "saving_confirmed": null
+      }
+    }
+  ],
+  "noise": [
+    {
+      "name": "access-logs-bucket",
+      "resource_id": "winter-access-logs",
+      "product_code": "AmazonS3",
+      "usage_type": "USE1-TimedStorage-ByteHrs",
+      "unit": "GB-Mo",
+      "rate": 0.023,
+      "daily_cost": 12.0,
+      "tags": {
+        "owner": "security-team",
+        "project": "audit"
+      },
+      "change": {
+        "time": "2026-11-22T14:10:00Z",
+        "event_name": "PutBucketLogging",
+        "event_source": "s3.amazonaws.com",
+        "resource_type": "AWS::S3::Bucket",
+        "identity": {
+          "type": "IAMUser",
+          "arn": "arn:aws:iam::111122223333:user/sam.k",
+          "userName": "sam.k"
+        },
+        "user_agent": "aws-cli/2.17.0",
+        "source_ip": "198.51.100.21"
+      }
+    },
+    {
+      "name": "search-debug-logs",
+      "resource_id": "arn:aws:logs:us-east-1:111122223333:log-group:/app/search-debug",
+      "product_code": "AmazonCloudWatch",
+      "usage_type": "USE1-DataProcessing-Bytes",
+      "unit": "GB",
+      "rate": 0.5,
+      "daily_cost": 10.0,
+      "tags": {
+        "owner": "search-team",
+        "project": "search"
+      },
+      "change": {
+        "time": "2026-11-22T16:40:00Z",
+        "event_name": "CreateLogGroup",
+        "event_source": "logs.amazonaws.com",
+        "resource_type": "AWS::Logs::LogGroup",
+        "identity": {
+          "type": "AssumedRole",
+          "arn": "arn:aws:sts::111122223333:assumed-role/search-deployer/search-ci"
+        },
+        "user_agent": "aws-sdk-go-v2/1.30.0",
+        "source_ip": "192.0.2.55"
+      }
+    },
+    {
+      "name": "db-snapshot",
+      "resource_id": "snap-0e1",
+      "product_code": "AmazonEC2",
+      "usage_type": "USE1-EBS:SnapshotUsage",
+      "unit": "GB-Mo",
+      "rate": 0.05,
+      "daily_cost": 8.0,
+      "tags": {
+        "owner": "data-team",
+        "project": "analytics"
+      },
+      "change": {
+        "time": "2026-11-23T03:00:00Z",
+        "event_name": "CreateSnapshot",
+        "event_source": "ec2.amazonaws.com",
+        "resource_type": "AWS::EC2::Snapshot",
+        "identity": {
+          "type": "AssumedRole",
+          "arn": "arn:aws:sts::111122223333:assumed-role/AWSBackupDefaultServiceRole/backup"
+        },
+        "user_agent": "backup.amazonaws.com",
+        "source_ip": "backup.amazonaws.com"
+      }
+    }
+  ],
+  "extra_events": [
+    {
+      "time": "2026-11-22T22:05:00Z",
+      "event_name": "CreateSecurityGroup",
+      "event_source": "ec2.amazonaws.com",
+      "resource_type": "AWS::EC2::SecurityGroup",
+      "resource_id": "sg-0f1",
+      "identity": {
+        "type": "AssumedRole",
+        "arn": "arn:aws:sts::111122223333:assumed-role/ops-automation/ops-bot"
+      },
+      "user_agent": "aws-sdk-go-v2/1.30.0",
+      "source_ip": "192.0.2.77",
+      "request": {
+        "groupName": "batch-workers-sg",
+        "vpcId": "vpc-0a1"
+      }
+    }
+  ],
+  "tickets_extra": [],
+  "budgets": [
+    {
+      "name": "checkout-loadtest-2026-10",
+      "project": "checkout-loadtest",
+      "limit": 1200.0,
+      "actual_spend": 422.5,
+      "forecasted_spend": 942.5
+    },
+    {
+      "name": "shared-network-2026-10",
+      "project": "shared-network",
+      "limit": 4000.0,
+      "actual_spend": 1912.3,
+      "forecasted_spend": 3150.0
+    },
+    {
+      "name": "orders-2026-10",
+      "project": "orders",
+      "limit": 22000.0,
+      "actual_spend": 9842.1,
+      "forecasted_spend": 15400.0
+    }
+  ],
+  "exceptions": [],
+  "title": "Busy Monday: idle GPUs, approved load test, NAT after a release",
+  "week": true
+}
